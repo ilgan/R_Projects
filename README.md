@@ -1,5 +1,6 @@
 # STAT545-hw-ganelin-ilya
-# IG, 20/09/17
+# Owner: IG 
+# Date: 20/09/17
 
 hw2.md - is the file that will show the full report
 
