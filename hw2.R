@@ -43,3 +43,13 @@ hist(gapminder$lifeExp)
 # A plot of one quantitative variable and one categorical. Maybe boxplots for several continents or countries.
 ggplot(gapminder, aes(x = continent, y = lifeExp)) + geom_boxplot()
 
+# Use filter() to create data subsets that you want to plot.
+filter(gapminder, continent=="Asia" & pop>=2.960e+07)
+filter(gapminder, continent=="Asia")
+
+# Practice piping together filter() and select(). Possibly even piping into ggplot().
+gapminder %>% 
+  filter(continent=="Asia" & pop>=2.960e+07) %>% 
+  select(-gdpPercap)
+
+

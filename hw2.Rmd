@@ -1,0 +1,86 @@
+---
+title: "hw2"
+author: "iganelin"
+date: "September 20, 2017"
+output: github_document
+---
+# Homework 2
+```{r}
+library(gapminder)
+library(tidyverse)
+```
+
+## Smell test the data
+- Is it a data.frame, a matrix, a vector, a list?
+```{r}
+typeof(gapminder) #list
+head(gapminder) 
+```
+- How many variables/columns?
+- How many rows/observations?
+- Can you get these facts about “extent” or “size” in more than one way? 
+```{r}
+dim(gapminder)  # rows x cols: 1704x6
+ncol(gapminder) # 6
+nrow(gapminder) # 1704
+```
+- What data type is each variable?
+```{r}
+typeof(gapminder$country)   # integer
+typeof(gapminder$continent) # integer
+typeof(gapminder$year)      # integer
+typeof(gapminder$lifeExp)   # double
+typeof(gapminder$pop)       # integer
+typeof(gapminder$gdpPercap) # double
+```
+
+# Explore individual variables
+- What are possible values (or range, whichever is appropriate) of each variable?
+```{r}
+summary(gapminder$year)
+```
+- What values are typical? What’s the spread? What’s the distribution? Etc., tailored to the variable at hand.
+
+*Mean: 1980, spread: from 1952 till 2007*
+- Distribution:
+```{r}
+hist(gapminder$year)
+```
+
+# Explore various plot types
+- A scatterplot of two quantitative variables.
+```{r}
+ggplot(gapminder, aes(x = year, y = lifeExp)) + geom_point()
+ggplot(gapminder, aes(x = year, y = gdpPercap)) + geom_point()
+```
+
+- A plot of one quantitative variable. Maybe a histogram or densityplot or frequency polygon.
+```{r}
+hist(gapminder$lifeExp)
+```
+
+
+- A plot of one quantitative variable and one categorical. Maybe boxplots for several continents or countries.
+```{r}
+ggplot(gapminder, aes(x = continent, y = lifeExp)) + geom_boxplot()
+```
+
+# Use filter(), select() and %>%
+
+- Use filter() to create data subsets that you want to plot.
+```{r}
+filter(gapminder, continent=="Asia" & pop>=2.960e+07)
+filter(gapminder, continent=="Asia")
+```
+
+- Practice piping together filter() and select(). Possibly even piping into ggplot().
+```{r}
+gapminder %>% 
+  filter(continent=="Asia" & pop>=2.960e+07) %>% 
+  select(-gdpPercap)
+```
+
+# But I want to do more!
+
+
+
