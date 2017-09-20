@@ -82,5 +82,27 @@ gapminder %>%
 
 # But I want to do more!
 
+Evaluate this code and describe the result. Presumably the analyst’s intent was to get the data for Rwanda and Afghanistan. Did they succeed? Why or why not? If not, what is the correct way to do this?
+```{r}
+filter(gapminder, country == c("Rwanda", "Afghanistan"))
+```
+Answer: No.
+
+The right way would be:
+```{r}
+data = filter(gapminder, country %in% c("Rwanda", "Afghanistan"))
+```
+- Present numerical tables in a more attractive form, such as using knitr::kable().
+```{r}
+
+```
+
+- Use more of the dplyr functions for operating on a single table.
+```{r}
+kable(data, format, digits = getOption("digits"), row.names = NA, col.names = NA, align, 
+    caption = NULL, format.args = list(), escape = TRUE, ...)
+```
+
+# Report your process
 
 

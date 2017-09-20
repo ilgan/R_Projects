@@ -52,4 +52,5 @@ gapminder %>%
   filter(continent=="Asia" & pop>=2.960e+07) %>% 
   select(-gdpPercap)
 
-
+filter(gapminder, country %in% c("Rwanda", "Afghanistan"))
+filter(gapminder, country == c("Rwanda", "Afghanistan"))
