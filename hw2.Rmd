@@ -2,7 +2,7 @@
 title: "hw2"
 author: "iganelin"
 date: "September 20, 2017"
-output: github_document
+output: md_document
 ---
 # Homework 2
 
