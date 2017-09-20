@@ -1,6 +1,7 @@
 library(gapminder)
 library(tidyverse)
-
+library(knitr)
+library(dplyr)
 # Is it a data.frame, a matrix, a vector, a list?
 
 typeof(gapminder) #list
@@ -54,3 +55,15 @@ gapminder %>%
 
 filter(gapminder, country %in% c("Rwanda", "Afghanistan"))
 filter(gapminder, country == c("Rwanda", "Afghanistan"))
+
+gapminder %>% 
+  filter(country %in% c("Rwanda", "Afghanistan")) %>% 
+  kable(., format = "markdown", caption = "Title of the table")
+
+gapminder %>% 
+  filter(continent=="Asia" & pop>=2.960e+07) %>% 
+  select(-pop) %>% 
+  mutate(developpedCountries = gdpPercap>20000) %>% 
+  kable(., format = "markdown", caption = "Kable Rmd Good Looking Table")
+
+

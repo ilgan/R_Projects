@@ -5,9 +5,13 @@ date: "September 20, 2017"
 output: github_document
 ---
 # Homework 2
+
+Loading libraries
 ```{r}
 library(gapminder)
 library(tidyverse)
+library(knitr)
+library(dplyr)
 ```
 
 ## Smell test the data
@@ -90,19 +94,30 @@ Answer: No.
 
 The right way would be:
 ```{r}
-data = filter(gapminder, country %in% c("Rwanda", "Afghanistan"))
+filter(gapminder, country %in% c("Rwanda", "Afghanistan"))
 ```
+
 - Present numerical tables in a more attractive form, such as using knitr::kable().
 ```{r}
-
+gapminder %>% 
+  filter(country %in% c("Rwanda", "Afghanistan")) %>% 
+  kable(., format = "markdown", caption = "Kable Rmd Good Looking Table")
 ```
 
 - Use more of the dplyr functions for operating on a single table.
 ```{r}
-kable(data, format, digits = getOption("digits"), row.names = NA, col.names = NA, align, 
-    caption = NULL, format.args = list(), escape = TRUE, ...)
+gapminder %>% 
+  filter(continent=="Asia" & pop>=2.960e+07) %>% 
+  select(-pop) %>% 
+  mutate(developpedCountries = gdpPercap>20000) %>% 
+  kable(., format = "markdown", caption = "Kable Rmd Good Looking Table")
 ```
 
 # Report your process
+The instructions were easy to follow and with help of the search engine, all the right answers were easily found.
 
+The helpful tutorials: 
 
+- [r-bloggers.com](https://www.r-bloggers.com/data-manipulation-with-dplyr/)
+
+- [http://t-redactyl.io](http://t-redactyl.io/blog/2016/04/creating-plots-in-r-using-ggplot2-part-10-boxplots.html)
