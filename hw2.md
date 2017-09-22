@@ -44,6 +44,8 @@ Smell test the data
     ## 5 Afghanistan      Asia  1972  36.088 13079460  739.9811
     ## 6 Afghanistan      Asia  1977  38.438 14880372  786.1134
 
+class - tibble
+
 -   How many variables/columns?
 -   How many rows/observations?
 -   Can you get these facts about “extent” or “size” in more than one
@@ -103,6 +105,11 @@ Explore individual variables
 
     ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
     ##    1952    1966    1980    1980    1993    2007
+
+    summary(gapminder$continent)
+
+    ##   Africa Americas     Asia   Europe  Oceania 
+    ##      624      300      396      360       24
 
 -   What values are typical? What’s the spread? What’s the distribution?
     Etc., tailored to the variable at hand.

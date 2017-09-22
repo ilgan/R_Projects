@@ -20,6 +20,8 @@ library(dplyr)
 typeof(gapminder) #list
 head(gapminder) 
 ```
+class - tibble
+
 - How many variables/columns?
 - How many rows/observations?
 - Can you get these facts about “extent” or “size” in more than one way? 
@@ -42,6 +44,8 @@ typeof(gapminder$gdpPercap) # double
 - What are possible values (or range, whichever is appropriate) of each variable?
 ```{r}
 summary(gapminder$year)
+
+summary(gapminder$continent)
 ```
 - What values are typical? What’s the spread? What’s the distribution? Etc., tailored to the variable at hand.
 
