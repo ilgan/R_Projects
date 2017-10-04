@@ -1,0 +1,18 @@
+---
+title: "HW4"
+author: "iganelin"
+date: "October 4, 2017"
+output: html_document
+  github_document: default
+---
+# Homework 4
+
+Loading libraries
+```{r}
+library(gapminder)
+library(tidyverse)
+library(knitr)
+library(dplyr)
+library(tidyr)
+```
+
