@@ -44,7 +44,6 @@ typeof(gapminder$gdpPercap) # double
 - What are possible values (or range, whichever is appropriate) of each variable?
 ```{r}
 summary(gapminder$year)
-
 summary(gapminder$continent)
 ```
 - What values are typical? What’s the spread? What’s the distribution? Etc., tailored to the variable at hand.
@@ -53,6 +52,7 @@ summary(gapminder$continent)
 - Distribution:
 ```{r}
 hist(gapminder$year)
+hist(gapminder$continent)
 ```
 
 # Explore various plot types
