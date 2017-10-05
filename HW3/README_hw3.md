@@ -15,4 +15,6 @@ I created the repository and relocated all the files related to HW2, HW3 to sing
 
 I used kable to create tables in more appealing format.
 
+I mainly used the [RMarkdown cheatsheet](https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf) for al the questions regarding plots.
+
 Plots also were labeled.
