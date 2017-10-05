@@ -5,9 +5,11 @@ The homework files located in the main folder with the class excersices.
 
 ## Contents:
 
-- ![hw3.rmd](https://github.com/ilgan/STAT545-hw03-ganelin-ilya/blob/master/hw3.rmd) - contains all teh graphs and tables required for the hw3.
+- ![hw3.rmd](https://github.com/ilgan/STAT545-hw-ganelin-ilya/blob/master/HW3/hw3.rmd) - contains all teh graphs and tables required for the hw3.
 
-- ![hw3.knit.md](https://github.com/ilgan/STAT545-hw03-ganelin-ilya/blob/master/hw3.knit.md) - contains compailed hw3.rmd with the graphs and tables.
+- ![hw3.md](https://github.com/ilgan/STAT545-hw-ganelin-ilya/blob/master/HW3/hw3.md) - contains compailed hw3.rmd with the graphs and tables.
+
+- ![hw3.R](https://github.com/ilgan/STAT545-hw-ganelin-ilya/blob/master/HW3/hw3.R) - contains R script, but I mainly worked directly with Rmd file.
 
 ## Reporting:
 
