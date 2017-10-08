@@ -14,6 +14,7 @@ library(tidyverse)
 library(knitr)
 library(dplyr)
 ```
+# Data Reshaping
 
 ## Activity #1:  Minimal guide to tidyr
 
@@ -51,7 +52,9 @@ leTbl <- select(filter(gapminder, country %in% c("Canada", "Australia")),
       year, country, lifeExp) %>% 
       gather(measure, value, lifeExp) %>% 
       arrange(country, year)
-kable(leTbl, format = "markdown", caption = "Life Expectancy in Canada and Australia")
+#kable(leTbl, format = "markdown", caption = "Life Expectancy in Canada and Australia")
+
+knitr::kable(leTbl)
 ```
 
 - A scatterplot of life expectancy for Canada against Australia.
@@ -68,10 +71,25 @@ ggplot(leTbl, aes(x=year, y=value, colour=country))+
 - We can see from the scatterplot that from 1958 and until 1999 the life expectancy in Canada was higher.
 
 
-## Activity #3 Compute some measure of life expectancy.
+## Activity #3 
+
+- Compute some measure of life expectancy for all possible combinations of continent and year.
+
+```{r}
+tb <- gapminder %>% 
+  select (-c(country, pop, gdpPercap)) %>% 
+  group_by(continent) %>% 
+  mutate(meanLifeExp=mean(lifeExp)) %>% 
+  gather(measure, value, lifeExp)
+knitr::kable(tb)
+```
+
+- The table summarizes the life expectancy per year per continent
 
 
+# Join Prompt: Join, Merge, Look up
 
+## Activity
 
 
 
