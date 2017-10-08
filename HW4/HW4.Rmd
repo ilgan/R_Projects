@@ -43,4 +43,52 @@ continentsG
 ...or as we call it "melting data".
 ![](melting.png)
 
-## Activity #2:  Minimal guide to tidyr
+## Activity #2: Make a tibble with one row per year and columns for life expectancy for two or more countries.
+
+- A tibble with *year* as a measure, *gdpPercap* as a value for Canada and Australia.
+```{r}
+leTbl <- select(filter(gapminder, country %in% c("Canada", "Australia")),
+      year, country, lifeExp) %>% 
+      gather(measure, value, lifeExp) %>% 
+      arrange(country, year) %>% 
+
+knitr::kable(leTbl)
+```
+
+- A scatterplot of life expectancy for Canada against Australia.
+```{r}
+ggplot(leTbl, aes(x=year, y=value, colour=country))+
+  geom_point() +
+  geom_smooth() +
+  scale_x_continuous("Year") +
+  scale_y_continuous("Life Expectancy") +
+  labs(title = "Life Expectancy in Canada and Australia") +
+  theme_classic()
+```
+- We can see from the scatterplot that from 1958 and until 1999 the life expectancy in Canada was higher.
+
+
+## Activity #3 Compute some measure of life expectancy.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
