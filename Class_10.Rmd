@@ -1,6 +1,6 @@
 ---
 title: "Class 10"
-author: "IG"
+author: "Rainer"
 date: "10/5/2017"
 output: html_document
 ---
@@ -8,6 +8,7 @@ Getting my dev tools on
 ```{r}
 install.packages("devtools")
 library(devtools)
+library(tidyverse)
 install_github("JoeyBernhardt/singer")
 ```
 
@@ -56,35 +57,48 @@ inner_join(songs,locations,by="title") %>%
   count(year)
 ```
 
+
+## Reshaping
 ```{r}
-d_y <- singer_location %>% 
-  select(year, artist_hottnesss, artist_familarity, duration)
+data("singer_locations")
+glimpse(singer_locations)
+
+View(singer_locations)
+
+```
+
+year, artist_hotttnesss, artist_familiarity, duration
+
+```{r}
+hfd_y <- singer_locations %>% 
+  select(year, artist_hotttnesss, artist_familiarity,duration)
 
 hfd_y %>% 
-  filter(year>1900)
-  ggplot(aes(x=year, y=duration)) +
-    geom_point()
-  
+  filter(artist_hotttnesss>0) %>% 
+  ggplot(aes(x=artist_hotttnesss,y=artist_familiarity))+geom_point()
 ```
 
-package 'tidyr', 'gather()': from wide to long
+package 'tidyr', 'gather' - transforms data from a wide format into a long format. It stacks the values on top of each other
+
 ```{r}
+
 hfd_y_long <- hfd_y %>% 
-  gather(key = "Measure", value = "Units", artist_hotttnesss:duration)
-View(hfd_y)
-View(hfd_y_long)
+  gather(key="Measure", value="Units", artist_hotttnesss:duration)
 
-hfd_y_long %>%
-  filter(year>1900) %>% 
-  ggplot(aes(x=year, y=Units)) +
-  geom_point()
+# View(hfd_y)
+# View(hfd_y_long)
+
+hfd_y_long %>% 
+  filter(year > 0) %>% 
+  ggplot(aes(x=year,y=Units))+
+  geom_point()+
+  facet_wrap(~ Measure, scales="free")
 ```
 
-**Wide"" dataframe
-**LONG** dataframe
-```{r}
 
-```
+we get the same year, the measure (name of the column) and its value
+
+
 
 
 
