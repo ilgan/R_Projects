@@ -2,7 +2,7 @@
 title: "HW4"
 author: "iganelin"
 date: "October 4, 2017"
-output: html_document
+output:
   github_document: default
 ---
 # Homework 4
@@ -17,15 +17,10 @@ library(dplyr)
 
 ## Activity #1:  Minimal guide to tidyr
 
-This is a minimal guide, mostly for myself, to remind me of the most import tidyr functions **gather** and **spread** functions that I'm familiar with. Also checkout [A tidyr Tutorial](http://data.library.virginia.edu/a-tidyr-tutorial/)
+This is a minimal guide, mostly for myself, to remind me of the most import tidyr functions **gather** and **spread** functions that I'm familiar with. Also check out [A tidyr Tutorial](http://data.library.virginia.edu/a-tidyr-tutorial/).
 
-Start with installing the package:
-```{r}
-install.packages("tidyverse")
-install.packages("tidyr")
-library(tidyr)
-library(gapminder)
-```
+Start with installing the package using following commands **install.packages("tidyverse")** and **install.packages("tidyr")**.
+
 We will be using the **gapminder** data as our input.
 - Firstly, let's create a data frame to manipulate with:
 ```{r}
@@ -40,9 +35,12 @@ continents <- data.frame(
    n_countries = dp$n_countries)
 continents 
 ```
-- The help page for gather says that it “takes multiple columns and collapses into key-value pairs, duplicating all other columns as needed.”
+- The help page for gather says that it “takes multiple columns and collapses into key-value pairs, duplicating all other columns as needed” 
 ```{r}
 continentsG <- gather(data = continents, key = continent, value = meanGdp)
 continentsG
 ```
+...or as we call it "melting data".
+![](melting.png)
 
+## Activity #2:  Minimal guide to tidyr
