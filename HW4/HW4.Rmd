@@ -1,7 +1,7 @@
 ---
 title: "HW4"
 author: "iganelin"
-date: "October 4, 2017"
+date: "October 8, 2017"
 output:
   github_document: default
 ---
@@ -81,7 +81,8 @@ td.gapminder <- gapminder %>%
   group_by(continent) %>% 
   mutate(meanLifeExp=mean(lifeExp)) %>% 
   gather(measure, value, lifeExp)
-knitr::kable(td.gapminder)
+#knitr::kable(td.gapminder) # Just too long of the output
+head(knitr::kable(td.gapminder))
 ```
 
 - The table summarizes the life expectancy per year per continent
@@ -103,7 +104,7 @@ We start with grabbing GNI per capita data for Chile, Hungary, Uruguay, Mexico, 
 library(WDI)
 td.wdi <- WDI(indicator='NY.GDP.PCAP.KD', country=c('MX','CA','US','CL','HU','UY'), start=1952, end=2017) %>% 
   select(-iso2c)
-knitr::kable(td.wdi)
+head(knitr::kable(td.wdi))
 #or
 #View(td.wdi)
 
@@ -112,7 +113,8 @@ td.gapminder <- gapminder %>%
   group_by(continent) %>% 
   mutate(meanLifeExp=mean(lifeExp)) %>% 
   gather(measure, value, lifeExp)
-knitr::kable(td.gapminder)
+
+head(knitr::kable(td.gapminder))
 ```
 
 - Inner Join. 
@@ -120,11 +122,18 @@ knitr::kable(td.gapminder)
 
 ```{r}
 td.ij <- inner_join(td.gapminder,td.wdi,by="country")
-knitr::kable(td.ij)
+head(knitr::kable(td.ij))
 ```
 
+The join result has all variables from td.gapminder plus NY.GDP.PCAP.KD, from td.wdi.
 
+- Full Join
+```{r}
+td.ij <- full_join(td.gapminder,td.wdi)
+head(knitr::kable(td.ij))
+```
 
+Here we used full join and kept all the information from both data bases. Note that we joined by both "country" and "year".
 
 
 ## Activity #2: Create cheatsheet patterned.
