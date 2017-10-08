@@ -1,0 +1,90 @@
+---
+title: "Class 10"
+author: "IG"
+date: "10/5/2017"
+output: html_document
+---
+Getting my dev tools on
+```{r}
+install.packages("devtools")
+library(devtools)
+install_github("JoeyBernhardt/singer")
+```
+
+Now we have the singer dataframes! Huzzah
+
+```{r}
+library(singer)
+# Load songs into the environment
+data("locations")
+data("songs")
+```
+
+and we can give a look at them!!
+
+```{r}
+glimpse(songs)
+glimpse(locations)
+```
+
+```{r}
+View(songs)
+View(locations)
+```
+
+
+
+
+### Release and Year
+
+Produce a dataframe with all the albums, the artists and the year in which the album was published
+
+```{r}
+release_year <- inner_join(locations,songs,by=c("title","artist_name"))%>% 
+  select(release, artist_name,year)
+
+View(release_year)
+View(inner_join(locations,songs,by="title"))
+```
+
+### Challenge 1
+
+Get the number of releases per year
+
+```{r}
+inner_join(songs,locations,by="title") %>% 
+  count(year)
+```
+
+```{r}
+d_y <- singer_location %>% 
+  select(year, artist_hottnesss, artist_familarity, duration)
+
+hfd_y %>% 
+  filter(year>1900)
+  ggplot(aes(x=year, y=duration)) +
+    geom_point()
+  
+```
+
+package 'tidyr', 'gather()': from wide to long
+```{r}
+hfd_y_long <- hfd_y %>% 
+  gather(key = "Measure", value = "Units", artist_hotttnesss:duration)
+View(hfd_y)
+View(hfd_y_long)
+
+hfd_y_long %>%
+  filter(year>1900) %>% 
+  ggplot(aes(x=year, y=Units)) +
+  geom_point()
+```
+
+**Wide"" dataframe
+**LONG** dataframe
+```{r}
+
+```
+
+
+
