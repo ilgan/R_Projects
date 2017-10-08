@@ -50,9 +50,8 @@ continentsG
 leTbl <- select(filter(gapminder, country %in% c("Canada", "Australia")),
       year, country, lifeExp) %>% 
       gather(measure, value, lifeExp) %>% 
-      arrange(country, year) %>% 
-
-knitr::kable(leTbl)
+      arrange(country, year)
+kable(leTbl, format = "markdown", caption = "Life Expectancy in Canada and Australia")
 ```
 
 - A scatterplot of life expectancy for Canada against Australia.
@@ -65,6 +64,7 @@ ggplot(leTbl, aes(x=year, y=value, colour=country))+
   labs(title = "Life Expectancy in Canada and Australia") +
   theme_classic()
 ```
+
 - We can see from the scatterplot that from 1958 and until 1999 the life expectancy in Canada was higher.
 
 
