@@ -76,12 +76,12 @@ ggplot(leTbl, aes(x=year, y=value, colour=country))+
 - Compute some measure of life expectancy for all possible combinations of continent and year.
 
 ```{r}
-tb <- gapminder %>% 
+td.gapminder <- gapminder %>% 
   select (-c(country, pop, gdpPercap)) %>% 
   group_by(continent) %>% 
   mutate(meanLifeExp=mean(lifeExp)) %>% 
   gather(measure, value, lifeExp)
-knitr::kable(tb)
+knitr::kable(td.gapminder)
 ```
 
 - The table summarizes the life expectancy per year per continent
@@ -89,7 +89,63 @@ knitr::kable(tb)
 
 # Join Prompt: Join, Merge, Look up
 
-## Activity
+## Activity #1
+
+- Create a second data frame, complementary to Gapminder. Join this with (part of) Gapminder using a *dplyr* join function and make some observations about the process and result. Explore the different types of joins.
+
+**Dataframe:**
+One row per country, a country variable and one or more variables with extra info, such as language spoken, NATO membership, national animal, or capitol city. If you really want to be helpful, you could attempt to make a pull request to resolve this issue, where I would like to bring ISO country codes into the gapminder package.
+
+
+- I am going to use WDI climate data set.
+We start with grabbing GNI per capita data for Chile, Hungary, Uruguay, Mexico, Canada, and USA for years 1952 - 2017.
+```{r}
+library(WDI)
+td.wdi <- WDI(indicator='NY.GDP.PCAP.KD', country=c('MX','CA','US','CL','HU','UY'), start=1952, end=2017) %>% 
+  select(-iso2c)
+knitr::kable(td.wdi)
+#or
+#View(td.wdi)
+
+td.gapminder <- gapminder %>% 
+  select (-c(pop, gdpPercap)) %>% 
+  group_by(continent) %>% 
+  mutate(meanLifeExp=mean(lifeExp)) %>% 
+  gather(measure, value, lifeExp)
+knitr::kable(td.gapminder)
+```
+
+- Inner Join. 
+*Note: the countries not from our previously mentioned list in WDI will have NA instead of the values.*
+
+```{r}
+td.ij <- inner_join(td.gapminder,td.wdi,by="country")
+knitr::kable(td.ij)
+```
+
+
+
+
+
+## Activity #2: Create cheatsheet patterned.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
