@@ -1,84 +1,15 @@
 # STAT545-hw04-ganelin-ilya
 
-tidyr In a Nutshell
-===
 
-This is a minimal guide, mostly for myself, to remind me of the most import tidyr functions **gather** and **spread** functions that I'm familiar with. Also checkout [dplyr In a Nutshell](https://github.com/trinker/dplyr_in_a_nutshell) and [A tidyr Tutorial](http://data.library.virginia.edu/a-tidyr-tutorial/)
+In the folder:
+- [HW4.md](https://github.com/ilgan/STAT545-hw-ganelin-ilya/blob/master/HW4/HW4.md)
+- [HW4.Rmd](https://github.com/ilgan/STAT545-hw-ganelin-ilya/blob/master/HW4/HW4.Rmd)
 
+I have completed from the Prompts 1: Activity 1, 2, and 3. From the Prompts 2: Activity 1 (maybe a few more if I'll have time).
 
-```{r}
-library(knitr)
-library(gapminder)
-library(tidyr)
-```
-
-
-
-
-# 2  Main Functions
-
-List of **tidyr** functions and the **reshape2** functions they're related to:
-
-reshape2 Function    | tidyr Function | Special Powers
----------------------|-------------------|----------------------------
-`melt`               |  `gather`         | long format\*
-`dcast`              |  `spread`         | wide format\*
-
-
-\*[Hadley notes](http://vita.had.co.nz/papers/tidy-data.pdf) these terms are imprecise but good enough for my little noodle
-
-## Arguments (when chaining)
-
-![](tidyr.png)
-
-
-# Demos
-### Some Data
-```{r}
-library(tidyr); library(dplyr)
-
-dat <- data.frame(
-   id = LETTERS[1:5],
-   x = sample(0:1, 5, TRUE),
-   y = sample(0:1, 5, TRUE),
-   z = sample(0:1, 5, TRUE)
-)
-
-dat
-```
-
-### gather in Action
-
-```{r}
-dat %>% gather(item, scores, -c(id))
-```
-
-### spread it Back Out
-
-```{r}
-dat %>% gather(item, scores, -c(id)) %>%
-    spread(item, scores)
-```
-
----
-
-# Additional Demos
-
-### gather
-
-```{r}
-dat %>% gather(item, scores, x:z) 
-dat %>% gather(item, scores, x, y, z) 
-```
-
-### spread
-
-```{r}
-dat %>% gather(item, scores, -c(id)) %>%
-    spread(id, scores)
-```
-
-
-```{r, echo=FALSE, eval=FALSE}
-## knitr::knit2html("README.Rmd")
-```
+For taht excersice I used a lot of help from a few web sources:
+Useful links:
+- [WDI dataset](https://cran.r-project.org/web/packages/WDI/README.html)
+- [WDI dataset manipulations](https://blogs.worldbank.org/opendata/accessing-world-bank-data-apis-python-r-ruby-stata)
+- [info on tibbles](https://cran.r-project.org/web/packages/tibble/vignettes/tibble.html)
+- [Data manipulation of the stack overflow](https://stackoverflow.com/questions/35839408/r-dplyr-drop-multiple-columns)
