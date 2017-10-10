@@ -7,7 +7,7 @@ In the folder:
 
 I have completed from the Prompts 1: Activity 1, 2, and 3. From the Prompts 2: Activity 1 (maybe a few more if I'll have time).
 
-For taht excersice I used a lot of help from a few web sources:
+For that excersice I used a lot of help from a few web sources:
 Useful links:
 - [WDI dataset](https://cran.r-project.org/web/packages/WDI/README.html)
 - [WDI dataset manipulations](https://blogs.worldbank.org/opendata/accessing-world-bank-data-apis-python-r-ruby-stata)
