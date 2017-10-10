@@ -11,25 +11,6 @@ Homework 4
 ``` r
 library(gapminder)
 library(tidyverse)
-```
-
-    ## Warning: package 'tidyverse' was built under R version 3.4.2
-
-    ## Loading tidyverse: ggplot2
-    ## Loading tidyverse: tibble
-    ## Loading tidyverse: tidyr
-    ## Loading tidyverse: readr
-    ## Loading tidyverse: purrr
-    ## Loading tidyverse: dplyr
-
-    ## Warning: package 'tidyr' was built under R version 3.4.2
-
-    ## Conflicts with tidy packages ----------------------------------------------
-
-    ## filter(): dplyr, stats
-    ## lag():    dplyr, stats
-
-``` r
 library(knitr)
 library(dplyr)
 ```
@@ -42,7 +23,7 @@ Activity \#1: Minimal guide to tidyr
 
 This is a minimal guide, mostly for myself, to remind me of the most import tidyr functions **gather** and **spread** functions that I'm familiar with. Also check out [A tidyr Tutorial](http://data.library.virginia.edu/a-tidyr-tutorial/).
 
-Start with installing the package using following commands **install.packages("tidyverse")** and **install.packages("tidyr")**.
+Start with installing the package using following commands **install.packages("tidyverse")** or **install.packages("tidyr")**.
 
 We will be using the **gapminder** data as our input. - Firstly, let's create a data frame to manipulate with:
 
@@ -80,7 +61,11 @@ continentsG
     ## 4    Europe 14469.476 n_countries     360
     ## 5   Oceania 18621.609 n_countries      24
 
-...or as we call it "melting data". ![](melting.png)
+...or as we call it "melting data".
+
+A picture is worth a thousand words!
+
+![](melting.png)
 
 Activity \#2: Make a tibble with one row per year and columns for life expectancy for two or more countries.
 ------------------------------------------------------------------------------------------------------------
@@ -94,35 +79,15 @@ leTbl <- select(filter(gapminder, country %in% c("Canada", "Australia")),
       arrange(country, year)
 #kable(leTbl, format = "markdown", caption = "Life Expectancy in Canada and Australia")
 
-knitr::kable(leTbl)
+head(knitr::kable(leTbl))
 ```
 
-|  year| country   | measure |   value|
-|-----:|:----------|:--------|-------:|
-|  1952| Australia | lifeExp |  69.120|
-|  1957| Australia | lifeExp |  70.330|
-|  1962| Australia | lifeExp |  70.930|
-|  1967| Australia | lifeExp |  71.100|
-|  1972| Australia | lifeExp |  71.930|
-|  1977| Australia | lifeExp |  73.490|
-|  1982| Australia | lifeExp |  74.740|
-|  1987| Australia | lifeExp |  76.320|
-|  1992| Australia | lifeExp |  77.560|
-|  1997| Australia | lifeExp |  78.830|
-|  2002| Australia | lifeExp |  80.370|
-|  2007| Australia | lifeExp |  81.235|
-|  1952| Canada    | lifeExp |  68.750|
-|  1957| Canada    | lifeExp |  69.960|
-|  1962| Canada    | lifeExp |  71.300|
-|  1967| Canada    | lifeExp |  72.130|
-|  1972| Canada    | lifeExp |  72.880|
-|  1977| Canada    | lifeExp |  74.210|
-|  1982| Canada    | lifeExp |  75.760|
-|  1987| Canada    | lifeExp |  76.860|
-|  1992| Canada    | lifeExp |  77.950|
-|  1997| Canada    | lifeExp |  78.610|
-|  2002| Canada    | lifeExp |  79.770|
-|  2007| Canada    | lifeExp |  80.653|
+    ## [1] " year  country     measure     value"
+    ## [2] "-----  ----------  --------  -------"
+    ## [3] " 1952  Australia   lifeExp    69.120"
+    ## [4] " 1957  Australia   lifeExp    70.330"
+    ## [5] " 1962  Australia   lifeExp    70.930"
+    ## [6] " 1967  Australia   lifeExp    71.100"
 
 -   A scatterplot of life expectancy for Canada against Australia.
 
@@ -133,7 +98,8 @@ ggplot(leTbl, aes(x=year, y=value, colour=country))+
   scale_x_continuous("Year") +
   scale_y_continuous("Life Expectancy") +
   labs(title = "Life Expectancy in Canada and Australia") +
-  theme_classic()
+  theme_classic() +
+  theme(legend.position = "bottom")
 ```
 
     ## `geom_smooth()` using method = 'loess'
@@ -217,7 +183,9 @@ head(knitr::kable(td.gapminder))
     ## [5] "Afghanistan                Asia         1962      60.06490  lifeExp    31.99700"
     ## [6] "Afghanistan                Asia         1967      60.06490  lifeExp    34.02000"
 
--   Inner Join. *Note: the countries not from our previously mentioned list in WDI will have NA instead of the values.*
+-   Inner Join.
+
+*Note: the countries that are not in our previously mentioned list in WDI will have NA instead of the values.*
 
 ``` r
 td.ij <- inner_join(td.gapminder,td.wdi,by="country")

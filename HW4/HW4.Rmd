@@ -8,7 +8,7 @@ output:
 # Homework 4
 
 ### Loading libraries
-```{r}
+```{r message=FALSE}
 library(gapminder)
 library(tidyverse)
 library(knitr)
@@ -20,10 +20,11 @@ library(dplyr)
 
 This is a minimal guide, mostly for myself, to remind me of the most import tidyr functions **gather** and **spread** functions that I'm familiar with. Also check out [A tidyr Tutorial](http://data.library.virginia.edu/a-tidyr-tutorial/).
 
-Start with installing the package using following commands **install.packages("tidyverse")** and **install.packages("tidyr")**.
+Start with installing the package using following commands **install.packages("tidyverse")** or **install.packages("tidyr")**.
 
 We will be using the **gapminder** data as our input.
 - Firstly, let's create a data frame to manipulate with:
+
 ```{r}
 dp <- gapminder %>%
   group_by(continent) %>% 
@@ -36,12 +37,18 @@ continents <- data.frame(
    n_countries = dp$n_countries)
 continents 
 ```
+
 - The help page for gather says that it “takes multiple columns and collapses into key-value pairs, duplicating all other columns as needed” 
+
 ```{r}
 continentsG <- gather(data = continents, key = continent, value = meanGdp)
 continentsG
 ```
+
 ...or as we call it "melting data".
+
+A picture is worth a thousand words!
+
 ![](melting.png)
 
 ## Activity #2: Make a tibble with one row per year and columns for life expectancy for two or more countries.
@@ -54,7 +61,7 @@ leTbl <- select(filter(gapminder, country %in% c("Canada", "Australia")),
       arrange(country, year)
 #kable(leTbl, format = "markdown", caption = "Life Expectancy in Canada and Australia")
 
-knitr::kable(leTbl)
+head(knitr::kable(leTbl))
 ```
 
 - A scatterplot of life expectancy for Canada against Australia.
@@ -65,7 +72,8 @@ ggplot(leTbl, aes(x=year, y=value, colour=country))+
   scale_x_continuous("Year") +
   scale_y_continuous("Life Expectancy") +
   labs(title = "Life Expectancy in Canada and Australia") +
-  theme_classic()
+  theme_classic() +
+  theme(legend.position = "bottom")
 ```
 
 - We can see from the scatterplot that from 1958 and until 1999 the life expectancy in Canada was higher.
@@ -118,7 +126,8 @@ head(knitr::kable(td.gapminder))
 ```
 
 - Inner Join. 
-*Note: the countries not from our previously mentioned list in WDI will have NA instead of the values.*
+
+*Note: the countries that are not in our previously mentioned list in WDI will have NA instead of the values.*
 
 ```{r}
 td.ij <- inner_join(td.gapminder,td.wdi,by="country")
@@ -128,6 +137,7 @@ head(knitr::kable(td.ij))
 The join result has all variables from td.gapminder plus NY.GDP.PCAP.KD, from td.wdi.
 
 - Full Join
+
 ```{r}
 td.ij <- full_join(td.gapminder,td.wdi)
 head(knitr::kable(td.ij))
