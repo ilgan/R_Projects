@@ -13,3 +13,5 @@ Useful links:
 - [WDI dataset manipulations](https://blogs.worldbank.org/opendata/accessing-world-bank-data-apis-python-r-ruby-stata)
 - [info on tibbles](https://cran.r-project.org/web/packages/tibble/vignettes/tibble.html)
 - [Data manipulation of the stack overflow](https://stackoverflow.com/questions/35839408/r-dplyr-drop-multiple-columns)
+
+Side note: I was initially confused on how many activities I should finish, so I solved a few extra ones, just in case ;)
