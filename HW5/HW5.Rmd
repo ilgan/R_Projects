@@ -104,10 +104,28 @@ While you’re here, practice writing to file and reading back in (see next sect
 
 Characterize the (derived) data before and after your factor re-leveling.
 
-    Explore the effects of arrange(). Does merely arranging the data have any effect on, say, a figure?
-    Explore the effects of reordering a factor and factor reordering coupled with arrange(). Especially, what effect does this have on a figure?
+- Explore the effects of arrange(). Does merely arranging the data have any effect on, say, a figure?
+- Explore the effects of reordering a factor and factor reordering coupled with arrange(). Especially, what effect does this have on a figure?
+```{r}
+h_gap_dropped_add %>% 
+  filter(year == 2007, continent == "Americas") %>% 
+  arrange(lifeExp) %>% 
+  ggplot(aes(x = gdpGap, y = fct_reorder(country, gdpGap), color = country)) +
+  geom_point()
 
-These explorations should involve the data, the factor levels, and some figures.
+```
+
+
+- "Arrange" function did not play role in the example above.
+
+```{r}
+h_gap_dropped_add %>% 
+  filter(year == 2007, continent == "Americas") %>% 
+  arrange(country) %>% 
+  ggplot(aes(x = gdpGap, y = fct_reorder(country, gdpGap), color = country)) +
+  geom_point()
+
+```
 
 ##File I/O
 
@@ -124,7 +142,15 @@ Use ggsave() to explicitly save a plot to file. Then use ! to load and embed it 
 - Explicit provision of the plot object p via ggsave(..., plot = p). Show a situation in which this actually matters.
 
 
-
+ - We will start with reading teh file from our system and saving into gap_tsv.
 ```{r setup, include=FALSE}
-
+(gap_tsv <- system.file("gapminder.tsv", package = "gapminder"))
+my_gapminder <- read_tsv(gap_tsv)
+str(my_gapminder, give.attr = FALSE)
 ```
+
+- Write into csv file.
+```{r}
+write_csv(my_gapminder, "gap_life_exp.csv")
+```
+

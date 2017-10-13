@@ -160,10 +160,30 @@ While you’re here, practice writing to file and reading back in (see next sect
 
 Characterize the (derived) data before and after your factor re-leveling.
 
-    Explore the effects of arrange(). Does merely arranging the data have any effect on, say, a figure?
-    Explore the effects of reordering a factor and factor reordering coupled with arrange(). Especially, what effect does this have on a figure?
+-   Explore the effects of arrange(). Does merely arranging the data have any effect on, say, a figure?
+-   Explore the effects of reordering a factor and factor reordering coupled with arrange(). Especially, what effect does this have on a figure?
 
-These explorations should involve the data, the factor levels, and some figures.
+``` r
+h_gap_dropped_add %>% 
+  filter(year == 2007, continent == "Americas") %>% 
+  arrange(lifeExp) %>% 
+  ggplot(aes(x = gdpGap, y = fct_reorder(country, gdpGap), color = country)) +
+  geom_point()
+```
+
+![](HW5_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-8-1.png)
+
+-   "Arrange" function did not play role in the example above.
+
+``` r
+h_gap_dropped_add %>% 
+  filter(year == 2007, continent == "Americas") %>% 
+  arrange(country) %>% 
+  ggplot(aes(x = gdpGap, y = fct_reorder(country, gdpGap), color = country)) +
+  geom_point()
+```
+
+![](HW5_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-9-1.png)
 
 File I/O
 --------
@@ -177,3 +197,11 @@ Use ggsave() to explicitly save a plot to file. Then use ! to load and embed it 
 -   Arguments of ggsave(), such as width, height, resolution or text scaling.
 -   Various graphics devices, e.g. a vector vs. raster format.
 -   Explicit provision of the plot object p via ggsave(..., plot = p). Show a situation in which this actually matters.
+
+-   We will start with reading teh file from our system and saving into gap\_tsv.
+
+-   Write into csv file.
+
+``` r
+write_csv(my_gapminder, "gap_life_exp.csv")
+```
