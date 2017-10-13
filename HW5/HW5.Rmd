@@ -143,7 +143,7 @@ Use ggsave() to explicitly save a plot to file. Then use ! to load and embed it 
 - Explicit provision of the plot object p via ggsave(..., plot = p). Show a situation in which this actually matters.
 
 
- - We will start with reading teh file from our system and saving into gap_tsv.
+ - We will start with reading the file from our system and saving into gap_tsv.
 ```{r setup, include=FALSE}
 (gap_tsv <- system.file("gapminder.tsv", package = "gapminder"))
 my_gapminder <- read_tsv(gap_tsv)
@@ -151,9 +151,12 @@ str(my_gapminder, give.attr = FALSE)
 ```
 
 - Write into csv ![file](https://github.com/ilgan/STAT545-hw-ganelin-ilya/blob/master/HW5/gap_life_exp.csv).
+- Write ![my_plot png file](https://github.com/ilgan/STAT545-hw-ganelin-ilya/blob/master/HW5/my_plot.png)
+- Write ![my_plot pdf file](https://github.com/ilgan/STAT545-hw-ganelin-ilya/blob/master/HW5/my_plot.pdf)
 ```{r}
 write_csv(my_gapminder, "gap_life_exp.csv")
-ggsave(my_plot)
+ggsave("my_plot.png", plot = my_plot, width = 20, height = 20, units = "cm")
+ggsave("my_plot.pdf", width = 10, height = 10)
 ```
-![Alt text](/path/to/img.png)
+
 
