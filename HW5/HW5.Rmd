@@ -87,8 +87,9 @@ gdpGap <- h_gap_dropped_add %>% filter(year == 2007, continent == "Americas")
 ggplot(gdpGap, aes(x = gdpGap, y = country, color = country)) +
   geom_point()
 
-ggplot(gdpGap, aes(x = gdpGap, y = fct_reorder(country, gdpGap), color = country)) +
+my_plot <- ggplot(gdpGap, aes(x = gdpGap, y = fct_reorder(country, gdpGap), color = country)) +
   geom_point()
+plot(my_plot)
   
 ```
 
@@ -149,8 +150,10 @@ my_gapminder <- read_tsv(gap_tsv)
 str(my_gapminder, give.attr = FALSE)
 ```
 
-- Write into csv file.
+- Write into csv ![file](https://github.com/ilgan/STAT545-hw-ganelin-ilya/blob/master/HW5/gap_life_exp.csv).
 ```{r}
 write_csv(my_gapminder, "gap_life_exp.csv")
+ggsave(my_plot)
 ```
+![Alt text](/path/to/img.png)
 
