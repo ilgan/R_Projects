@@ -63,7 +63,20 @@ head(knitr::kable(h_gap))
     ## [5] "Afghanistan                Asia         1962   31.99700     10267083      853.1007"
     ## [6] "Afghanistan                Asia         1967   34.02000     11537966      836.1971"
 
-I used the list, for future extension. It can be done with just one line.
+``` r
+fct_count(h_gap$continent)
+```
+
+    ## # A tibble: 5 x 2
+    ##          f     n
+    ##     <fctr> <int>
+    ## 1   Africa   624
+    ## 2 Americas   300
+    ## 3     Asia   396
+    ## 4   Europe   360
+    ## 5  Oceania     0
+
+I used the list version, for future extension. Otherwise it can be done with just one line of code. As we can see the Oceania is no longer in the list. Only 24 Oceania entries were dropped, therest of the information remained in the table.
 
 #### Additionally, remove unused factor levels. Provide concrete information on the data before and after removing these rows and Oceania; address the number of rows and the levels of the affected factors.
 
@@ -141,8 +154,9 @@ ggplot(gdpGap, aes(x = gdpGap, y = country, color = country)) +
 ![](HW5_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-7-1.png)
 
 ``` r
-ggplot(gdpGap, aes(x = gdpGap, y = fct_reorder(country, gdpGap), color = country)) +
+my_plot <- ggplot(gdpGap, aes(x = gdpGap, y = fct_reorder(country, gdpGap), color = country)) +
   geom_point()
+plot(my_plot)
 ```
 
 ![](HW5_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-7-2.png)
@@ -151,6 +165,8 @@ ggplot(gdpGap, aes(x = gdpGap, y = fct_reorder(country, gdpGap), color = country
 
 ##### In my reordering excersice
 
+-   Show factor reordering regular.
+-   Show factor reordering descending order.
 -   Reordered the continent factors based on the gaps in life expectancy values.
 -   Reordered the continent factors based on the gaps in gdp per capita values.
 
@@ -185,23 +201,34 @@ h_gap_dropped_add %>%
 
 ![](HW5_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-9-1.png)
 
-File I/O
---------
+File I/O and Visualization Design
+---------------------------------
 
-Experiment with one or more of write\_csv()/read\_csv() (and/or TSV friends), saveRDS()/readRDS(), dput()/dget(). Create something new, probably by filtering or grouped-summarization of Singer or Gapminder. I highly recommend you fiddle with the factor levels, i.e. make them non-alphabetical (see previous section). Explore whether this survives the round trip of writing to file then reading back in. Visualization design
+-   We will start with reading the file from our system and saving it into the gap\_tsv.
 
-Remake at least one figure or create a new one, in light of something you learned in the recent class meetings about visualization design and color. Maybe juxtapose your first attempt and what you obtained after some time spent working on it. Reflect on the differences. If using Gapminder, you can use the country or continent color scheme that ships with Gapminder. Consult the guest lecture from Tamara Munzner and everything here. Writing figures to file
-
-Use ggsave() to explicitly save a plot to file. Then use ! to load and embed it in your report. You can play around with various options, such as:
-
--   Arguments of ggsave(), such as width, height, resolution or text scaling.
--   Various graphics devices, e.g. a vector vs. raster format.
--   Explicit provision of the plot object p via ggsave(..., plot = p). Show a situation in which this actually matters.
-
--   We will start with reading teh file from our system and saving into gap\_tsv.
-
--   Write into csv file.
+-   Write into csv ![file](https://github.com/ilgan/STAT545-hw-ganelin-ilya/blob/master/HW5/gap_life_exp.csv).
+-   Write ![my\_plot png file](https://github.com/ilgan/STAT545-hw-ganelin-ilya/blob/master/HW5/my_plot.png)
+-   Write ![my\_plot pdf file](https://github.com/ilgan/STAT545-hw-ganelin-ilya/blob/master/HW5/my_plot.pdf)
 
 ``` r
 write_csv(my_gapminder, "gap_life_exp.csv")
+ggsave("my_plot.png", plot = my_plot, width = 20, height = 20, units = "cm")
+ggsave("my_plot_1.pdf", width = 10, height = 10)
+ggsave("my_plot_2.pdf", width = 1, height = 2)
 ```
+
+``` r
+gap_via_csv <- read_csv("gap_life_exp.csv") %>% 
+  
+head
+```
+
+    ## Parsed with column specification:
+    ## cols(
+    ##   country = col_character(),
+    ##   continent = col_character(),
+    ##   year = col_integer(),
+    ##   lifeExp = col_double(),
+    ##   pop = col_integer(),
+    ##   gdpPercap = col_double()
+    ## )

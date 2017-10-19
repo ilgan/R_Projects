@@ -97,6 +97,8 @@ plot(my_plot)
 - The graphs to show the usability of factors.
 
 ##### In my reordering excersice
+- Show factor reordering regular.
+- Show factor reordering descending order.
 - Reordered the continent factors based on the gaps in life expectancy values.
 - Reordered the continent factors based on the gaps in gdp per capita values.
 
@@ -114,7 +116,6 @@ h_gap_dropped_add %>%
   arrange(lifeExp) %>% 
   ggplot(aes(x = gdpGap, y = fct_reorder(country, gdpGap), color = country)) +
   geom_point()
-
 ```
 
 
@@ -126,25 +127,13 @@ h_gap_dropped_add %>%
   arrange(country) %>% 
   ggplot(aes(x = gdpGap, y = fct_reorder(country, gdpGap), color = country)) +
   geom_point()
-
 ```
 
-##File I/O
-
-Experiment with one or more of write_csv()/read_csv() (and/or TSV friends), saveRDS()/readRDS(), dput()/dget(). Create something new, probably by filtering or grouped-summarization of Singer or Gapminder. I highly recommend you fiddle with the factor levels, i.e. make them non-alphabetical (see previous section). Explore whether this survives the round trip of writing to file then reading back in.
-Visualization design
-
-Remake at least one figure or create a new one, in light of something you learned in the recent class meetings about visualization design and color. Maybe juxtapose your first attempt and what you obtained after some time spent working on it. Reflect on the differences. If using Gapminder, you can use the country or continent color scheme that ships with Gapminder. Consult the guest lecture from Tamara Munzner and everything here.
-Writing figures to file
-
-Use ggsave() to explicitly save a plot to file. Then use ! to load and embed it in your report. You can play around with various options, such as:
-
-- Arguments of ggsave(), such as width, height, resolution or text scaling.
-- Various graphics devices, e.g. a vector vs. raster format.
-- Explicit provision of the plot object p via ggsave(..., plot = p). Show a situation in which this actually matters.
+##File I/O and Visualization Design
 
 
- - We will start with reading the file from our system and saving into gap_tsv.
+- We will start with reading the file from our system and saving it into the gap_tsv.
+
 ```{r setup, include=FALSE}
 (gap_tsv <- system.file("gapminder.tsv", package = "gapminder"))
 my_gapminder <- read_tsv(gap_tsv)
@@ -154,10 +143,31 @@ str(my_gapminder, give.attr = FALSE)
 - Write into csv ![file](https://github.com/ilgan/STAT545-hw-ganelin-ilya/blob/master/HW5/gap_life_exp.csv).
 - Write ![my_plot png file](https://github.com/ilgan/STAT545-hw-ganelin-ilya/blob/master/HW5/my_plot.png)
 - Write ![my_plot pdf file](https://github.com/ilgan/STAT545-hw-ganelin-ilya/blob/master/HW5/my_plot.pdf)
+
 ```{r}
 write_csv(my_gapminder, "gap_life_exp.csv")
 ggsave("my_plot.png", plot = my_plot, width = 20, height = 20, units = "cm")
-ggsave("my_plot.pdf", width = 10, height = 10)
+ggsave("my_plot_1.pdf", width = 10, height = 10)
+ggsave("my_plot_2.pdf", width = 1, height = 2)
 ```
+
+```{r}
+
+gap_via_csv <- read_csv("gap_life_exp.csv")
+mutate(gap_via_csv, continent = factor(continent))
+
+h_continents <- c("Americas")
+
+h_gap <- gap_via_csv %>%
+  filter(continent != h_continents)
+nlevels(h_gap$continent)
+
+write_csv(h_gap, "gap_life_exp_no_americas.csv")
+
+head(knitr::kable(gap_via_csv))
+fct_count(gap_via_csv)
+```
+- We read the csv file, re arranged the data by removing rows with continent Americas and wrote it to a new csv file.
+
 
 
