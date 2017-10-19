@@ -34,8 +34,9 @@ h_gap <- gapminder %>%
 nlevels(h_gap$continent)
 
 head(knitr::kable(h_gap))
+fct_count(h_gap$continent)
 ```
-I used the list, for future extension. It can be done with just one line.
+I used the list version, for future extension. Otherwise it can be done with just one line of code. As we can see the Oceania is no longer in the list. Only 24  Oceania entries were dropped, therest of the information remained in the table.
 
 #### Additionally, remove unused factor levels. Provide concrete information on the data before and after removing these rows and Oceania; address the number of rows and the levels of the affected factors.
 ```{r}
