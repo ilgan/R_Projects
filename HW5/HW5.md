@@ -233,6 +233,17 @@ gap_via_csv <- read_csv("gap_life_exp.csv")
     ## )
 
 ``` r
+head(knitr::kable(gap_via_csv))
+```
+
+    ## [1] "country                    continent    year    lifeExp          pop     gdpPercap"
+    ## [2] "-------------------------  ----------  -----  ---------  -----------  ------------"
+    ## [3] "Afghanistan                Asia         1952   28.80100      8425333      779.4453"
+    ## [4] "Afghanistan                Asia         1957   30.33200      9240934      820.8530"
+    ## [5] "Afghanistan                Asia         1962   31.99700     10267083      853.1007"
+    ## [6] "Afghanistan                Asia         1967   34.02000     11537966      836.1971"
+
+``` r
 fct_count(gap_via_csv$continent)
 ```
 
@@ -258,7 +269,7 @@ nlevels(h_gap$continent)
 ``` r
 write_csv(h_gap, "gap_life_exp_no_americas.csv")
 
-head(knitr::kable(gap_via_csv))
+head(knitr::kable(h_gap))
 ```
 
     ## [1] "country                    continent    year    lifeExp          pop     gdpPercap"
@@ -269,16 +280,15 @@ head(knitr::kable(gap_via_csv))
     ## [6] "Afghanistan                Asia         1967   34.02000     11537966      836.1971"
 
 ``` r
-fct_count(gap_via_csv$continent)
+fct_count(h_gap$continent)
 ```
 
-    ## # A tibble: 5 x 2
-    ##          f     n
-    ##     <fctr> <int>
-    ## 1   Africa   624
-    ## 2 Americas   300
-    ## 3     Asia   396
-    ## 4   Europe   360
-    ## 5  Oceania    24
+    ## # A tibble: 4 x 2
+    ##         f     n
+    ##    <fctr> <int>
+    ## 1  Africa   624
+    ## 2    Asia   396
+    ## 3  Europe   360
+    ## 4 Oceania    24
 
 -   We read the csv file, re arranged the data by removing rows with continent Americas and wrote it to a new csv file.
