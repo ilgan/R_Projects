@@ -3,8 +3,8 @@ HW5
 iganelin
 October 13, 2017
 
-Homework 5
-==========
+Homework 5. Gapminder version
+=============================
 
 ### Loading libraries
 
@@ -16,9 +16,6 @@ library(knitr)
 library(dplyr)
 library(forcats)
 ```
-
-Gapminder version:
-------------------
 
 ``` r
 str(gapminder$continent)
@@ -41,7 +38,8 @@ fct_count(gapminder$continent)
 
 So we know that continent in Gapminder is a factor variable and there are 24 entries of Oceania.
 
-#### Drop Oceania. Filter the Gapminder data to remove observations associated with the continent of Oceania.
+Filter the Gapminder data to remove observations associated with the continent of Oceania.
+------------------------------------------------------------------------------------------
 
 ``` r
 h_continents <- c("Oceania")
@@ -170,7 +168,8 @@ plot(my_plot)
 -   Reordered the continent factors based on the gaps in life expectancy values.
 -   Reordered the continent factors based on the gaps in gdp per capita values.
 
-#### Common part:
+Common part:
+------------
 
 While you’re here, practice writing to file and reading back in (see next section).
 
@@ -224,7 +223,7 @@ rm("my_plot_3.pdf")
 -   Write [my\_plot pdf file size 1x2](https://github.com/ilgan/STAT545-hw-ganelin-ilya/blob/master/HW5/my_plot_2.pdf)
 -   Write into [RDS file](https://github.com/ilgan/STAT545-hw-ganelin-ilya/blob/master/HW5/gap_life_exp.rds)
 
-We also wrote my\_plot\_3.pdf, but since it was the exact copy of my\_plot\_2.pdf, we decided to remove it ;)
+We also wrote **my\_plot\_3.pdf**, but since it was the exact copy of my\_plot\_2.pdf, we decided to remove it ;)
 
 ``` r
 gap_life_exp_rds <- readRDS("gap_life_exp.rds")
