@@ -140,10 +140,6 @@ my_gapminder <- read_tsv(gap_tsv)
 str(my_gapminder, give.attr = FALSE)
 ```
 
-- Write into csv ![file](https://github.com/ilgan/STAT545-hw-ganelin-ilya/blob/master/HW5/gap_life_exp.csv).
-- Write ![my_plot png file](https://github.com/ilgan/STAT545-hw-ganelin-ilya/blob/master/HW5/my_plot.png)
-- Write ![my_plot pdf file](https://github.com/ilgan/STAT545-hw-ganelin-ilya/blob/master/HW5/my_plot.pdf)
-
 ```{r}
 write_csv(my_gapminder, "gap_life_exp.csv")
 ggsave("my_plot.png", plot = my_plot, width = 20, height = 20, units = "cm")
@@ -151,10 +147,14 @@ ggsave("my_plot_1.pdf", width = 10, height = 10)
 ggsave("my_plot_2.pdf", width = 1, height = 2)
 ```
 
-```{r}
+- Write into csv [file](https://github.com/ilgan/STAT545-hw-ganelin-ilya/blob/master/HW5/gap_life_exp.csv).
+- Write [my_plot png file](https://github.com/ilgan/STAT545-hw-ganelin-ilya/blob/master/HW5/my_plot.png)
+- Write [my_plot pdf file size 10x10](https://github.com/ilgan/STAT545-hw-ganelin-ilya/blob/master/HW5/my_plot_1.pdf)
+- Write [my_plot pdf file size 1x2](https://github.com/ilgan/STAT545-hw-ganelin-ilya/blob/master/HW5/my_plot_2.pdf)
 
+```{r}
 gap_via_csv <- read_csv("gap_life_exp.csv")
-mutate(gap_via_csv, continent = factor(continent))
+fct_count(gap_via_csv$continent)
 
 h_continents <- c("Americas")
 
@@ -165,7 +165,7 @@ nlevels(h_gap$continent)
 write_csv(h_gap, "gap_life_exp_no_americas.csv")
 
 head(knitr::kable(gap_via_csv))
-fct_count(gap_via_csv)
+fct_count(gap_via_csv$continent)
 ```
 - We read the csv file, re arranged the data by removing rows with continent Americas and wrote it to a new csv file.
 

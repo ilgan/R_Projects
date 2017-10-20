@@ -206,10 +206,6 @@ File I/O and Visualization Design
 
 -   We will start with reading the file from our system and saving it into the gap\_tsv.
 
--   Write into csv ![file](https://github.com/ilgan/STAT545-hw-ganelin-ilya/blob/master/HW5/gap_life_exp.csv).
--   Write ![my\_plot png file](https://github.com/ilgan/STAT545-hw-ganelin-ilya/blob/master/HW5/my_plot.png)
--   Write ![my\_plot pdf file](https://github.com/ilgan/STAT545-hw-ganelin-ilya/blob/master/HW5/my_plot.pdf)
-
 ``` r
 write_csv(my_gapminder, "gap_life_exp.csv")
 ggsave("my_plot.png", plot = my_plot, width = 20, height = 20, units = "cm")
@@ -217,10 +213,13 @@ ggsave("my_plot_1.pdf", width = 10, height = 10)
 ggsave("my_plot_2.pdf", width = 1, height = 2)
 ```
 
+-   Write into csv [file](https://github.com/ilgan/STAT545-hw-ganelin-ilya/blob/master/HW5/gap_life_exp.csv).
+-   Write [my\_plot png file](https://github.com/ilgan/STAT545-hw-ganelin-ilya/blob/master/HW5/my_plot.png)
+-   Write [my\_plot pdf file size 10x10](https://github.com/ilgan/STAT545-hw-ganelin-ilya/blob/master/HW5/my_plot_1.pdf)
+-   Write [my\_plot pdf file size 1x2](https://github.com/ilgan/STAT545-hw-ganelin-ilya/blob/master/HW5/my_plot_2.pdf)
+
 ``` r
-gap_via_csv <- read_csv("gap_life_exp.csv") %>% 
-  
-head
+gap_via_csv <- read_csv("gap_life_exp.csv")
 ```
 
     ## Parsed with column specification:
@@ -232,3 +231,54 @@ head
     ##   pop = col_integer(),
     ##   gdpPercap = col_double()
     ## )
+
+``` r
+fct_count(gap_via_csv$continent)
+```
+
+    ## # A tibble: 5 x 2
+    ##          f     n
+    ##     <fctr> <int>
+    ## 1   Africa   624
+    ## 2 Americas   300
+    ## 3     Asia   396
+    ## 4   Europe   360
+    ## 5  Oceania    24
+
+``` r
+h_continents <- c("Americas")
+
+h_gap <- gap_via_csv %>%
+  filter(continent != h_continents)
+nlevels(h_gap$continent)
+```
+
+    ## [1] 0
+
+``` r
+write_csv(h_gap, "gap_life_exp_no_americas.csv")
+
+head(knitr::kable(gap_via_csv))
+```
+
+    ## [1] "country                    continent    year    lifeExp          pop     gdpPercap"
+    ## [2] "-------------------------  ----------  -----  ---------  -----------  ------------"
+    ## [3] "Afghanistan                Asia         1952   28.80100      8425333      779.4453"
+    ## [4] "Afghanistan                Asia         1957   30.33200      9240934      820.8530"
+    ## [5] "Afghanistan                Asia         1962   31.99700     10267083      853.1007"
+    ## [6] "Afghanistan                Asia         1967   34.02000     11537966      836.1971"
+
+``` r
+fct_count(gap_via_csv$continent)
+```
+
+    ## # A tibble: 5 x 2
+    ##          f     n
+    ##     <fctr> <int>
+    ## 1   Africa   624
+    ## 2 Americas   300
+    ## 3     Asia   396
+    ## 4   Europe   360
+    ## 5  Oceania    24
+
+-   We read the csv file, re arranged the data by removing rows with continent Americas and wrote it to a new csv file.
