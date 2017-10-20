@@ -1,0 +1,26 @@
+---
+title: "Cm004"
+author: "IG"
+date: "September 14, 2017"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+# Header 1
+
+This is a line of text.
+
+-bullet 1
+-bullet 2
+
+```{r, fig.width=20, fig.height=10, echo=FALSE}
+x<-rnorm(100)
+y<-rnorm(100)
+plot(x,y)
+```
+```{r second chunk, echo=FALSE}
+summary(x)
+```
+
+

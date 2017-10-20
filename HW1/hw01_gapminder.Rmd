@@ -1,0 +1,42 @@
+---
+title: "hw01_gapminder"
+author: "IG"
+date: "September 15, 2017"
+output:
+  github_document: default
+---
+
+# Main
+
+
+
+
+```{r}
+library(tidyverse)
+library(gapminder)
+
+gap_gdpPercap <- gapminder %>% 
+  group_by(continent, year) %>% 
+  summarise(cont_gdpPercap = sum(gdpPercap)) %>% 
+  ungroup
+
+str(gap_gdpPercap)
+
+gapminder %>% 
+  left_join(gap_gdpPercap) %>% 
+  mutate(cont_gdpPercap_share = gdpPercap / cont_gdpPercap) %>% 
+  ggplot( aes(x=year, 
+              y=cont_gdpPercap_share, 
+              group=country, 
+              colour=continent)) + 
+  geom_line() + 
+  facet_wrap(~continent )
+```
+
+```{r, echo = FALSE}
+renderTable({head(continent,input$gdpPercap)})
+
+```
+
+
+- The original Exercise 1 was taken from [Fabian Held web page](http://www.fabianheld.com/r-tidyverse/). Completed by IG.
