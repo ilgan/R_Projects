@@ -316,4 +316,4 @@ fct_count(h_gap$continent)
     ## 3  Europe   360
     ## 4 Oceania    24
 
--   We read the csv file, re arranged the data by removing rows with continent Americas and wrote it to a new csv file.
+-   We read the csv file, re arranged the data by removing rows with continent Americas and wrote it to a new [CSV file](https://github.com/ilgan/STAT545-hw-ganelin-ilya/blob/master/HW5/gap_life_exp_no_americas.csv).
