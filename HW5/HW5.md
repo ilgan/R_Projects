@@ -211,12 +211,27 @@ write_csv(my_gapminder, "gap_life_exp.csv")
 ggsave("my_plot.png", plot = my_plot, width = 20, height = 20, units = "cm")
 ggsave("my_plot_1.pdf", width = 10, height = 10)
 ggsave("my_plot_2.pdf", width = 1, height = 2)
+ggsave("my_plot_3.pdf", width = 1, height = 2)
+saveRDS(my_gapminder, "gap_life_exp.rds")
+rm("my_plot_3.pdf")
 ```
 
--   Write into csv [file](https://github.com/ilgan/STAT545-hw-ganelin-ilya/blob/master/HW5/gap_life_exp.csv).
+    ## Warning in rm("my_plot_3.pdf"): object 'my_plot_3.pdf' not found
+
+-   Write into [CSV file](https://github.com/ilgan/STAT545-hw-ganelin-ilya/blob/master/HW5/gap_life_exp.csv).
 -   Write [my\_plot png file](https://github.com/ilgan/STAT545-hw-ganelin-ilya/blob/master/HW5/my_plot.png)
 -   Write [my\_plot pdf file size 10x10](https://github.com/ilgan/STAT545-hw-ganelin-ilya/blob/master/HW5/my_plot_1.pdf)
 -   Write [my\_plot pdf file size 1x2](https://github.com/ilgan/STAT545-hw-ganelin-ilya/blob/master/HW5/my_plot_2.pdf)
+-   Write into [RDS file](https://github.com/ilgan/STAT545-hw-ganelin-ilya/blob/master/HW5/gap_life_exp.rds)
+
+We also wrote my\_plot\_3.pdf, but since it was the exact copy of my\_plot\_2.pdf, we decided to remove it ;)
+
+``` r
+gap_life_exp_rds <- readRDS("gap_life_exp.rds")
+dput(gap_life_exp_rds, "gap_life_exp.txt")
+```
+
+-   Just tried a few more methods to write and read files...and it also [worked](https://github.com/ilgan/STAT545-hw-ganelin-ilya/blob/master/HW5/gap_life_exp.txt)!
 
 ``` r
 gap_via_csv <- read_csv("gap_life_exp.csv")
