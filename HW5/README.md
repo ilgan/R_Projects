@@ -1,14 +1,14 @@
 # STAT545-hw05-ganelin-ilya
 
 
-###In the folder
+## In the folder
 
-- Script Files:
+### Script Files:
 
 - [HW45.md](https://github.com/ilgan/STAT545-hw-ganelin-ilya/blob/master/HW5/HW5.md)
 - [HW5.Rmd](https://github.com/ilgan/STAT545-hw-ganelin-ilya/blob/master/HW5/HW5.Rmd)
 
-- Files taht the scripts creates:
+### Files taht the scripts creates:
 
 - [csv file #1](https://github.com/ilgan/STAT545-hw-ganelin-ilya/blob/master/HW5/gap_life_exp.csv).
 - [csv file #2](https://github.com/ilgan/STAT545-hw-ganelin-ilya/blob/master/HW5/gap_life_exp_no_americas.csv).
