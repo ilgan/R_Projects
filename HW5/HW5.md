@@ -229,7 +229,17 @@ We also wrote my\_plot\_3.pdf, but since it was the exact copy of my\_plot\_2.pd
 ``` r
 gap_life_exp_rds <- readRDS("gap_life_exp.rds")
 dput(gap_life_exp_rds, "gap_life_exp.txt")
+
+gap_life_exp_dget <- dget("gap_life_exp.txt")
+head(knitr::kable(gap_life_exp_dget))
 ```
+
+    ## [1] "country                    continent    year    lifeExp          pop     gdpPercap"
+    ## [2] "-------------------------  ----------  -----  ---------  -----------  ------------"
+    ## [3] "Afghanistan                Asia         1952   28.80100      8425333      779.4453"
+    ## [4] "Afghanistan                Asia         1957   30.33200      9240934      820.8530"
+    ## [5] "Afghanistan                Asia         1962   31.99700     10267083      853.1007"
+    ## [6] "Afghanistan                Asia         1967   34.02000     11537966      836.1971"
 
 -   Just tried a few more methods to write and read files...and it also [worked](https://github.com/ilgan/STAT545-hw-ganelin-ilya/blob/master/HW5/gap_life_exp.txt)!
 
