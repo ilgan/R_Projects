@@ -2,11 +2,13 @@
 # Owner: IG 
 # Date: 20/09/17
 
-hw2.md - is the file that will show the full report
+Please refer to the following folders for more details for each exercise:
 
-![hw2.R](https://github.com/ilgan/STAT545-hw-ganelin-ilya/blob/master/hw2.md) - shows all the code and a few additional lines.
+- [README.md for HW2](https://github.com/ilgan/STAT545-hw-ganelin-ilya/tree/master/HW2/README.md)
+- [README.md for HW3](https://github.com/ilgan/STAT545-hw-ganelin-ilya/tree/master/HW3/README_hw3.md)
+- [README.md for HW4](https://github.com/ilgan/STAT545-hw-ganelin-ilya/tree/master/HW4/README.md)
+- [README.md for HW5](https://github.com/ilgan/STAT545-hw-ganelin-ilya/tree/master/HW5/README.md)
 
-![hw2.Rmd](https://github.com/ilgan/STAT545-hw-ganelin-ilya/blob/master/hw2.Rmd) - full report on homework 2 with comments
 
 Thank you.
 
