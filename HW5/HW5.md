@@ -99,7 +99,7 @@ levels_after
 
 The number of levels **after** dropping the unused factor levels.
 
-Reorder the levels of country or continent. Use the forcats package to change the order of the factor levels, based on a principled summary of one of the quantitative variables. Consider experimenting with a summary statistic beyond the most basic choice of the median.
+Reordered the levels of country or continent.
 
 ``` r
 h_gap_dropped_reorder <- fct_reorder(h_gap_dropped$continent, h_gap_dropped$lifeExp) %>% 
@@ -171,10 +171,6 @@ plot(my_plot)
 Common part:
 ------------
 
-While you’re here, practice writing to file and reading back in (see next section).
-
-Characterize the (derived) data before and after your factor re-leveling.
-
 -   Explore the effects of arrange(). Does merely arranging the data have any effect on, say, a figure?
 -   Explore the effects of reordering a factor and factor reordering coupled with arrange(). Especially, what effect does this have on a figure?
 
@@ -206,30 +202,31 @@ File I/O and Visualization Design
 -   We will start with reading the file from our system and saving it into the gap\_tsv.
 
 ``` r
-write_csv(my_gapminder, "gap_life_exp.csv")
-ggsave("my_plot.png", plot = my_plot, width = 20, height = 20, units = "cm")
-ggsave("my_plot_1.pdf", width = 10, height = 10)
-ggsave("my_plot_2.pdf", width = 1, height = 2)
-ggsave("my_plot_3.pdf", width = 1, height = 2)
-saveRDS(my_gapminder, "gap_life_exp.rds")
-rm("my_plot_3.pdf")
+write_csv(my_gapminder, "media/gap_life_exp.csv")
+ggsave("media/my_plot.png", plot = my_plot, width = 20, height = 20, units = "cm")
+ggsave("media/my_plot_1.pdf", width = 10, height = 10)
+ggsave("media/my_plot_2.pdf", width = 1, height = 2)
+ggsave("media/my_plot_3.pdf", width = 1, height = 2)
+saveRDS(my_gapminder, "media/gap_life_exp.rds")
+rm("media/my_plot_3.pdf")
 ```
 
-    ## Warning in rm("my_plot_3.pdf"): object 'my_plot_3.pdf' not found
+    ## Warning in rm("media/my_plot_3.pdf"): object 'media/my_plot_3.pdf' not
+    ## found
 
--   Write into [CSV file](https://github.com/ilgan/STAT545-hw-ganelin-ilya/blob/master/HW5/gap_life_exp.csv).
--   Write [my\_plot png file](https://github.com/ilgan/STAT545-hw-ganelin-ilya/blob/master/HW5/my_plot.png)
--   Write [my\_plot pdf file size 10x10](https://github.com/ilgan/STAT545-hw-ganelin-ilya/blob/master/HW5/my_plot_1.pdf)
--   Write [my\_plot pdf file size 1x2](https://github.com/ilgan/STAT545-hw-ganelin-ilya/blob/master/HW5/my_plot_2.pdf)
--   Write into [RDS file](https://github.com/ilgan/STAT545-hw-ganelin-ilya/blob/master/HW5/gap_life_exp.rds)
+-   Write into [CSV file](https://github.com/ilgan/STAT545-hw-ganelin-ilya/blob/master/HW5/media/gap_life_exp.csv).
+-   Write [my\_plot png file](https://github.com/ilgan/STAT545-hw-ganelin-ilya/blob/master/HW5/media/my_plot.png)
+-   Write [my\_plot pdf file size 10x10](https://github.com/ilgan/STAT545-hw-ganelin-ilya/blob/master/HW5/media/my_plot_1.pdf)
+-   Write [my\_plot pdf file size 1x2](https://github.com/ilgan/STAT545-hw-ganelin-ilya/blob/master/HW5/media/my_plot_2.pdf)
+-   Write into [RDS file](https://github.com/ilgan/STAT545-hw-ganelin-ilya/blob/master/HW5/media/gap_life_exp.rds)
 
 We also wrote **my\_plot\_3.pdf**, but since it was the exact copy of my\_plot\_2.pdf, we decided to remove it ;)
 
 ``` r
-gap_life_exp_rds <- readRDS("gap_life_exp.rds")
-dput(gap_life_exp_rds, "gap_life_exp.txt")
+gap_life_exp_rds <- readRDS("media/gap_life_exp.rds")
+dput(gap_life_exp_rds, "media/gap_life_exp.txt")
 
-gap_life_exp_dget <- dget("gap_life_exp.txt")
+gap_life_exp_dget <- dget("media/gap_life_exp.txt")
 head(knitr::kable(gap_life_exp_dget))
 ```
 
@@ -240,10 +237,10 @@ head(knitr::kable(gap_life_exp_dget))
     ## [5] "Afghanistan                Asia         1962   31.99700     10267083      853.1007"
     ## [6] "Afghanistan                Asia         1967   34.02000     11537966      836.1971"
 
--   Just tried a few more methods to write and read files...and it also [worked](https://github.com/ilgan/STAT545-hw-ganelin-ilya/blob/master/HW5/gap_life_exp.txt)!
+-   Just tried a few more methods to write and read files...and it also [worked](https://github.com/ilgan/STAT545-hw-ganelin-ilya/blob/master/HW5/media/gap_life_exp.txt)!
 
 ``` r
-gap_via_csv <- read_csv("gap_life_exp.csv")
+gap_via_csv <- read_csv("media/gap_life_exp.csv")
 ```
 
     ## Parsed with column specification:
@@ -291,7 +288,7 @@ nlevels(h_gap$continent)
     ## [1] 0
 
 ``` r
-write_csv(h_gap, "gap_life_exp_no_americas.csv")
+write_csv(h_gap, "media/gap_life_exp_no_americas.csv")
 
 head(knitr::kable(h_gap))
 ```
@@ -315,4 +312,4 @@ fct_count(h_gap$continent)
     ## 3  Europe   360
     ## 4 Oceania    24
 
--   We read the csv file, re arranged the data by removing rows with continent Americas and wrote it to a new [CSV file](https://github.com/ilgan/STAT545-hw-ganelin-ilya/blob/master/HW5/gap_life_exp_no_americas.csv).
+-   We read the csv file, re arranged the data by removing rows with continent Americas and wrote it to a new [CSV file](https://github.com/ilgan/STAT545-hw-ganelin-ilya/blob/master/HW5/media/gap_life_exp_no_americas.csv).
