@@ -38,8 +38,7 @@ fct_count(gapminder$continent)
 
 So we know that continent in Gapminder is a factor variable and there are 24 entries of Oceania.
 
-Filter the Gapminder data to remove observations associated with the continent of Oceania.
-------------------------------------------------------------------------------------------
+##### Filter the Gapminder data to remove observations associated with the continent of Oceania.
 
 ``` r
 h_continents <- c("Oceania")
@@ -76,7 +75,7 @@ fct_count(h_gap$continent)
 
 I used the list version, for future extension. Otherwise it can be done with just one line of code. As we can see the Oceania is no longer in the list. Only 24 Oceania entries were dropped, therest of the information remained in the table.
 
-#### Additionally, remove unused factor levels. Provide concrete information on the data before and after removing these rows and Oceania; address the number of rows and the levels of the affected factors.
+##### Additionally, remove unused factor levels. Provide concrete information on the data before and after removing these rows and Oceania; address the number of rows and the levels of the affected factors.
 
 ``` r
 levels_before <- nlevels(h_gap$continent)
@@ -206,7 +205,7 @@ write_csv(my_gapminder, "media/gap_life_exp.csv")
 ggsave("media/my_plot.png", plot = my_plot, width = 20, height = 20, units = "cm")
 ggsave("media/my_plot_1.pdf", width = 10, height = 10)
 ggsave("media/my_plot_2.pdf", width = 1, height = 2)
-ggsave("media/my_plot_3.pdf", width = 1, height = 2)
+ggsave("media/my_plot_3.pdf", width = 30, height = 35)
 saveRDS(my_gapminder, "media/gap_life_exp.rds")
 rm("media/my_plot_3.pdf")
 ```
@@ -312,4 +311,4 @@ fct_count(h_gap$continent)
     ## 3  Europe   360
     ## 4 Oceania    24
 
--   We read the csv file, re arranged the data by removing rows with continent Americas and wrote it to a new [CSV file](https://github.com/ilgan/STAT545-hw-ganelin-ilya/blob/master/HW5/media/gap_life_exp_no_americas.csv).
+-   We read the csv file, re-arranged the data by removing rows with continent Americas and wrote it to a new [CSV file](https://github.com/ilgan/STAT545-hw-ganelin-ilya/blob/master/HW5/media/gap_life_exp_no_americas.csv).
