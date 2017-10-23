@@ -12,5 +12,9 @@
 - [README.md for HW5](https://github.com/ilgan/STAT545-hw-ganelin-ilya/tree/master/HW5/README.md)
 
 
+### Useful Cheat Sheets:
+
+- [Cheat Sheets' folder](https://github.com/ilgan/STAT545-hw-ganelin-ilya/tree/master/R_Cheat_Sheets)
+
 Thank you.
 
