@@ -1,0 +1,70 @@
+---
+title: "cm101-547"
+author: "IG"
+date: "October 24, 2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r}
+my_string <- "Surroundded by quotes."
+my_string
+my_string2 <- 'Tis is anothes string'
+my_string2
+my_string3 <- " a slash \ "
+my_string3
+```
+
+### HW
+How do I "string"" a single slash?
+
+```{r}
+my_string4 <- `my_string`  # it is just a naming of an object
+my_string5 <- 'my_string'  # this is the assignment of the string to the object
+my_string4 == my_string5
+my_string6 <- "my_string"
+my_string5 == my_string6
+
+
+```
+```{r}
+#devtools::install_github("joeybernhardt/singer")
+library(singer)
+places <- unique(singer_locations$city)
+
+str(places)
+nchar(c("City", "double", "a very long string")) #counts the length of the strings
+nchar(c("", NA, " ", "   "))
+
+```
+
+## The tools of the trade
+```{r}
+devtools::install_github("tidyverse/stringr")
+devtools::install_github("tidyverse/glue")
+library(tidyverse)
+library(stringr)
+library(glue)
+```
+
+glueing `glue()`
+
+```{r}
+My_name <- "Giulio"
+My_age <- 109
+My_color <-"blue"
+
+glue("Myname is {My_name}", "My age two years ago was {My_age - 2},")
+```
+```{r}
+paste("My name is ", My_name,", My age was ", My_age - 2)
+```
+```{r}
+
+```
+
+
