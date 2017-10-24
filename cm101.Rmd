@@ -63,8 +63,91 @@ glue("Myname is {My_name}", "My age two years ago was {My_age - 2},")
 ```{r}
 paste("My name is ", My_name,", My age was ", My_age - 2)
 ```
+Writes on different lines
 ```{r}
+glue("
+     Myname is 
+{My_name} ", 
+" My age two years ago was 
+{My_age - 2}",
+My_name = "Another Name",
+My_age = 10
+     )
+
+```
+## Challenge
+
+Phrase : Today is Wednesday, October 29, 1986 and the sun shines
+```{r}
+today <- Sys.Date()
+today_frmt <- format(today, format="%A, %B %d, %Y")
+phrase <- "Today is {today_frmt} and the sun shines"
+
+glue(phrase)
+```
+```{r}
+singer_locations %>% 
+  glue_data("{artist_name} is from {city}.") %>% 
+  head()
+```
+
+### Stringr
+
+```{r}
+library(stringr)
+getNamespaceExports("stringr") #spits al teh functions in the package
+```
+
+```{r}
+getNamespaceExports("stringr") %>%
+  str_subset("str_")
+
+getNamespaceExports("stringr") %>%
+  str_view("str_")
+```
+### Challenge
+Used to clean data frame
+```{r}
+places <- unique(singer_locations$city)
+
+```
+And let's get all the placeds containing the string "york".
+```{r}
+places %>% 
+  str_to_lower() %>% 
+  str_subset("york")
+```
+### Regular Expressions
+```{r}
+places %>% 
+  str_subset("[Yyb]ork")
+```
+
+coll options with ignore_case == TRUE
+```{r}
+places %>% 
+  str_subset(coll("york", ignore_case = TRUE))
+```
+At the END of the string
+```{r}
+places %>% 
+  str_subset("York$")
+```
+At the START of the string
+```{r}
+places %>% 
+  str_subset("^York")
+```
+### Challenge
+
+Places that contain a digit in their names
+```{r}
+places %>% 
+  str_subset("[:digit:]")
 
 ```
 
+```{r}
+
+```
 
