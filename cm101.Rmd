@@ -146,8 +146,16 @@ places %>%
   str_subset("[:digit:]")
 
 ```
+DOT replaces any character
+?one or zero
++ at least one
+{2} two appearances
+* zero one or more
 
 ```{r}
-
+places %>% 
+  str_subset("B.a?")
+places %>% 
+  str_subset("B.a_+")
 ```
 
