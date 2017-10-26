@@ -204,8 +204,8 @@ File I/O and Visualization Design
 write_csv(my_gapminder, "media/gap_life_exp.csv")
 ggsave("media/my_plot.png", plot = my_plot, width = 20, height = 20, units = "cm")
 ggsave("media/my_plot_1.pdf", width = 10, height = 10)
-ggsave("media/my_plot_2.pdf", width = 1, height = 2)
-ggsave("media/my_plot_3.pdf", width = 30, height = 35)
+ggsave("media/my_plot_2.pdf", width = 11, height = 11)
+ggsave("media/my_plot_3.pdf", width = 9, height = 9)
 saveRDS(my_gapminder, "media/gap_life_exp.rds")
 rm("media/my_plot_3.pdf")
 ```
