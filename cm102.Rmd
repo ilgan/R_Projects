@@ -1,5 +1,5 @@
 ---
-title: "cm102"
+title: "cm102_functions"
 author: "IG"
 date: "October 26, 2017"
 output: html_document
@@ -7,4 +7,75 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(gapminder)
+str(gapminder)
 ```
+
+```{r}
+mmm2 <- function(x) {
+  if(!is.numeric(x)) {
+    stop('I am so sorry, but this function only works for numeric input!\n',
+         'You have provided an object of class: ', class(x)[1])
+  }
+  max(x) - min(x)
+}
+```
+
+```{r}
+modulus <- function(x, y) {
+  if(!is.numeric(x)) {
+    stop('I am so sorry, but this function only works for numeric input!\n',
+         'You have provided an object of class: ', class(x)[1])
+  }
+    if(!is.numeric(y)) {
+    stop('I am so sorry, but this function only works for numeric input!\n',
+         'You have provided an object of class: ', class(x)[1])
+    }
+  
+  if (y > x) {
+    x
+  }
+  else {
+    x - int(x/y)
+  }
+}
+```
+
+```{r}
+mod_ten <- function(x) {
+  if(!is.numeric(x)) {
+    stop('I am so sorry, but this function only works for numeric input!\n',
+         'You have provided an object of class: ', class(x)[1])
+  }
+
+  x%% 10
+}
+```
+
+```{r}
+mod_ten(1001)
+#modulus(5,1)
+```
+```{r}
+mod_x <- function(value, devisor=10) {
+  if(!is.numeric(value)) {
+    stop('I am so sorry, but this function only works for numeric input value!\n',
+         'You have provided an object of class: ', class(value)[1])
+  }
+    if(!is.numeric(devisor)) {
+    stop('I am so sorry, but this function only works for numeric input devisor!\n',
+         'You have provided an object of class: ', class(devisor)[1])
+  }
+
+  mod <- value%%devisor
+  nt  <- value%/%devisor
+  output = list(quotient = nt, remainder = mod)
+  
+  return(output)
+}
+
+mod_x(30,7)
+```
+
+
+
