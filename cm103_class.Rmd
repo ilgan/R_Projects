@@ -17,6 +17,7 @@ https://github.com/JoeyBernhardt/stat545-purrr/edit/master/purrr-lesson.Rmd
 (v_log <- c(TRUE, FALSE, FALSE, TRUE))
 (v_int <- 1:4)
 (v_doub <- 1:4 * 1.2)
+typeof(v_doub)
 (v_char <- letters[1:4])
 
 
@@ -26,6 +27,7 @@ https://github.com/JoeyBernhardt/stat545-purrr/edit/master/purrr-lesson.Rmd
 v_char[c(FALSE, FALSE, TRUE, TRUE)]
 v_char[v_log]
 
+## Index by position
 v_doub[2:3]
 v_char[-4]
 
@@ -34,7 +36,10 @@ v_int[0]
 typeof(v_int[0])
 v_doub[100]
 typeof(v_doub[100])
-
+v_doub_copy <- v_doub
+str(v_doub_copy)
+v_doub_copy[3] <- "uhoh"
+str(v_doub_copy)
 
 v_log
 as.integer(v_log)
@@ -60,7 +65,7 @@ str(big_plans)
 big_plans[1] <- 10
 str(big_plans)
 
-
+## Lists
 (x <- list(1:3, c("four", "five")))
 (y <- list(logical = TRUE, integer = 4L, double = 4 * 1.2, character = "character"))
 (z <- list(letters[26:22], transcendental = c(pi, exp(1)), f = function(x) x^2))
@@ -76,6 +81,7 @@ z["transcendental"]
 x[[2]]
 
 y[["double"]]
+y["double"]
 
 
 z$transcendental
@@ -111,6 +117,8 @@ exp(l_doub)
 library(purrr)
 map_dbl(l_doub, exp)
 
+
+
 identical(exp(v_doub), map_dbl(l_doub, exp))
 
 ### then introduce the various types of map functions
@@ -118,7 +126,21 @@ identical(exp(v_doub), map_dbl(l_doub, exp))
 
 library(stringr)
 
-fruit
+fruit[2]
+
+split_fruit <- fruit %>%
+  map(str_split, " " )
+split_fruit
+
+map_chr(.x = fruit, function(x) str_split(x, pattern = " "))
+
+fruit %>% 
+  map_chr(str_to_upper)
+
+
+
+
+
 
 str(fruit)
 
@@ -273,6 +295,7 @@ We have no clue what is in this list. This is normal. That is why it's important
 Use `str()` with arguments such as `max.level` and `list.len`. It often pays off to do deeper inspection on a single element.
 
 ```{r}
+str(gh_users)
 str(gh_users, max.level = 1)
 str(gh_users[[1]], list.len = 6)
 ```
@@ -294,6 +317,17 @@ To have the interactive list viewing experience, visit <http://rpubs.com/jennybc
 1. Call `str()` on `gh_users`, specifying both `max.level` and `list.len`.
 1. Recall the [list and vector indexing techniques](bk00_vectors-and-lists.html#list_indexing). Inspect elements 1, 2, 6, 18, 21, and 24 of the list component for the 5th GitHub user. One of these should be the URL for the user's profile on GitHub.com. Go there and compare info you see there with the info you just extracted from `gh_users`.
 1. Consider the interactive view of `gh_users` here. Or, optionally, install the listviewer package via `install.packages("listviewer")` and call `jsonedit(gh_users)` to run this widget locally. Can you find the same info you extracted in the previous exercise? The same info you see in user's GitHub.com profile?
+
+```{r}
+list <- c("login", "name", "id", "location")
+gh_users %>% 
+  map(list)
+
+x <- map(gh_users, `[`, c("login", "name", "id", "location"))
+map(gh_users, magrittr::extract, list)
+
+gp_mean <- map(gapminder$pop, mean)
+```
 
 ### Name and position shortcuts
 
