@@ -64,19 +64,43 @@ gh_repos_df
 
 #### user name instead of user's ID
 ```{r}
-u_name <- gh_repos %>% 
+user_login <- gh_repos %>% 
   map_chr(list(1, "owner", "login"))
 
 gh_repos_named2 <- gh_repos %>% 
-  set_names(u_name)
+  set_names(user_login)
 
 gh_repos_df2 <- gh_repos_named2 %>% 
   enframe("user_login", "repository_stuff")
 
 gh_repos_df2
-
 ```
 
+```{r}
+gh_repos_df2 %>% 
+  filter(user_login %in% c("masalmon", "leeper")) %>% 
+  mutate(number_of_repositories = map_int(repository_stuff, length))
+```
+```{r}
+map(got_chars, "aliases")
+map(got_chars, "name")
+
+aliases_named <- set_names(map(got_chars, "aliases"), map(got_chars, "name"))
+length(aliases_named)
+
+map_int(aliases_named, length)
+
+collapse_by_comma <- function(vec_of_strings){
+  paste(vec_of_strings, collapse = ", ")
+}
+
+collapse_by_comma(c("first string", "second string"))
+
+map(aliases_named, collapse_by_comma)
+map(aliases_named, function(v_o_s) paste (v_o_s, collapse = ", "))
+map(aliases_named, paste, collapse = ", ")
+map(aliases_named, ~paste(.x, collapse = ", "))
+```
 
 
 
