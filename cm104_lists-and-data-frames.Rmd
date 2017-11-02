@@ -1,0 +1,87 @@
+---
+title: "cm104_lists-and-data-frames"
+author: "IG"
+date: "November 2, 2017"
+output: html_document
+---
+```{r}
+library(repurrrsive)
+library(listviewer)
+library(jsonlite)
+library(dplyr)
+library(tibble)
+library(purrr)
+```
+
+```{r}
+str(gh_repos, max.level = 1)
+data("gh_repos")
+gh_repos[[1]]
+```
+Give a look at it
+```{r}
+View(gh_users)
+```
+
+Extract information from the lists: full name of the first repo
+map_chr - because the element we are looking for is a char.
+```{r}
+View(gh_repos)
+
+gh_repos %>% 
+  map_chr(list(2, "name"))
+
+gh_repos %>% 
+  map_chr(list(1, "full_name"))
+```
+### Warm up challenge
+Extract info from the lists: owners ID of fourth repo for each user
+Solution: input a list with level names. In this case we have third level.
+```{r}
+gh_repos %>% 
+  map_int(list(4,"owner", "id"))
+```
+```{r}
+#library(tibble)
+u_id <- gh_repos %>% 
+  map_int(list(1, "owner", "id"))
+
+str(gh_repos, max.level = 1)
+
+#gonna name the elements
+
+gh_repos_named <- gh_repos %>% 
+  set_names(u_id)
+
+str(gh_repos_named, max.level = 1)
+#View(gh_repos_named)
+
+gh_repos_df <- gh_repos_named %>% 
+  enframe("user_id", "repository_stuff")
+
+gh_repos_df
+```
+
+#### user name instead of user's ID
+```{r}
+u_name <- gh_repos %>% 
+  map_chr(list(1, "owner", "login"))
+
+gh_repos_named2 <- gh_repos %>% 
+  set_names(u_name)
+
+gh_repos_df2 <- gh_repos_named2 %>% 
+  enframe("user_login", "repository_stuff")
+
+gh_repos_df2
+
+```
+
+
+
+
+
+
+
+ 
+ 
