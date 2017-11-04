@@ -1,0 +1,184 @@
+---
+title: "HW6"
+author: "iganelin"
+date: "November 4, 2017"
+output:
+  github_document: default
+---
+
+#Homework 6. Gapminder version
+
+### Loading libraries
+```{r message=FALSE}
+library(gapminder)
+library(singer)
+library(tidyverse)
+library(knitr)
+library(dplyr)
+library(forcats)
+```
+
+
+```{r}
+str(gapminder$continent)
+fct_count(gapminder$continent)
+```
+So we know that continent in Gapminder is a factor variable and there are 24 entries of Oceania.
+
+##### Filter the Gapminder data to remove observations associated with the continent of Oceania.
+
+```{r}
+h_continents <- c("Oceania")
+h_gap <- gapminder %>%
+  filter(continent != h_continents)
+nlevels(h_gap$continent)
+
+head(knitr::kable(h_gap))
+fct_count(h_gap$continent)
+```
+I used the list version, for future extension. Otherwise it can be done with just one line of code. As we can see the Oceania is no longer in the list. Only 24  Oceania entries were dropped, therest of the information remained in the table.
+
+##### Additionally, remove unused factor levels. Provide concrete information on the data before and after removing these rows and Oceania; address the number of rows and the levels of the affected factors.
+```{r}
+levels_before <- nlevels(h_gap$continent)
+levels_before
+```
+
+The number of levels **before** dropping the unused factor levels.
+```{r}
+h_gap_dropped <- h_gap %>% 
+  droplevels()
+
+levels_after <- nlevels(h_gap_dropped$continent)
+levels_after
+```
+
+The number of levels **after** dropping the unused factor levels.
+
+Reordered the levels of country or continent.
+
+```{r}
+h_gap_dropped_reorder <- fct_reorder(h_gap_dropped$continent, h_gap_dropped$lifeExp) %>% 
+  levels() %>% head()
+h_gap_dropped_reorder
+
+h_gap_dropped_reorder <- fct_reorder(h_gap_dropped$continent, h_gap_dropped$lifeExp,  .desc = TRUE) %>% 
+  levels() %>% head()
+h_gap_dropped_reorder
+
+h_gap_dropped_add <- h_gap_dropped %>% 
+  mutate(maxLifeExp = max(lifeExp), minLifeExp = min(lifeExp)) %>% 
+  mutate(ageGap = maxLifeExp-minLifeExp)
+
+h_gap_dropped_reorder <- fct_reorder(h_gap_dropped_add$country, h_gap_dropped_add$ageGap) %>% 
+  levels() %>% head()
+h_gap_dropped_reorder
+
+h_gap_dropped_add <- h_gap_dropped %>% 
+  group_by(country) %>% 
+  mutate(gdpGap = max(gdpPercap)-min(gdpPercap))
+
+h_gap_dropped_reorder <- fct_reorder(h_gap_dropped_add$country, h_gap_dropped_add$gdpGap) %>% 
+  levels() %>% head()
+h_gap_dropped_reorder
+
+```
+
+```{r}
+gdpGap <- h_gap_dropped_add %>% filter(year == 2007, continent == "Americas")
+ggplot(gdpGap, aes(x = gdpGap, y = country, color = country)) +
+  geom_point()
+
+my_plot <- ggplot(gdpGap, aes(x = gdpGap, y = fct_reorder(country, gdpGap), color = country)) +
+  geom_point()
+plot(my_plot)
+  
+```
+
+- The graphs to show the usability of factors.
+
+##### In my reordering excersice
+- Show factor reordering regular.
+- Show factor reordering descending order.
+- Reordered the continent factors based on the gaps in life expectancy values.
+- Reordered the continent factors based on the gaps in gdp per capita values.
+
+## Common part:
+
+- Explore the effects of arrange(). Does merely arranging the data have any effect on, say, a figure?
+- Explore the effects of reordering a factor and factor reordering coupled with arrange(). Especially, what effect does this have on a figure?
+
+```{r}
+h_gap_dropped_add %>% 
+  filter(year == 2007, continent == "Americas") %>% 
+  arrange(lifeExp) %>% 
+  ggplot(aes(x = gdpGap, y = fct_reorder(country, gdpGap), color = country)) +
+  geom_point()
+```
+
+- "Arrange" function did not play role in the example above.
+
+```{r}
+h_gap_dropped_add %>% 
+  filter(year == 2007, continent == "Americas") %>% 
+  arrange(country) %>% 
+  ggplot(aes(x = gdpGap, y = fct_reorder(country, gdpGap), color = country)) +
+  geom_point()
+```
+
+## File I/O and Visualization Design
+
+- We will start with reading the file from our system and saving it into the gap_tsv.
+
+```{r setup, include=FALSE}
+(gap_tsv <- system.file("gapminder.tsv", package = "gapminder"))
+my_gapminder <- read_tsv(gap_tsv)
+str(my_gapminder, give.attr = FALSE)
+```
+
+```{r}
+write_csv(my_gapminder, "media/gap_life_exp.csv")
+ggsave("media/my_plot.png", plot = my_plot, width = 20, height = 20, units = "cm")
+ggsave("media/my_plot_1.pdf", width = 10, height = 10)
+ggsave("media/my_plot_2.pdf", width = 11, height = 11)
+ggsave("media/my_plot_3.pdf", width = 9, height = 9)
+saveRDS(my_gapminder, "media/gap_life_exp.rds")
+rm("media/my_plot_3.pdf")
+```
+
+- Write into [CSV file](https://github.com/ilgan/STAT545-hw-ganelin-ilya/blob/master/HW5/media/gap_life_exp.csv).
+- Write [my_plot png file](https://github.com/ilgan/STAT545-hw-ganelin-ilya/blob/master/HW5/media/my_plot.png)
+- Write [my_plot pdf file size 10x10](https://github.com/ilgan/STAT545-hw-ganelin-ilya/blob/master/HW5/media/my_plot_1.pdf)
+- Write [my_plot pdf file size 1x2](https://github.com/ilgan/STAT545-hw-ganelin-ilya/blob/master/HW5/media/my_plot_2.pdf)
+- Write into [RDS file](https://github.com/ilgan/STAT545-hw-ganelin-ilya/blob/master/HW5/media/gap_life_exp.rds)
+
+We also wrote **my_plot_3.pdf**, but since it was the exact copy of my_plot_2.pdf, we decided to remove it ;)
+
+```{r}
+gap_life_exp_rds <- readRDS("media/gap_life_exp.rds")
+dput(gap_life_exp_rds, "media/gap_life_exp.txt")
+
+gap_life_exp_dget <- dget("media/gap_life_exp.txt")
+head(knitr::kable(gap_life_exp_dget))
+```
+
+- Just tried a few more methods to write and read files...and it also [worked](https://github.com/ilgan/STAT545-hw-ganelin-ilya/blob/master/HW5/media/gap_life_exp.txt)!
+
+```{r}
+gap_via_csv <- read_csv("media/gap_life_exp.csv")
+head(knitr::kable(gap_via_csv))
+fct_count(gap_via_csv$continent)
+
+h_continents <- c("Americas")
+
+h_gap <- gap_via_csv %>%
+  filter(continent != h_continents)
+nlevels(h_gap$continent)
+
+write_csv(h_gap, "media/gap_life_exp_no_americas.csv")
+
+head(knitr::kable(h_gap))
+fct_count(h_gap$continent)
+```
+
+- We read the csv file, re-arranged the data by removing rows with continent Americas and wrote it to a new [CSV file](https://github.com/ilgan/STAT545-hw-ganelin-ilya/blob/master/HW5/media/gap_life_exp_no_americas.csv).
