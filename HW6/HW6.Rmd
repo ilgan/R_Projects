@@ -16,6 +16,7 @@ library(tidyverse)
 library(knitr)
 library(dplyr)
 library(forcats)
+library(plyr)
 ```
 
 ##1. Character data
@@ -127,16 +128,19 @@ func(x)
 ##2. Writing functions
 - If you plan to complete the homework where we build an R package, write a couple of experimental functions exploring some functionality that is useful to you in real life and that might form the basis of your personal package.
 We are going to use the data from the real wind turbine in form of csv. First function wil read this file and clean it up.
+```{r}
+
+```
 
 ```{r}
-read_wind_data <- function(input, printout_flag){
+read_wind_data <- function(input, save_flag){
   #Reads teh wind turbine data CSV, cleans and prints it out.
   gtm.rawData <- read.csv(input, header = TRUE)
   gtm.dat <- within(gtm.rawData, rm("X.GV.SD_04","X.GV.SD_05","X.GV.SD_38", "X.GV.HRR_GeneratorWindingTemp.1"))
-  if (printout_flag == TRUE){
-    #head(gtm.dat)
-  }
-  
+  c_names <- colnames(gtm.dat, do.NULL = TRUE, prefix = "col")
+  raw_data <- str_replace(c_names, "X.GV.", "")
+  names(gtm.dat) <- raw_data
+
   return(gtm.dat)
 }
 ```
@@ -146,7 +150,6 @@ gtm.dat <- read_wind_data("10.0.103.10.csv", FALSE)
 ```
 
 ```{r}
-
 mkdirs <- function(fp) {
     if(!file.exists(fp)) {
         mkdirs(dirname(source_local(), fp))
@@ -158,9 +161,9 @@ mkdirs <- function(fp) {
 Function plots var1 against var2 from data-frame df and saves if save_flag == TRUE:
 ```{r}
 plot_and_save <- function(df, var1, var2, save_flag){
-    my_plot <- ggplot(df, aes(var1, var2)) +
-    geom_point() +
-    geom_smooth(se=FALSE)
+    my_plot <- ggplot(df, aes(df[[var1]], df[[var2]])) +
+      geom_point() +
+      geom_smooth(se=FALSE)
   
     if(save_flag == TRUE){
     #mkdirs(media)
@@ -170,7 +173,25 @@ plot_and_save <- function(df, var1, var2, save_flag){
 ```
 
 ```{r}
-plot_and_save(gtm.dat, "X.GV.HRR_WTCorrectedWindSpeed", "X.GV.HRR_kW", TRUE)
+plot_and_save(gtm.dat, "HRR_WTCorrectedWindSpeed", "HRR_kW", TRUE)
+```
+PCA plus Linear regression
+```{r}
+end = ncol(gtm.dat)
+gtm.gentemp <- gtm.dat[,end]
+gtm.vars <- gtm.dat[,3:end-1]
+
+le_lin_fit <- function(vars, gentemp) {
+  PCA <- prcomp(vars, center = TRUE, scale. = TRUE) 
+  print(PCA$rotation)
+  plot(PCA, type = "l")
+  summary(PCA)
+  #the_fit <- lm(gentemp ~ gtm.dat)
+  #the_fit <- lm(gentemp ~ PCA$rotation[,1], PCA$rotation[,2])
+  the_fit <- lm(gtm.gentemp ~ gtm.vars$HRR_kVAR + gtm.vars$HRR_WTCorrectedWindSpeed)
+  coef(the_fit)
+  }
+le_lin_fit(gtm.vars, gtm.gentemp)
 ```
 
 
