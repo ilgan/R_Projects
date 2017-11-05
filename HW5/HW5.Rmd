@@ -16,6 +16,13 @@ library(tidyverse)
 library(knitr)
 library(dplyr)
 library(forcats)
+library(meme)
+```
+
+```{r message=FALSE, warning=FALSE, error=FALSE }
+u <- "http://i0.kym-cdn.com/entries/icons/mobile/000/000/745/success.jpg"
+#meme(u, "Homework 6", "Yes! Give me more!")
+mmplot(u) + mm_caption("Homework 5", "Yes! Give me more!", color="purple")
 ```
 
 
@@ -131,7 +138,8 @@ h_gap_dropped_add %>%
 - We will start with reading the file from our system and saving it into the gap_tsv.
 
 ```{r setup, include=FALSE}
-(gap_tsv <- system.file("gapminder.tsv", package = "gapminder"))
+#(gap_tsv <- system.file("gapminder.tsv", package = "gapminder"))
+gap_tsv <- system.file("extdata", "gapminder.tsv", package = "gapminder")
 my_gapminder <- read_tsv(gap_tsv)
 str(my_gapminder, give.attr = FALSE)
 ```

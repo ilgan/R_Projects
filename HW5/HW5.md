@@ -15,7 +15,16 @@ library(tidyverse)
 library(knitr)
 library(dplyr)
 library(forcats)
+library(meme)
 ```
+
+``` r
+u <- "http://i0.kym-cdn.com/entries/icons/mobile/000/000/745/success.jpg"
+#meme(u, "Homework 6", "Yes! Give me more!")
+mmplot(u) + mm_caption("Homework 5", "Yes! Give me more!", color="purple")
+```
+
+![](HW5_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-2-1.png)
 
 ``` r
 str(gapminder$continent)
@@ -148,7 +157,7 @@ ggplot(gdpGap, aes(x = gdpGap, y = country, color = country)) +
   geom_point()
 ```
 
-![](HW5_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-7-1.png)
+![](HW5_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-8-1.png)
 
 ``` r
 my_plot <- ggplot(gdpGap, aes(x = gdpGap, y = fct_reorder(country, gdpGap), color = country)) +
@@ -156,7 +165,7 @@ my_plot <- ggplot(gdpGap, aes(x = gdpGap, y = fct_reorder(country, gdpGap), colo
 plot(my_plot)
 ```
 
-![](HW5_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-7-2.png)
+![](HW5_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-8-2.png)
 
 -   The graphs to show the usability of factors.
 
@@ -181,7 +190,7 @@ h_gap_dropped_add %>%
   geom_point()
 ```
 
-![](HW5_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-8-1.png)
+![](HW5_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-9-1.png)
 
 -   "Arrange" function did not play role in the example above.
 
@@ -193,7 +202,7 @@ h_gap_dropped_add %>%
   geom_point()
 ```
 
-![](HW5_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-9-1.png)
+![](HW5_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-10-1.png)
 
 File I/O and Visualization Design
 ---------------------------------

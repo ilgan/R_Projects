@@ -17,6 +17,13 @@ library(knitr)
 library(dplyr)
 library(forcats)
 library(plyr)
+library(meme)
+```
+
+```{r}
+u <- "http://i0.kym-cdn.com/entries/icons/mobile/000/000/745/success.jpg"
+#meme(u, "Homework 6", "Yes! Give me more!")
+mmplot(u) + mm_caption("Homework 6", "Yes! Give me more!", color="purple")
 ```
 
 ##1. Character data
