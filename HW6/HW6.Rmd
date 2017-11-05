@@ -196,6 +196,12 @@ le_lin_fit(gtm.vars, gtm.gentemp)
 
 
 ##3. Work with the candy data
+- The ![excersise](http://stat545.com/hw07_2015_data-wrangling-candy.html) from 2015
+- The original work ![here](https://github.com/jennybc/candy)
+
+```{r}
+
+```
 
 ##4. Work with the singer data
 
