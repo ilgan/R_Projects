@@ -20,7 +20,7 @@ library(plyr)
 library(meme)
 ```
 
-```{r}
+```{r message=FALSE, warning=FALSE, error=FALSE }
 u <- "http://i0.kym-cdn.com/entries/icons/mobile/000/000/745/success.jpg"
 #meme(u, "Homework 6", "Yes! Give me more!")
 mmplot(u) + mm_caption("Homework 6", "Yes! Give me more!", color="purple")
@@ -135,9 +135,6 @@ func(x)
 ##2. Writing functions
 - If you plan to complete the homework where we build an R package, write a couple of experimental functions exploring some functionality that is useful to you in real life and that might form the basis of your personal package.
 We are going to use the data from the real wind turbine in form of csv. First function wil read this file and clean it up.
-```{r}
-
-```
 
 ```{r}
 read_wind_data <- function(input, save_flag){
@@ -151,6 +148,7 @@ read_wind_data <- function(input, save_flag){
   return(gtm.dat)
 }
 ```
+
 Functoin creates dir in main folder
 ```{r}
 gtm.dat <- read_wind_data("10.0.103.10.csv", FALSE)
@@ -182,6 +180,7 @@ plot_and_save <- function(df, var1, var2, save_flag){
 ```{r}
 plot_and_save(gtm.dat, "HRR_WTCorrectedWindSpeed", "HRR_kW", TRUE)
 ```
+
 PCA plus Linear regression
 ```{r}
 end = ncol(gtm.dat)
