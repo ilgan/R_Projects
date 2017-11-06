@@ -231,13 +231,29 @@ raw_with_id_scores <- raw_with_id %>%
 #View(raw_with_id_scores)
 ```
 
-Copy the scores to the tibble
+Copy the scores to the data frame. Adding some left_join practice, because why not? ;)
 ```{r message=FALSE, warning=FALSE}
 #raw_with_id_scores$age <- factor(raw_with_id_scores$age)
 age_joy_des <- raw_with_id_scores %>%
-  group_by(raw_with_id_scores$age) %>%
-  count(j_score)
-head(age_joy_des)
+  group_by(age) %>%
+  summarise(j_score_tot = sum(j_score))
+  
+age_des_des <- raw_with_id_scores %>%
+  group_by(age) %>%
+  summarise(d_score_tot = sum(d_score))
+
+age_stats <- left_join(age_joy_des, age_des_des)
+  
+#View(age_stats)
+age_stats
+dat <- age_stats[!is.na(as.numeric(as.character(age_stats$age))) | !(age_stats$age>120),]
+#dat1 <- dat[!(dat$age>120),]
+  
+plot1 <- ggplot(dat, aes(x = age, y = j_score_tot, color = age)) +
+  geom_point()
+plot(plot1)
+#tim <- age_stats(age_stats$age == 33)
+View(dat)
 ```
 
 
