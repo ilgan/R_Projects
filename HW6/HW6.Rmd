@@ -1,7 +1,7 @@
 ---
 title: "HW6"
 author: "iganelin"
-date: "November 4, 2017"
+date: "`r format(Sys.Date())`"
 output:
   github_document: default
 ---
@@ -205,9 +205,41 @@ le_lin_fit(gtm.vars, gtm.gentemp)
 - The ![excersise](http://stat545.com/hw07_2015_data-wrangling-candy.html) from 2015
 - The original work ![here](https://github.com/jennybc/candy)
 
-```{r}
+Calculate the joy/dispare scores in separate columns. Joy is (+1), Dispare is (+1), overall Joy - Dispare.
+```{r message=FALSE, warning=FALSE}
+library(readr)
+suppressPackageStartupMessages(library(dplyr))
+library(tidyr)
+library(stringr)
+library(ggplot2)
 
+raw <- read_csv("CANDY-HIERARCHY-2015 SURVEY-Responses.csv",
+                col_types = cols(
+                  Timestamp = col_datetime("%m/%d/%Y %H:%M:%S")
+                ))
+
+raw_with_id <- raw %>%
+  mutate(id = sprintf("ID%04d", row_number())) %>%
+  select(id,
+         age = starts_with("How"),
+         everything())
+
+raw_with_id_scores <- raw_with_id %>%
+  mutate(j_score = apply(raw_with_id, 1, function(x) sum(x=="JOY", na.rm=TRUE))) %>% 
+  mutate(d_score = apply(raw_with_id, 1, function(x) sum(x=="DESPAIR", na.rm=TRUE))) %>% 
+  mutate(tot_score = j_score - d_score)
+#View(raw_with_id_scores)
 ```
+
+Copy the scores to the tibble
+```{r message=FALSE, warning=FALSE}
+#raw_with_id_scores$age <- factor(raw_with_id_scores$age)
+age_joy_des <- raw_with_id_scores %>%
+  group_by(raw_with_id_scores$age) %>%
+  count(j_score)
+head(age_joy_des)
+```
+
 
 ##4. Work with the singer data
 
