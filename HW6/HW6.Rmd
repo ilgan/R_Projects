@@ -6,7 +6,7 @@ output:
   github_document: default
 ---
 
-#Homework 06: Data wrangling wrap up
+#Homework 06: Data wrangling wrap up (Due date 10/11/17)
 
 ### Loading libraries
 ```{r message=FALSE}

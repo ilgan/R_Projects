@@ -1,0 +1,20 @@
+---
+title: "words.en.rmd"
+author: "IG"
+date: "November 7, 2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+```
+```{r read-data}
+en <- read_tsv("words.en.length")
+
+```
+
+```{r}
+ggplot()
+```
+
