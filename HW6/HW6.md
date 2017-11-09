@@ -21,7 +21,7 @@ library(plyr)
 1. Character data
 -----------------
 
-We wil start from the loading the libraries for this excercise.
+We wil; start from the loading the libraries for this excercise.
 
 ``` r
 library(tidyverse)

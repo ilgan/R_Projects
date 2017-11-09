@@ -18,6 +18,10 @@ library(dplyr)
 library(forcats)
 library(plyr)
 library(meme)
+library(readr)
+library(tidyr)
+library(stringr)
+library(ggplot2)
 ```
 
 ```{r message=FALSE, warning=FALSE, error=FALSE }
@@ -328,12 +332,13 @@ le_lin_fit(gtm.vars, gtm.gentemp)
 - The original work ![here](https://github.com/jennybc/candy)
 
 Calculate the joy/dispare scores in separate columns. Joy is (+1), Dispare is (+1), overall Joy - Dispare.
-```{r message=FALSE, warning=FALSE}
-library(readr)
-suppressPackageStartupMessages(library(dplyr))
-library(tidyr)
-library(stringr)
-library(ggplot2)
+#```{r message=FALSE, warning()}
+```{r}
+#library(readr)
+#suppressPackageStartupMessages(library(dplyr))
+#library(tidyr)
+#library(stringr)
+#library(ggplot2)
 
 raw <- read_csv("CANDY-HIERARCHY-2015 SURVEY-Responses.csv",
                 col_types = cols(
