@@ -323,7 +323,7 @@ Since this list is long, you might want to use the match argument to str\_view()
 
 ``` r
 read_wind_data <- function(input, save_flag){
-  #Reads teh wind turbine data CSV, cleans and prints it out.
+  #Reads the wind turbine data CSV, cleans and prints it out.
   gtm.rawData <- read.csv(input, header = TRUE)
   gtm.dat <- within(gtm.rawData, rm("X.GV.SD_04","X.GV.SD_05","X.GV.SD_38", "X.GV.HRR_GeneratorWindingTemp.1"))
   c_names <- colnames(gtm.dat, do.NULL = TRUE, prefix = "col")
@@ -540,8 +540,8 @@ raw <- read_csv("CANDY-HIERARCHY-2015 SURVEY-Responses.csv",
                 ))
 
 raw_with_id <- raw %>%
-  mutate( id = sprintf("ID%04d", row_number())) %>%
-  select(id, age = starts_with("How"), everything())
+    dplyr::mutate(id = sprintf("ID%04d", row_number())) %>%
+    select(id, age = starts_with("How"), everything())
 ```
 
     ## Warning: Mangling the following names: [Box’o’ Raisins] -> [Box<U+0092>o<U
