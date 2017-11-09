@@ -1,10 +1,10 @@
 HW6
 ================
 iganelin
-November 4, 2017
+2017-11-08
 
-Homework 06: Data wrangling wrap up
-===================================
+Homework 06: Data wrangling wrap up (Due date 10/11/17)
+=======================================================
 
 ### Loading libraries
 
@@ -13,15 +13,28 @@ library(gapminder)
 library(singer)
 library(tidyverse)
 library(knitr)
-library(dplyr)
 library(forcats)
-library(plyr)
+#library(plyr)
+library(dplyr)
+library(meme)
+library(readr)
+library(tidyr)
+library(stringr)
+library(ggplot2)
 ```
+
+``` r
+u <- "http://i0.kym-cdn.com/entries/icons/mobile/000/000/745/success.jpg"
+#meme(u, "Homework 6", "Yes! Give me more!")
+mmplot(u) + mm_caption("Homework 6", "Yes! Give me more!", color="purple")
+```
+
+![](HW6_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-2-1.png)
 
 1. Character data
 -----------------
 
-We wil; start from the loading the libraries for this excercise.
+We wil start from the loading the libraries for this excercise.
 
 ``` r
 library(tidyverse)
@@ -51,9 +64,11 @@ str_c(string1, string2, sep = ", ")
 
     ## [1] "This is definitely string, If I want to include a \"quote\" inside a string, I use single quotes"
 
-### 14.2.5 Exercises
+### Character Data
 
--   In code that doesn’t use stringr, you’ll often see paste() and paste0(). What’s the difference between the two functions?
+#### 14.2.5 Exercises
+
+1.  In code that doesn’t use stringr, you’ll often see paste() and paste0(). What’s the difference between the two functions?
 
 The difference between paste() and paste0() is that the argument "sep"" by default is ” ” (paste) and “” (paste0). It can be changed in the fuction itself.
 
@@ -85,11 +100,11 @@ paste0(c("a", NA, "b"), "-d")
 
 ....so as we can see from the examples above, str\_c does recognize NA, whereas paste() and paste0() both read NA as a string.
 
--   In your own words, describe the difference between the sep and collapse arguments to str\_c().
+1.  In your own words, describe the difference between the sep and collapse arguments to str\_c().
 
 Argument "sep" is used when we want to insert a string between the input vectors. Argument "collapse" is used when we want to combine input vectors into one string.
 
--   Use str\_length() and str\_sub() to extract the middle character from a string.
+1.  Use str\_length() and str\_sub() to extract the middle character from a string.
 
 ``` r
 string <- "This is defiNitely string"
@@ -104,7 +119,7 @@ str_sub(string, start=ln/2+1, end=ln/2+1)
 
 In that case we can extract the middle-1 or middle+1 character instead, or output "your character has even number of caracters" forcing the user to adjust the input string, and/or output an error.
 
--   What does str\_wrap() do? When might you want to use it?
+1.  What does str\_wrap() do? When might you want to use it?
 
 ``` r
 thanks_path <- file.path(R.home("doc"), "THANKS")
@@ -132,7 +147,7 @@ cat(str_wrap(thanks), "\n")
 
 This is a wrapper around stri\_wrap which implements the Knuth-Plass paragraph wrapping algorithm, where the function breaks text paragraphs into lines, of total width. We might wanna use it in the case when the lines' width is important, fixed screen sizes for example.
 
--   What does str\_trim() do? What’s the opposite of str\_trim()?
+1.  What does str\_trim() do? What’s the opposite of str\_trim()?
 
 ``` r
 string <- "   This is definitely string   "
@@ -149,7 +164,7 @@ str_trim(string)
 
 str\_trim() - trims all the leading and trailing whitespaces from the string. The opposite to str\_trim() function is str\_pad().
 
--   Write a function that turns (e.g.) a vector c("a", "b", "c") into the string a, b, and c. Think carefully about what it should do if given a vector of length 0, 1, or 2.
+1.  Write a function that turns (e.g.) a vector c("a", "b", "c") into the string a, b, and c. Think carefully about what it should do if given a vector of length 0, 1, or 2.
 
 ``` r
 x = c("a", "b", "c")
@@ -187,6 +202,119 @@ func(x)
 ```
 
     ## a, b and c
+
+#### 14.3.1.1 Exercises
+
+1.  Explain why each of these strings don’t match a : "", "\\", "\\".
+
+2.  How would you match the sequence "'?
+
+3.  What patterns will the regular expression ...... match? How would you represent it as a string?
+
+#### 14.3.2.1 Exercises
+
+1.  How would you match the literal string "$^$"?
+
+2.  Given the corpus of common words in stringr::words, create regular expressions that find all words that:
+
+-   Start with “y”.
+-   End with “x”
+-   Are exactly three letters long. (Don’t cheat by using str\_length()!)
+-   Have seven letters or more.
+
+Since this list is long, you might want to use the match argument to str\_view() to show only the matching or non-matching words.
+
+#### 14.3.3.1 Exercises
+
+1.  Create regular expressions to find all words that:
+
+-   Start with a vowel.
+
+-   That only contain consonants. (Hint: thinking about matching “not”-vowels.)
+
+-   End with ed, but not with eed.
+
+-   End with ing or ise.
+
+1.  Empirically verify the rule “i before e except after c”.
+
+2.  Is “q” always followed by a “u”?
+
+3.  Write a regular expression that matches a word if it’s probably written in British English, not American English.
+4.  Create a regular expression that will match telephone numbers as commonly written in your country.
+
+#### 14.3.4.1 Exercises
+
+1.  Describe the equivalents of ?, +, \* in {m,n} form.
+
+2.  Describe in words what these regular expressions match: (read carefully to see if I’m using a regular expression or a string that defines a regular expression.)
+
+-   ^.\*$
+-   "\\{.+\\}"
+-   --
+-   "\\\\{4}"
+
+1.  Create regular expressions to find all words that:
+
+-   Start with three consonants.
+-   Have three or more vowels in a row.
+-   Have two or more vowel-consonant pairs in a row.
+
+1.  Solve the beginner regexp crosswords at <https://regexcrossword.com/challenges/beginner>.
+
+#### 14.3.5.1 Exercises
+
+1.  Describe, in words, what these expressions will match:
+
+-   (.)
+-   "(.)(.)\\2\\1"
+-   (..)
+-   "(.).\\1.\\1"
+-   "(.)(.)(.).\*\\3\\2\\1"
+
+1.  Construct regular expressions to match words that:
+
+-   Start and end with the same character.
+
+-   Contain a repeated pair of letters (e.g. “church” contains “ch” repeated twice.)
+
+-   Contain one letter repeated in at least three places (e.g. “eleven” contains three “e”s.)
+
+#### 14.4.2 Exercises
+
+1.  For each of the following challenges, try solving it by using both a single regular expression, and a combination of multiple str\_detect() calls.
+
+-   Find all words that start or end with x.
+
+-   Find all words that start with a vowel and end with a consonant.
+
+-   Are there any words that contain at least one of each different vowel?
+
+1.  What word has the highest number of vowels? What word has the highest proportion of vowels? (Hint: what is the denominator?)
+
+#### 14.4.3.1 Exercises
+
+1.  In the previous example, you might have noticed that the regular expression matched “flickered”, which is not a colour. Modify the regex to fix the problem.
+
+2.  From the Harvard sentences data, extract:
+
+-   The first word from each sentence.
+-   All words ending in ing.
+-   All plurals.
+
+#### 14.4.4.1 Exercises
+
+1.  Find all words that come after a “number” like “one”, “two”, “three” etc. Pull out both the number and the word.
+
+2.  Find all contractions. Separate out the pieces before and after the apostrophe.
+
+#### 14.4.5.1 Exercises
+
+1.  Replace all forward slashes in a string with backslashes.
+
+2.  Implement a simple version of str\_to\_lower() using replace\_all().
+
+3.  Switch the first and last letters in words. Which of those strings are still words?
 
 2. Writing functions
 --------------------
@@ -393,6 +521,120 @@ le_lin_fit(gtm.vars, gtm.gentemp)
 
 3. Work with the candy data
 ---------------------------
+
+-   The ![excersise](http://stat545.com/hw07_2015_data-wrangling-candy.html) from 2015
+-   The original work ![here](https://github.com/jennybc/candy)
+
+Calculate the joy/dispare scores in separate columns. Joy is (+1), Dispare is (+1), overall Joy - Dispare. \#\`\`\`{r message=FALSE, warning=FALSE}
+
+``` r
+#library(readr)
+#suppressPackageStartupMessages(library(dplyr))
+#library(tidyr)
+#library(stringr)
+#library(ggplot2)
+
+raw <- read_csv("CANDY-HIERARCHY-2015 SURVEY-Responses.csv",
+                col_types = cols(
+                  Timestamp = col_datetime("%m/%d/%Y %H:%M:%S")
+                ))
+
+raw_with_id <- raw %>%
+  mutate( id = sprintf("ID%04d", row_number())) %>%
+  select(id, age = starts_with("How"), everything())
+```
+
+    ## Warning: Mangling the following names: [Box’o’ Raisins] -> [Box<U+0092>o<U
+    ## +0092> Raisins], [Hershey’s Kissables] -> [Hershey<U+0092>s Kissables],
+    ## [Hershey’s Milk Chocolate] -> [Hershey<U+0092>s Milk Chocolate], [Reese’s
+    ## Peanut Butter Cups] -> [Reese<U+0092>s Peanut Butter Cups], [Peanut M&M’s]
+    ## -> [Peanut M&M<U+0092>s], [Chick-o-Sticks (we don’t know what that is)] -
+    ## > [Chick-o-Sticks (we don<U+0092>t know what that is)]. Use enc2native() to
+    ## avoid the warning.
+
+``` r
+raw_with_id_scores <- raw_with_id %>%
+  mutate(j_score = apply(raw_with_id, 1, function(x) sum(x=="JOY", na.rm=TRUE))) %>% 
+  mutate(d_score = apply(raw_with_id, 1, function(x) sum(x=="DESPAIR", na.rm=TRUE))) %>% 
+  mutate(tot_score = j_score - d_score)
+```
+
+    ## Warning: Mangling the following names: [Box’o’ Raisins] -> [Box<U+0092>o<U
+    ## +0092> Raisins], [Hershey’s Kissables] -> [Hershey<U+0092>s Kissables],
+    ## [Hershey’s Milk Chocolate] -> [Hershey<U+0092>s Milk Chocolate], [Reese’s
+    ## Peanut Butter Cups] -> [Reese<U+0092>s Peanut Butter Cups], [Peanut M&M’s]
+    ## -> [Peanut M&M<U+0092>s], [Chick-o-Sticks (we don’t know what that is)] -
+    ## > [Chick-o-Sticks (we don<U+0092>t know what that is)]. Use enc2native() to
+    ## avoid the warning.
+
+    ## Warning: Mangling the following names: [Box’o’ Raisins] -> [Box<U+0092>o<U
+    ## +0092> Raisins], [Hershey’s Kissables] -> [Hershey<U+0092>s Kissables],
+    ## [Hershey’s Milk Chocolate] -> [Hershey<U+0092>s Milk Chocolate], [Reese’s
+    ## Peanut Butter Cups] -> [Reese<U+0092>s Peanut Butter Cups], [Peanut M&M’s]
+    ## -> [Peanut M&M<U+0092>s], [Chick-o-Sticks (we don’t know what that is)] -
+    ## > [Chick-o-Sticks (we don<U+0092>t know what that is)]. Use enc2native() to
+    ## avoid the warning.
+
+    ## Warning: Mangling the following names: [Box’o’ Raisins] -> [Box<U+0092>o<U
+    ## +0092> Raisins], [Hershey’s Kissables] -> [Hershey<U+0092>s Kissables],
+    ## [Hershey’s Milk Chocolate] -> [Hershey<U+0092>s Milk Chocolate], [Reese’s
+    ## Peanut Butter Cups] -> [Reese<U+0092>s Peanut Butter Cups], [Peanut M&M’s]
+    ## -> [Peanut M&M<U+0092>s], [Chick-o-Sticks (we don’t know what that is)] -
+    ## > [Chick-o-Sticks (we don<U+0092>t know what that is)]. Use enc2native() to
+    ## avoid the warning.
+
+``` r
+#View(raw_with_id_scores)
+```
+
+Copy the scores to the data frame. Adding some left\_join practice, because why not? ;)
+
+``` r
+#raw_with_id_scores$age <- factor(raw_with_id_scores$age)
+age_joy_des <- raw_with_id_scores %>%
+  group_by(age) %>%
+  summarise(j_score_tot = sum(j_score))
+  
+age_des_des <- raw_with_id_scores %>%
+  group_by(age) %>%
+  summarise(d_score_tot = sum(d_score))
+
+age_stats <- left_join(age_joy_des, age_des_des)
+  
+#View(age_stats)
+age_stats
+```
+
+    ## # A tibble: 147 x 3
+    ##      age j_score_tot d_score_tot
+    ##    <chr>       <int>       <int>
+    ##  1    --          36          59
+    ##  2   >39          31          27
+    ##  3     0          39          53
+    ##  4  0.62          44          51
+    ##  5    10         262         192
+    ##  6   100          64         101
+    ##  7   108          42          53
+    ##  8    11         390         307
+    ##  9   115          33          46
+    ## 10    12         571         585
+    ## # ... with 137 more rows
+
+``` r
+dat <- age_stats[!is.na(as.numeric(as.character(age_stats$age))) | !(age_stats$age>120),]
+#dat1 <- dat[!(dat$age>120),]
+  
+plot1 <- ggplot(dat, aes(x = age, y = j_score_tot, color = age)) +
+  geom_point()
+plot(plot1)
+```
+
+![](HW6_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-17-1.png)
+
+``` r
+#tim <- age_stats(age_stats$age == 33)
+View(dat)
+```
 
 4. Work with the singer data
 ----------------------------
