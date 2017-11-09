@@ -1,17 +1,19 @@
-all:
-  echo: hi
-  
-all: words.en.txt
+all: words.en.html
 
-words.en.txt:
-	curl: -o words.en.txt http://www-01.sil.org/linguistics/wordlists/english/wordlist/wordsEn.txt
+clean:
+	rm -f words.en.txt words.en.length words.en.html
+
+words.en.crlf.txt:
+	curl -o words.en.txt http://www-01.sil.org/linguistics/wordlists/english/wordlist/wordsEn.txt
 	
 words.en.txt: words.en.crlf.txt
-	tr -d '\r' words.en.crlf.txt >words.en.txt
+	tr -d '\r' <words.en.crlf.txt >words.en.txt
 	
+#words.en.length: words.en.txt
+#	awk '{print length}' <words.en.txt >words.en.length
+
 words.en.length: words.en.txt
 	awk '{print length}' <words.en.txt >words.en.length
 	
-words.en.html: words.en.length
+words.en.html: words.en.length words.en.rmd
 	Rscript -e 'rmarkdown::render("words.en.rmd")'
-

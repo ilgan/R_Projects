@@ -357,11 +357,17 @@ raw_with_id_scores <- raw_with_id %>%
 ```
 
 Copy the scores to the data frame. Adding some left_join practice, because why not? ;)
+
 ```{r message=FALSE, warning=FALSE}
 #raw_with_id_scores$age <- factor(raw_with_id_scores$age)
 age_joy_des <- raw_with_id_scores %>%
   group_by(age) %>%
-  summarise(j_score_tot = sum(j_score))
+  mutate(if (age == age){j_score_tot = sum(j_score)})
+
+age_joy_des <- raw_with_id_scores %>%
+	cbind(age_joy_des[!names(DF2) %in% names(DF1)])
+
+View(age_joy_des)
   
 age_des_des <- raw_with_id_scores %>%
   group_by(age) %>%
