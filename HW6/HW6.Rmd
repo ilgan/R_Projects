@@ -420,4 +420,4 @@ Both graphs look about the same, except for the actual values. It means that the
 
 ##Report your process
 
-The progress report is in the [Readme file]("README.md")
+The progress report is in the [Readme file](https://github.com/ilgan/STAT545-hw-ganelin-ilya/blob/master/HW6/README.md)
