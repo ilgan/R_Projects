@@ -710,10 +710,296 @@ Both graphs look about the same, except for the actual values. It means that the
 5. Work with a list
 -------------------
 
+### Background basics
+
+#### Vectors and lists review of vectors, lists, and indexing
+
+``` r
+library(purrr)
+(v_log <- c(TRUE, FALSE, FALSE, TRUE))
+```
+
+    ## [1]  TRUE FALSE FALSE  TRUE
+
+``` r
+(v_int <- 1:4)
+```
+
+    ## [1] 1 2 3 4
+
+``` r
+(v_doub <- 1:4 * 1.2)
+```
+
+    ## [1] 1.2 2.4 3.6 4.8
+
+``` r
+(v_char <- letters[1:4])
+```
+
+    ## [1] "a" "b" "c" "d"
+
+-   Define the vectors above or similar. Use the family of is.star() functions to confirm vector type, e.g. is.logical(). You will need to guess or look some of them up. Long-term, you may wish to explore the purrr::is\_\*() family of functions.
+
+``` r
+is.logical(v_log)
+```
+
+    ## [1] TRUE
+
+``` r
+is.character(v_log)
+```
+
+    ## [1] FALSE
+
+-   What do is.numeric(), is.integer(), and is.double() return for the vectors that hold floating point number versus integers?
+
+``` r
+is.numeric(v_doub)
+```
+
+    ## [1] TRUE
+
+``` r
+is.integer(v_doub)
+```
+
+    ## [1] FALSE
+
+``` r
+is.double(v_doub)
+```
+
+    ## [1] TRUE
+
+Floating point is indeed numeric and double, so will return TRUE for those two.
+
+-   What happens when you ask for an element that is past the end of the vector, i.e. request x\[k\] when the length of x is less than k?
+
+``` r
+v_char[10]
+```
+
+    ## [1] NA
+
+Displays NA.
+
+-   We indexed a vector x with a vector of positive integers that is shorter than x. What happens if the indexing vector is longer than x?
+
+``` r
+v_int <- 1:10
+v_char[v_int]
+```
+
+    ##  [1] "a" "b" "c" "d" NA  NA  NA  NA  NA  NA
+
+Displays NA.
+
+-   We indexed x with a logical vector of the same length. What happen if the indexing vector is shorter than x?
+
+``` r
+v_int <- 1:3
+v_char[v_int]
+```
+
+    ## [1] "a" "b" "c"
+
+Displays values indexed by v\_int from v\_char
+
+-   Recall the hieararchy of the most common atomic vector types: logical &lt; integer &lt; numeric &lt; character. Try to use the as.\*() functions to go the wrong way. Call as.logical(), as.integer(), and as.numeric() on a character vector, such as letters. What happens?
+
+``` r
+as.logical(v_char)
+```
+
+    ## [1] NA NA NA NA
+
+``` r
+as.integer(v_char)
+```
+
+    ## Warning: NAs introduced by coercion
+
+    ## [1] NA NA NA NA
+
+``` r
+as.numeric(v_char)
+```
+
+    ## Warning: NAs introduced by coercion
+
+    ## [1] NA NA NA NA
+
+as.logical(v\_char) converts the character list to the NA.
+
+-   Make the lists x, y, and z as shown above. Use is.star() functions to get to know these objects. Try to get some positive and negative results, i.e. establish a few things that x is and is NOT. Make sure to try is.list(), is.vector(), is.atomic(), and is.recursive(). Long-term, you may wish to explore the purrr::is\_\*() family of functions.
+
+``` r
+(x <- list(1:3, c("four", "five")))
+```
+
+    ## [[1]]
+    ## [1] 1 2 3
+    ## 
+    ## [[2]]
+    ## [1] "four" "five"
+
+``` r
+(y <- list(logical = TRUE, integer = 4L, double = 4 * 1.2, character = "character"))
+```
+
+    ## $logical
+    ## [1] TRUE
+    ## 
+    ## $integer
+    ## [1] 4
+    ## 
+    ## $double
+    ## [1] 4.8
+    ## 
+    ## $character
+    ## [1] "character"
+
+``` r
+(z <- list(letters[26:22], transcendental = c(pi, exp(1)), f = function(x) x^2))
+```
+
+    ## [[1]]
+    ## [1] "z" "y" "x" "w" "v"
+    ## 
+    ## $transcendental
+    ## [1] 3.141593 2.718282
+    ## 
+    ## $f
+    ## function (x) 
+    ## x^2
+
+``` r
+is.double(x)
+```
+
+    ## [1] FALSE
+
+``` r
+is.character(x)
+```
+
+    ## [1] FALSE
+
+``` r
+is.atomic(x)
+```
+
+    ## [1] FALSE
+
+``` r
+is.complex(x)
+```
+
+    ## [1] FALSE
+
+``` r
+is.factor(x)
+```
+
+    ## [1] FALSE
+
+``` r
+is.list(x)
+```
+
+    ## [1] TRUE
+
+``` r
+is.double(y)
+```
+
+    ## [1] FALSE
+
+``` r
+is.character(y)
+```
+
+    ## [1] FALSE
+
+``` r
+is.atomic(y)
+```
+
+    ## [1] FALSE
+
+``` r
+is.complex(y)
+```
+
+    ## [1] FALSE
+
+``` r
+is.factor(y)
+```
+
+    ## [1] FALSE
+
+``` r
+is.list(y)
+```
+
+    ## [1] TRUE
+
+``` r
+is.double(z)
+```
+
+    ## [1] FALSE
+
+``` r
+is.character(z)
+```
+
+    ## [1] FALSE
+
+``` r
+is.atomic(z)
+```
+
+    ## [1] FALSE
+
+``` r
+is.complex(z)
+```
+
+    ## [1] FALSE
+
+``` r
+is.factor(z)
+```
+
+    ## [1] FALSE
+
+``` r
+is.list(z)
+```
+
+    ## [1] TRUE
+
+All three are definitely a list.
+
+-   Use \[, \[\[, and $ to access the second component of the list z, which bears the name “transcendental”. Use the length() and the is.\*() functions explored elsewhere to study the result. Which methods of indexing yield the same result vs. different?
+
+-   Use \[ and \[\[ to attempt to retrieve elements 2 and 3 from my\_vec and my\_list. What succeeds vs. fails? What if you try to retrieve element 2 alone? Does \[\[ even work on atomic vectors? Compare and contrast the results from the various combinations of indexing method and input object.
+
+``` r
+my_vec <- c(a = 1, b = 2, c = 3)
+my_list <- list(a = 1, b = 2, c = 3)
+```
+
+#### Relationship to base and plyr functions side-by-side workflow comparison
+
 6. Work with a nested data frame
 --------------------------------
 
 Report your process
 -------------------
 
-The progress report is in the [Readme file](%22README.md%22)
+The progress report is in the [Readme file](https://github.com/ilgan/STAT545-hw-ganelin-ilya/blob/master/HW6/README.md)
