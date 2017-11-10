@@ -1,7 +1,7 @@
 HW6
 ================
 iganelin
-2017-11-08
+2017-11-10
 
 Homework 06: Data wrangling wrap up (Due date 10/11/17)
 =======================================================
@@ -14,6 +14,7 @@ library(singer)
 library(tidyverse)
 library(knitr)
 library(forcats)
+library(magrittr)
 #library(plyr)
 library(dplyr)
 library(meme)
@@ -592,8 +593,15 @@ Copy the scores to the data frame. Adding some left\_join practice, because why 
 ``` r
 #raw_with_id_scores$age <- factor(raw_with_id_scores$age)
 age_joy_des <- raw_with_id_scores %>%
-  group_by(age) %>%
-  summarise(j_score_tot = sum(j_score))
+    group_by(age) %>%
+    summarise(j_score_tot = sum(j_score))
+
+#  mutate(if (age == age){j_score_tot = sum(j_score)})
+
+#age_joy_des <- raw_with_id_scores %>%
+#   cbind(age_joy_des[!names(DF2) %in% names(DF1)])
+
+#View(age_joy_des)
   
 age_des_des <- raw_with_id_scores %>%
   group_by(age) %>%
@@ -622,19 +630,79 @@ age_stats
 
 ``` r
 dat <- age_stats[!is.na(as.numeric(as.character(age_stats$age))) | !(age_stats$age>120),]
-#dat1 <- dat[!(dat$age>120),]
-  
-plot1 <- ggplot(dat, aes(x = age, y = j_score_tot, color = age)) +
-  geom_point()
-plot(plot1)
+
+View(dat)
+
+#Clean data from the strings and redicoulous age numbers
+dat$age <- as.integer(dat$age) 
+typeof(dat$age)
 ```
 
-![](HW6_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-17-1.png)
+    ## [1] "integer"
 
 ``` r
-#tim <- age_stats(age_stats$age == 33)
-View(dat)
+dat_cleaned <- dat[with(dat, !(age >= 120 | age < 3), ordered = TRUE), ]
+View(dat_cleaned)
 ```
+
+Let's see how candy-loving and candy-neutral people vary by age:
+
+``` r
+plot_j <- ggplot(dat_cleaned, aes(x = age, y = j_score_tot, color = age)) +
+    geom_point() +
+    geom_smooth() +
+    labs(title="Distribution of candy loving people by age")
+ggsave("media/neutral_score_by_age_plot.png", plot = plot_j)
+```
+
+    ## Saving 7 x 5 in image
+
+    ## `geom_smooth()` using method = 'loess'
+
+    ## Warning: Removed 5 rows containing non-finite values (stat_smooth).
+
+    ## Warning: Removed 5 rows containing missing values (geom_point).
+
+``` r
+plot(plot_j)
+```
+
+    ## `geom_smooth()` using method = 'loess'
+
+    ## Warning: Removed 5 rows containing non-finite values (stat_smooth).
+
+    ## Warning: Removed 5 rows containing missing values (geom_point).
+
+![](HW6_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-18-1.png)
+
+``` r
+plot_d <- ggplot(dat_cleaned, aes(x = age, y = d_score_tot, color = age)) +
+    geom_point() +
+    geom_smooth() +
+    labs(title="Distribution of candy neutral people by age")
+ggsave("media/joy_score_by_age_plot.png", plot = plot_d)
+```
+
+    ## Saving 7 x 5 in image
+    ## `geom_smooth()` using method = 'loess'
+
+    ## Warning: Removed 5 rows containing non-finite values (stat_smooth).
+
+    ## Warning: Removed 5 rows containing missing values (geom_point).
+
+``` r
+plot(plot_d)
+```
+
+    ## `geom_smooth()` using method = 'loess'
+
+    ## Warning: Removed 5 rows containing non-finite values (stat_smooth).
+
+    ## Warning: Removed 5 rows containing missing values (geom_point).
+
+![](HW6_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-18-2.png)
+
+Both graphs look about the same, except for the actual values. It means that the distribution of people loving and neutral to candies is the same. With the peak at about 32 years old and slowly going down after that.
 
 4. Work with the singer data
 ----------------------------
@@ -647,3 +715,5 @@ View(dat)
 
 Report your process
 -------------------
+
+The progress report is in the [Readme file](%22README.md%22)
