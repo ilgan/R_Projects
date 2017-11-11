@@ -8,3 +8,37 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+
+### Loading libraries
+```{r message=FALSE}
+library(gapminder)
+library(singer)
+library(tidyverse)
+library(knitr)
+library(forcats)
+library(magrittr)
+library(dplyr)
+library(meme)
+library(readr)
+library(tidyr)
+library(stringr)
+library(ggplot2)
+```
+
+```{r}
+read_wind_data <- function(input, save_flag){
+  #Reads the wind turbine data CSV, cleans and prints it out.
+  gtm.rawData <- read.csv(input, header = TRUE)
+  gtm.dat <- within(gtm.rawData, rm("X.GV.SD_04","X.GV.SD_05","X.GV.SD_38", "X.GV.HRR_GeneratorWindingTemp.1"))
+  c_names <- colnames(gtm.dat, do.NULL = TRUE, prefix = "col")
+  raw_data <- str_replace(c_names, "X.GV.", "")
+  names(gtm.dat) <- raw_data
+
+  return(gtm.dat)
+}
+```
+
+```{r}
+read_wind_data(input, save_flag=TRUE)
+```
+
