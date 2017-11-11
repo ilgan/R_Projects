@@ -385,9 +385,9 @@ le_lin_fit <- function(vars, gentemp) {
   print(PCA$rotation)
   plot(PCA, type = "l")
   summary(PCA)
-  #the_fit <- lm(gentemp ~ gtm.dat)
-  #the_fit <- lm(gentemp ~ PCA$rotation[,1], PCA$rotation[,2])
   the_fit <- lm(gtm.gentemp ~ gtm.vars$HRR_kVAR + gtm.vars$HRR_WTCorrectedWindSpeed)
+  #OR
+  #mutate(the_fit = map(data, ~ lm(gtm.gentemp ~ PCA$rotation, data = .x)))
   coef(the_fit)
   }
 le_lin_fit(gtm.vars, gtm.gentemp)
@@ -523,18 +523,12 @@ le_lin_fit(gtm.vars, gtm.gentemp)
 3. Work with the candy data
 ---------------------------
 
--   The ![excersise](http://stat545.com/hw07_2015_data-wrangling-candy.html) from 2015
--   The original work ![here](https://github.com/jennybc/candy)
+-   The [excersise](http://stat545.com/hw07_2015_data-wrangling-candy.html) from 2015
+-   The original work [here](https://github.com/jennybc/candy)
 
 Calculate the joy/dispare scores in separate columns. Joy is (+1), Dispare is (+1), overall Joy - Dispare. \#\`\`\`{r message=FALSE, warning=FALSE}
 
 ``` r
-#library(readr)
-#suppressPackageStartupMessages(library(dplyr))
-#library(tidyr)
-#library(stringr)
-#library(ggplot2)
-
 raw <- read_csv("CANDY-HIERARCHY-2015 SURVEY-Responses.csv",
                 col_types = cols(
                   Timestamp = col_datetime("%m/%d/%Y %H:%M:%S")
@@ -987,14 +981,300 @@ All three are definitely a list.
 
 -   Use \[, \[\[, and $ to access the second component of the list z, which bears the name “transcendental”. Use the length() and the is.\*() functions explored elsewhere to study the result. Which methods of indexing yield the same result vs. different?
 
+``` r
+z[2:2]
+```
+
+    ## $transcendental
+    ## [1] 3.141593 2.718282
+
+``` r
+z[[2]]
+```
+
+    ## [1] 3.141593 2.718282
+
+``` r
+z$transcendental
+```
+
+    ## [1] 3.141593 2.718282
+
+``` r
+length(z[[2]])
+```
+
+    ## [1] 2
+
+``` r
+is.numeric(z[2:2])
+```
+
+    ## [1] FALSE
+
+Single bracket methos also gave the name of the list in addition to the actual values.
+
 -   Use \[ and \[\[ to attempt to retrieve elements 2 and 3 from my\_vec and my\_list. What succeeds vs. fails? What if you try to retrieve element 2 alone? Does \[\[ even work on atomic vectors? Compare and contrast the results from the various combinations of indexing method and input object.
 
 ``` r
 my_vec <- c(a = 1, b = 2, c = 3)
 my_list <- list(a = 1, b = 2, c = 3)
+is.atomic(my_vec)
 ```
 
+    ## [1] TRUE
+
+``` r
+is.atomic(my_list)
+```
+
+    ## [1] FALSE
+
+``` r
+#Atomic vector
+my_vec[2:3]
+```
+
+    ## b c 
+    ## 2 3
+
+``` r
+# Not atomic, actual 3 separate lists a, b, and c
+my_list[2:3]
+```
+
+    ## $b
+    ## [1] 2
+    ## 
+    ## $c
+    ## [1] 3
+
+``` r
+my_vec[[2]]
+```
+
+    ## [1] 2
+
+``` r
+my_list[[2]]
+```
+
+    ## [1] 2
+
+``` r
+#Next lines won't work, thus are commented out
+#my_vec[[1:2]]
+#Won't work since a has only one element
+#my_list[[2:3]]
+```
+
+``` r
+typeof(v_doub)
+```
+
+    ## [1] "double"
+
+``` r
+l_doub <- as.list(v_doub)
+typeof(l_doub)
+```
+
+    ## [1] "list"
+
+``` r
+typeof(v_doub[[2]])
+```
+
+    ## [1] "double"
+
+``` r
+typeof(l_doub[[2]])
+```
+
+    ## [1] "double"
+
+``` r
+exp(v_doub)
+```
+
+    ## [1]   3.320117  11.023176  36.598234 121.510418
+
+``` r
+#Next line won't work, thus commented out
+#exp(l_doub)
+```
+
+When dealing with lists, we will apply MAP function instead!
+
 #### Relationship to base and plyr functions side-by-side workflow comparison
+
+``` r
+library(purrr)
+library(repurrrsive)
+library(listviewer)
+```
+
+Since there is only one level, I will use max.level = 1.
+
+-   Read the documentation on str(). What does max.level control? Apply str() to wesanderson and/or got\_chars and experiment with max.level = 0, max.level = 1, and max.level = 2. Which will you use in practice with deeply nested lists?
+
+``` r
+library(wesanderson)
+#library(got_chars)
+str(wesanderson)
+```
+
+    ## List of 15
+    ##  $ GrandBudapest : chr [1:4] "#F1BB7B" "#FD6467" "#5B1A18" "#D67236"
+    ##  $ Moonrise1     : chr [1:4] "#F3DF6C" "#CEAB07" "#D5D5D3" "#24281A"
+    ##  $ Royal1        : chr [1:4] "#899DA4" "#C93312" "#FAEFD1" "#DC863B"
+    ##  $ Moonrise2     : chr [1:4] "#798E87" "#C27D38" "#CCC591" "#29211F"
+    ##  $ Cavalcanti    : chr [1:5] "#D8B70A" "#02401B" "#A2A475" "#81A88D" ...
+    ##  $ Royal2        : chr [1:5] "#9A8822" "#F5CDB4" "#F8AFA8" "#FDDDA0" ...
+    ##  $ GrandBudapest2: chr [1:4] "#E6A0C4" "#C6CDF7" "#D8A499" "#7294D4"
+    ##  $ Moonrise3     : chr [1:5] "#85D4E3" "#F4B5BD" "#9C964A" "#CDC08C" ...
+    ##  $ Chevalier     : chr [1:4] "#446455" "#FDD262" "#D3DDDC" "#C7B19C"
+    ##  $ Zissou        : chr [1:5] "#3B9AB2" "#78B7C5" "#EBCC2A" "#E1AF00" ...
+    ##  $ FantasticFox  : chr [1:5] "#DD8D29" "#E2D200" "#46ACC8" "#E58601" ...
+    ##  $ Darjeeling    : chr [1:5] "#FF0000" "#00A08A" "#F2AD00" "#F98400" ...
+    ##  $ Rushmore      : chr [1:5] "#E1BD6D" "#EABE94" "#0B775E" "#35274A" ...
+    ##  $ BottleRocket  : chr [1:7] "#A42820" "#5F5647" "#9B110E" "#3F5151" ...
+    ##  $ Darjeeling2   : chr [1:5] "#ECCBAE" "#046C9A" "#D69C4E" "#ABDDDE" ...
+
+``` r
+#View(got_chars)
+#View(wesanderson)
+str(wesanderson, max.level = 0)
+```
+
+    ## List of 15
+
+``` r
+str(wesanderson, max.level = 1)
+```
+
+    ## List of 15
+    ##  $ GrandBudapest : chr [1:4] "#F1BB7B" "#FD6467" "#5B1A18" "#D67236"
+    ##  $ Moonrise1     : chr [1:4] "#F3DF6C" "#CEAB07" "#D5D5D3" "#24281A"
+    ##  $ Royal1        : chr [1:4] "#899DA4" "#C93312" "#FAEFD1" "#DC863B"
+    ##  $ Moonrise2     : chr [1:4] "#798E87" "#C27D38" "#CCC591" "#29211F"
+    ##  $ Cavalcanti    : chr [1:5] "#D8B70A" "#02401B" "#A2A475" "#81A88D" ...
+    ##  $ Royal2        : chr [1:5] "#9A8822" "#F5CDB4" "#F8AFA8" "#FDDDA0" ...
+    ##  $ GrandBudapest2: chr [1:4] "#E6A0C4" "#C6CDF7" "#D8A499" "#7294D4"
+    ##  $ Moonrise3     : chr [1:5] "#85D4E3" "#F4B5BD" "#9C964A" "#CDC08C" ...
+    ##  $ Chevalier     : chr [1:4] "#446455" "#FDD262" "#D3DDDC" "#C7B19C"
+    ##  $ Zissou        : chr [1:5] "#3B9AB2" "#78B7C5" "#EBCC2A" "#E1AF00" ...
+    ##  $ FantasticFox  : chr [1:5] "#DD8D29" "#E2D200" "#46ACC8" "#E58601" ...
+    ##  $ Darjeeling    : chr [1:5] "#FF0000" "#00A08A" "#F2AD00" "#F98400" ...
+    ##  $ Rushmore      : chr [1:5] "#E1BD6D" "#EABE94" "#0B775E" "#35274A" ...
+    ##  $ BottleRocket  : chr [1:7] "#A42820" "#5F5647" "#9B110E" "#3F5151" ...
+    ##  $ Darjeeling2   : chr [1:5] "#ECCBAE" "#046C9A" "#D69C4E" "#ABDDDE" ...
+
+``` r
+str(wesanderson, max.level = 2)
+```
+
+    ## List of 15
+    ##  $ GrandBudapest : chr [1:4] "#F1BB7B" "#FD6467" "#5B1A18" "#D67236"
+    ##  $ Moonrise1     : chr [1:4] "#F3DF6C" "#CEAB07" "#D5D5D3" "#24281A"
+    ##  $ Royal1        : chr [1:4] "#899DA4" "#C93312" "#FAEFD1" "#DC863B"
+    ##  $ Moonrise2     : chr [1:4] "#798E87" "#C27D38" "#CCC591" "#29211F"
+    ##  $ Cavalcanti    : chr [1:5] "#D8B70A" "#02401B" "#A2A475" "#81A88D" ...
+    ##  $ Royal2        : chr [1:5] "#9A8822" "#F5CDB4" "#F8AFA8" "#FDDDA0" ...
+    ##  $ GrandBudapest2: chr [1:4] "#E6A0C4" "#C6CDF7" "#D8A499" "#7294D4"
+    ##  $ Moonrise3     : chr [1:5] "#85D4E3" "#F4B5BD" "#9C964A" "#CDC08C" ...
+    ##  $ Chevalier     : chr [1:4] "#446455" "#FDD262" "#D3DDDC" "#C7B19C"
+    ##  $ Zissou        : chr [1:5] "#3B9AB2" "#78B7C5" "#EBCC2A" "#E1AF00" ...
+    ##  $ FantasticFox  : chr [1:5] "#DD8D29" "#E2D200" "#46ACC8" "#E58601" ...
+    ##  $ Darjeeling    : chr [1:5] "#FF0000" "#00A08A" "#F2AD00" "#F98400" ...
+    ##  $ Rushmore      : chr [1:5] "#E1BD6D" "#EABE94" "#0B775E" "#35274A" ...
+    ##  $ BottleRocket  : chr [1:7] "#A42820" "#5F5647" "#9B110E" "#3F5151" ...
+    ##  $ Darjeeling2   : chr [1:5] "#ECCBAE" "#046C9A" "#D69C4E" "#ABDDDE" ...
+
+-   What does the list.len argument of str() control? What is its default value? Call str() on got\_chars and then on a single component of got\_chars with list.len set to a value much smaller than the default. What range of values do you think you’ll use in real life?
+
+``` r
+str(got_chars, list.len = 1)
+```
+
+    ## List of 30
+    ##  $ :List of 18
+    ##   ..$ url        : chr "https://www.anapioficeandfire.com/api/characters/1022"
+    ##   .. [list output truncated]
+    ##   [list output truncated]
+
+``` r
+#########
+str(got_chars[[1]])
+```
+
+    ## List of 18
+    ##  $ url        : chr "https://www.anapioficeandfire.com/api/characters/1022"
+    ##  $ id         : int 1022
+    ##  $ name       : chr "Theon Greyjoy"
+    ##  $ gender     : chr "Male"
+    ##  $ culture    : chr "Ironborn"
+    ##  $ born       : chr "In 278 AC or 279 AC, at Pyke"
+    ##  $ died       : chr ""
+    ##  $ alive      : logi TRUE
+    ##  $ titles     : chr [1:3] "Prince of Winterfell" "Captain of Sea Bitch" "Lord of the Iron Islands (by law of the green lands)"
+    ##  $ aliases    : chr [1:4] "Prince of Fools" "Theon Turncloak" "Reek" "Theon Kinslayer"
+    ##  $ father     : chr ""
+    ##  $ mother     : chr ""
+    ##  $ spouse     : chr ""
+    ##  $ allegiances: chr "House Greyjoy of Pyke"
+    ##  $ books      : chr [1:3] "A Game of Thrones" "A Storm of Swords" "A Feast for Crows"
+    ##  $ povBooks   : chr [1:2] "A Clash of Kings" "A Dance with Dragons"
+    ##  $ tvSeries   : chr [1:6] "Season 1" "Season 2" "Season 3" "Season 4" ...
+    ##  $ playedBy   : chr "Alfie Allen"
+
+``` r
+str(got_chars[[1]], list.len = 2)
+```
+
+    ## List of 18
+    ##  $ url        : chr "https://www.anapioficeandfire.com/api/characters/1022"
+    ##  $ id         : int 1022
+    ##   [list output truncated]
+
+We looked at first element \[\[1\]\], which is a list, and we looked at two first elements. in real life we have to look at specific one taht we are interested or at the range.
+
+-   Call str() on got\_chars, specifying both max.level and list.len.
+
+``` r
+str(got_chars, max.level=1, list.len=2)
+```
+
+    ## List of 30
+    ##  $ :List of 18
+    ##  $ :List of 18
+    ##   [list output truncated]
+
+-   Call str() on the first element of got\_chars, i.e. the first Game of Thrones character. Use what you’ve learned to pick an appropriate combination of max.level and list.len.
+
+``` r
+str(got_chars[[1]], max.level=2, list.len=18)
+```
+
+    ## List of 18
+    ##  $ url        : chr "https://www.anapioficeandfire.com/api/characters/1022"
+    ##  $ id         : int 1022
+    ##  $ name       : chr "Theon Greyjoy"
+    ##  $ gender     : chr "Male"
+    ##  $ culture    : chr "Ironborn"
+    ##  $ born       : chr "In 278 AC or 279 AC, at Pyke"
+    ##  $ died       : chr ""
+    ##  $ alive      : logi TRUE
+    ##  $ titles     : chr [1:3] "Prince of Winterfell" "Captain of Sea Bitch" "Lord of the Iron Islands (by law of the green lands)"
+    ##  $ aliases    : chr [1:4] "Prince of Fools" "Theon Turncloak" "Reek" "Theon Kinslayer"
+    ##  $ father     : chr ""
+    ##  $ mother     : chr ""
+    ##  $ spouse     : chr ""
+    ##  $ allegiances: chr "House Greyjoy of Pyke"
+    ##  $ books      : chr [1:3] "A Game of Thrones" "A Storm of Swords" "A Feast for Crows"
+    ##  $ povBooks   : chr [1:2] "A Clash of Kings" "A Dance with Dragons"
+    ##  $ tvSeries   : chr [1:6] "Season 1" "Season 2" "Season 3" "Season 4" ...
+    ##  $ playedBy   : chr "Alfie Allen"
 
 6. Work with a nested data frame
 --------------------------------
