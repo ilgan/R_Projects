@@ -2,7 +2,7 @@
 title: "clean_wind_data"
 author: "IG"
 date: "November 11, 2017"
-output: html_document
+output: csv_document
 ---
 
 ```{r setup, include=FALSE}
@@ -26,19 +26,21 @@ library(ggplot2)
 ```
 
 ```{r}
-read_wind_data <- function(input, save_flag){
+read_wind_data <- function(input, save_flag=TRUE){
   #Reads the wind turbine data CSV, cleans and prints it out.
   gtm.rawData <- read.csv(input, header = TRUE)
   gtm.dat <- within(gtm.rawData, rm("X.GV.SD_04","X.GV.SD_05","X.GV.SD_38", "X.GV.HRR_GeneratorWindingTemp.1"))
   c_names <- colnames(gtm.dat, do.NULL = TRUE, prefix = "col")
   raw_data <- str_replace(c_names, "X.GV.", "")
   names(gtm.dat) <- raw_data
-
+  
+  
+  write.csv(gtm.dat)
   return(gtm.dat)
 }
 ```
 
 ```{r}
-read_wind_data(input, save_flag=TRUE)
+#read_wind_data(, save_flag=TRUE)
 ```
 
