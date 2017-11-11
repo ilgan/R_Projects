@@ -1,0 +1,61 @@
+---
+title: "plot_wind_data"
+author: "IG"
+date: "November 11, 2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Functoin creates dir in main folder
+```{r}
+gtm.dat <- read_wind_data("10.0.103.10.csv", FALSE)
+```
+
+```{r}
+mkdirs <- function(fp) {
+    if(!file.exists(fp)) {
+        mkdirs(dirname(source_local(), fp))
+        dir.create(fp)
+    }
+} 
+```
+
+Function plots var1 against var2 from data-frame df and saves if save_flag == TRUE:
+```{r}
+plot_and_save <- function(df, var1, var2, save_flag){
+    my_plot <- ggplot(df, aes(df[[var1]], df[[var2]])) +
+      geom_point() +
+      geom_smooth(se=FALSE)
+  
+    if(save_flag == TRUE){
+    #mkdirs(media)
+      ggsave("media/my_plot.png", plot = my_plot)
+    }
+}
+```
+
+```{r}
+plot_and_save(gtm.dat, "HRR_WTCorrectedWindSpeed", "HRR_kW", TRUE)
+```
+
+PCA plus Linear regression
+```{r}
+end = ncol(gtm.dat)
+gtm.gentemp <- gtm.dat[,end]
+gtm.vars <- gtm.dat[,3:end-1]
+
+le_lin_fit <- function(vars, gentemp) {
+  PCA <- prcomp(vars, center = TRUE, scale. = TRUE) 
+  print(PCA$rotation)
+  plot(PCA, type = "l")
+  summary(PCA)
+  the_fit <- lm(gtm.gentemp ~ gtm.vars$HRR_kVAR + gtm.vars$HRR_WTCorrectedWindSpeed)
+  #OR
+  #mutate(the_fit = map(data, ~ lm(gtm.gentemp ~ PCA$rotation, data = .x)))
+  coef(the_fit)
+  }
+le_lin_fit(gtm.vars, gtm.gentemp)
+```
