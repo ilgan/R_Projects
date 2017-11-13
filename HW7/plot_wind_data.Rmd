@@ -9,6 +9,7 @@ date: "November 11, 2017"
 ```{r message=FALSE}
 library(tidyverse)
 library(ggplot2)
+library(stringr)
 ```
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -29,7 +30,8 @@ plot_and_save <- function(df, var1, var2, save_flag=TRUE){
 ```
 
 ```{r}
-input_csv <- read.csv(cleaned_wind_data.csv)
+library(stringr)
+input_csv <- read.csv(file="clean_wind_data.csv", header=TRUE, sep=",")
 plot_and_save(input_csv, "HRR_WTCorrectedWindSpeed", "HRR_kW", TRUE)
 ```
 
