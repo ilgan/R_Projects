@@ -1,0 +1,18 @@
+---
+title: "cm107_class"
+author: "IG"
+date: "November 14, 2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(shiny)
+
+my_ui <- fluidPage()
+
+my_server <- function(input, output){
+	
+}
+
+shinyApp (ui = my_ui, server = my_server)
+```
