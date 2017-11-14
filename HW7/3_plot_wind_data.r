@@ -9,7 +9,9 @@ plot_and_save <- function(df, var1, var2, save_flag=TRUE){
 	
 	if(save_flag == TRUE){
 		#mkdirs(media)
+		ggsave("HW7/media/my_plot.png", plot = my_plot)
 		ggsave("media/my_plot.png", plot = my_plot)
+		ggsave("my_plot.png", plot = my_plot)
 	}
 }
 
