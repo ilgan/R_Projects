@@ -16,4 +16,4 @@ words.en.length: words.en.txt
 	awk '{print length}' <words.en.txt >words.en.length
 	
 words.en.html: words.en.length words.en.rmd
-	Rscript -e 'rmarkdown::render("words.en.rmd")'
+	Rscript -e 'rmarkdown::render("words.en.rmd")'S
