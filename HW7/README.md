@@ -21,8 +21,9 @@
 - A fifth script to rule them all, i.e. to run the others in sequence: [Makefile](https://github.com/ilgan/STAT545-hw-ganelin-ilya/blob/master/HW7/Makefile)
 
 #### In addition
-- Just to have a main [HW7.md]() file for the future project development. We will also download the image from the internet and create a meme out of it.
-- Move the image downloaded at previous stage and delete from current folder [5_move_image.r]() 
+
+- Just to have a main [HW7.md](https://github.com/ilgan/STAT545-hw-ganelin-ilya/blob/master/HW7/HW7.Rmd) file for the future project development. We will also download the image from the internet and create a meme out of it.
+- Move the image downloaded at previous stage and delete from current folder [5_move_image.r](https://github.com/ilgan/STAT545-hw-ganelin-ilya/blob/master/HW7/5_move_image.r) 
 
 ### Notes:
 
