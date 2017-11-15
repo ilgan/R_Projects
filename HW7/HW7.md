@@ -24,8 +24,7 @@ library(ggplot2)
 ```
 
 ``` r
-u <- "http://i0.kym-cdn.com/entries/icons/mobile/000/000/745/success.jpg"
-#meme(u, "Homework 6", "Yes! Give me more!")
+u <- "http://www.happyfamilyneeds.com/wp-content/uploads/2017/08/angry8.jpg"
 mmplot(u) + mm_caption("Homework 7", "Yes! Give me more!", color="purple")
 ```
 
@@ -45,3 +44,7 @@ Big picture
 -   Third script: read the output of the second script, generate some figures and save them to files: [3\_plot\_wind\_data.rmd](https://github.com/ilgan/STAT545-hw-ganelin-ilya/blob/master/HW7/3_plot_wind_data.rmd)
 -   Fourth script: an Rmd, actually, that presents original data, the statistical summaries, and/or the figures in a little report: [4\_wind\_data.rmd](https://github.com/ilgan/STAT545-hw-ganelin-ilya/blob/master/HW7/4_wind_data.rmd)
 -   A fifth script to rule them all, i.e. to run the others in sequence: [Makefile](https://github.com/ilgan/STAT545-hw-ganelin-ilya/blob/master/HW7/Makefile)
+
+#### Output Files from the pipeline
+
+-   Media files are [here](https://github.com/ilgan/STAT545-hw-ganelin-ilya/tree/master/HW7/media)
