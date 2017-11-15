@@ -19,12 +19,12 @@ library(meme)
 
 ``` r
 u <- "http://i0.kym-cdn.com/entries/icons/mobile/000/000/745/success.jpg"
-mmplot(u) + mm_caption("Homework 7", "Yes! Give me more to `make`!", color="purple")
+mmplot(u) + mm_caption("Homework 7", "Yes! Give me more to `make`!", color="green")
 ```
 
 ![](4_wind_data_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-2-1.png)
 
-The function reads teh raw csv fil with wind data and cleans it by reformating teh columns names, and removing a few unused variables.
+The function reads the raw csv file with wind data, cleans it by reformating the columns' names, and removing a few unused variables.
 
 ``` r
 read_wind_data <- function(gtm.rawData, save_flag){
@@ -39,7 +39,7 @@ read_wind_data <- function(gtm.rawData, save_flag){
 }
 ```
 
-Function that creates a directory in the root.
+Function that creates a folder in the root directory.
 
 ``` r
 mkdirs <- function(fp) {
@@ -51,8 +51,6 @@ mkdirs <- function(fp) {
 ```
 
 Function plots var1 against var2 from data-frame df and saves if save\_flag == TRUE:
-
-plot\_and\_save(input\_csv, "HRR\_WTCorrectedWindSpeed", "HRR\_kW", TRUE)
 
 ``` r
 plot_and_save <- function(df, var1, var2, save_flag){
@@ -68,7 +66,7 @@ plot_and_save <- function(df, var1, var2, save_flag){
 }
 ```
 
-PCA plus Linear regression on the wind data.
+PCA and Linear Regression on the wind data.
 
 ``` r
 le_lin_fit <- function(vars, gentemp, save_flag=TRUE) {

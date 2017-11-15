@@ -1,11 +1,11 @@
 ## Make file to get the data of teh internet, clean it, analyse, and save a few plots out of it.
 
-all: 4_wind_data.md
+all: 4_wind_data.md HW7.md
 
 clean:
 	rm -f clean_wind_data.csv
 
-#Dowload teh raw wind data
+#Dowload the raw wind data
 wind_data.csv:
 	Rscript 1_download_wind_data.R
 
@@ -21,3 +21,6 @@ my_plot.png: clean_wind_data.csv
 4_wind_data.md: clean_wind_data.csv
 	Rscript -e 'rmarkdown::render("4_wind_data.rmd")'
 
+#Just to have a main HW7.md file for the future project development
+HW7.md:
+	Rscript -e 'rmarkdown::render("HW7.rmd")'
