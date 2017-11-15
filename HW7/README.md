@@ -10,8 +10,9 @@
 ### Files that the scripts creates:
 
 - [HW7 media files](https://github.com/ilgan/STAT545-hw-ganelin-ilya/blob/master/HW7/media)
+- And some plots are [here](https://github.com/ilgan/STAT545-hw-ganelin-ilya/tree/master/HW7/4_wind_data_files/figure-markdown_github-ascii_identifiers)
 
-### Excersice Flow
+### Excersice Pipeline
 
 - First script: download some data: [1_download_wind_data.r](https://github.com/ilgan/STAT545-hw-ganelin-ilya/blob/master/HW7/1_download_wind_data.r)
 - Second script: read the data, perform some analysis and write numerical data to file in CSV or TSV forma: [2_clean_wind_data.r](https://github.com/ilgan/STAT545-hw-ganelin-ilya/blob/master/HW7/2_clean_wind_data.r)
@@ -21,5 +22,8 @@
 
 ### Notes:
 
+- Had some issues with the saving and reading the files, due to the hierarchy of the folder structure that I have.
+
+- Yuuuge Thanks to @ksedivyhaley who kindly helped with the issue!
 
 Thank you!
