@@ -2,7 +2,8 @@
 title: "4_wind_data.rmd"
 author: "iganelin"
 date: "November 13, 2017"
-output: html_document
+output: 
+  github_document: default
 ---
 
 ### Loading libraries
@@ -15,7 +16,15 @@ library(readr)
 library(stringr)
 library(ggplot2)
 library(ggfortify)
+library(meme)
 ```
+
+```{r message=FALSE, warning=FALSE, error=FALSE }
+u <- "http://i0.kym-cdn.com/entries/icons/mobile/000/000/745/success.jpg"
+mmplot(u) + mm_caption("Homework 7", "Yes! Give me more to `make`!", color="purple")
+```
+
+The function reads teh raw csv fil with wind data and cleans it by reformating teh columns names, and removing a few unused variables.
 
 ```{r}
 read_wind_data <- function(gtm.rawData, save_flag){
@@ -30,6 +39,8 @@ read_wind_data <- function(gtm.rawData, save_flag){
 }
 ```
 
+Function that creates a directory in the root.
+
 ```{r}
 mkdirs <- function(fp) {
     if(!file.exists(fp)) {
@@ -40,6 +51,8 @@ mkdirs <- function(fp) {
 ```
 
 Function plots var1 against var2 from data-frame df and saves if save_flag == TRUE:
+
+plot_and_save(input_csv, "HRR_WTCorrectedWindSpeed", "HRR_kW", TRUE)
 ```{r}
 plot_and_save <- function(df, var1, var2, save_flag){
     my_plot <- ggplot(df, aes(df[[var1]], df[[var2]])) +
@@ -48,12 +61,14 @@ plot_and_save <- function(df, var1, var2, save_flag){
   
     if(save_flag == TRUE){
     #mkdirs(media)
-      ggsave("media/my_plot.png", plot = my_plot)
+    	plotname <- str_c("media/", var1,"_", var2, "_plot.png")
+        ggsave(plotname, plot = my_plot)
     }
 }
 ```
 
-PCA plus Linear regression
+PCA plus Linear regression on the wind data.
+
 ```{r}
 le_lin_fit <- function(vars, gentemp, save_flag=TRUE) {
   PCA <- prcomp(vars, center = TRUE, scale. = TRUE) 
@@ -64,8 +79,9 @@ le_lin_fit <- function(vars, gentemp, save_flag=TRUE) {
   #mutate(the_fit = map(data, ~ lm(gtm.gentemp ~ PCA$rotation, data = .x)))
   coef(the_fit)
   if(save_flag == TRUE){
+  	plotname <- str_c("media/", "PCA_", vars,"_", gentemp, "_plot.jpg")
    	my_plot <- plot(PCA, type = "l")
-    ggsave("media/my_pca_plot.png", plot = my_plot)
+    ggsave(plotname, plot = my_plot)
   	}
   }
 ```
@@ -75,6 +91,7 @@ Let's plot a few graphs and complete PCA analysis for generator temperature usin
 ```{r}
 input_csv <- read.csv(file="clean_wind_data.csv", header=TRUE, sep=",")
 plot_and_save(input_csv, "HRR_WTCorrectedWindSpeed", "HRR_kW", TRUE)
+plot_and_save(input_csv, "HRR_WTCorrectedWindSpeed", "HRR_GearboxOilTemp", TRUE)
 
 gtm.dat <- input_csv
 
@@ -82,9 +99,7 @@ end = ncol(input_csv)
 gtm.gentemp <- gtm.dat[,end]
 gtm.vars <- gtm.dat[,4:end-1]
 
-le_lin_fit(gtm.vars, gtm.gentemp, save_flag=TRUE)
-
-plot_and_save(gtm.dat, "HRR_WTCorrectedWindSpeed", "HRR_kW", TRUE)
+le_lin_fit(gtm.vars, gtm.gentemp, save_flag=FALSE)
 
 gtm.pca <- prcomp(gtm.vars, center = TRUE, scale. = TRUE) 
 head(gtm.pca$rotation)
