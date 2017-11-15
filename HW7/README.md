@@ -20,6 +20,10 @@
 - Fourth script: an Rmd, actually, that presents original data, the statistical summaries, and/or the figures in a little report: [4_wind_data.rmd](https://github.com/ilgan/STAT545-hw-ganelin-ilya/blob/master/HW7/4_wind_data.rmd)
 - A fifth script to rule them all, i.e. to run the others in sequence: [Makefile](https://github.com/ilgan/STAT545-hw-ganelin-ilya/blob/master/HW7/Makefile)
 
+#### In addition
+- Just to have a main [HW7.md]() file for the future project development. We will also download the image from the internet and create a meme out of it.
+- Move the image downloaded at previous stage and delete from current folder [5_move_image.r]() 
+
 ### Notes:
 
 - Had some issues with the saving and reading the files, due to the hierarchy of the folder structure that I have.

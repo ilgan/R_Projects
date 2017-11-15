@@ -21,6 +21,11 @@ my_plot.png: clean_wind_data.csv _plot_wind_data.r
 4_wind_data.md: clean_wind_data.csv 4_wind_data.rmd
 	Rscript -e 'rmarkdown::render("4_wind_data.rmd")'
 
-#Just to have a main HW7.md file for the future project development
+#Just to have a main HW7.md file for the future project development. 
+#We will also download the image from the internet and create a meme out of it.
 HW7.md: 4_wind_data.md HW7.rmd
 	Rscript -e 'rmarkdown::render("HW7.rmd")'
+	
+#Move the image downloaded at previous stage and delete from current folder
+angry.jpg: angry8.jpg HW7.md
+	Rscript 5_move_image.r

@@ -22,10 +22,14 @@ library(readr)
 library(tidyr)
 library(stringr)
 library(ggplot2)
+library(downloader)
 ```
 
+Firstly, we will download the picture to the main folder and create a meme
+
 ```{r message=FALSE, warning=FALSE, error=FALSE }
-u <- "http://www.happyfamilyneeds.com/wp-content/uploads/2017/08/angry8.jpg"
+download.file(url = "http://www.happyfamilyneeds.com/wp-content/uploads/2017/08/angry8.jpg", destfile = "angry8.jpg", mode="wb")
+u <- "angry8.jpg"
 mmplot(u) + mm_caption("Homework 7", "Yes! Give me more!", color="purple")
 ```
 
