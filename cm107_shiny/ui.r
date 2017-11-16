@@ -1,15 +1,21 @@
 ui <- fluidPage(
-	h1("This is blah"),
-	h2("Subtitle"),
-	"body script",
-	textInput("My_text_in", "Enter text here"),
-	"This is my output text",
-	br(), #brake the line
-	textOutput("Your_text"),
-	br(), #brake the line
-	plotOutput("Hist_AlcCont"),
 	
-	sidebarPanel(),
-	mainPanel(plotOutput("Hist_AlcCont"))
+	# Application title
+	titlePanel("My liquor webpage"),
 	
+	sidebarPanel("This is my sidebar",
+				 img(src = "kitten.jpg", width = "100%")),
+	
+	sidebarPanel("Side Bar",
+			   sliderInput("priceIn", "Price of booze",
+			   			min = 0, max = 300, value = c(10,20), pre = "CAD")),
+	
+	radioButtons("typeIn", "What kind of booze?", 
+				 choices = c("BEER", "SPIRITS", "WINE"), selected = "WINE"),
+	
+	mainPanel(plotOutput("Hist_AlcCont"),
+			  br(),br(),
+			  tableOutput("table_head"),
+			  plotOutput("Geom_P")
+			  )
 )

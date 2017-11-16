@@ -1,0 +1,12 @@
+name: cm107_shiny
+title: cm107_shiny
+username:
+account: igan
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 236330
+bundleId: 1079460
+url: https://igan.shinyapps.io/cm107_shiny/
+when: 1510857949.07486
+asMultiple: FALSE
+asStatic: FALSE
