@@ -4,11 +4,11 @@ library(dplyr)
 
 
 server <- function(input, output) {
-	bcl <- read.csv("bcl-data.csv", stringsAsFactors = FALSE)
+	cwd <- read.csv("clean_wind_data", stringsAsFactors = FALSE)
 	
 	output$countryOutput <- renderUI({
 		selectInput("countryInput", "Country",
-					sort(unique(bcl$Country)),
+					sort(unique(cwd$Country)),
 					selected = "CANADA")
 	})  
 	
