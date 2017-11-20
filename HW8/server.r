@@ -2,6 +2,8 @@ library(shiny)
 library(ggplot2)
 library(dplyr)
 library(meme)
+library(DT)
+
 
 
 server <- function(input, output) {
@@ -34,7 +36,7 @@ server <- function(input, output) {
 			geom_smooth(se=FALSE)
 	})
 
-	output$table_head <- renderTable({
+	output$table_head <- DT::renderDataTable({ #renderTable({
 		cwd %>%
 			head()
 	}) 
