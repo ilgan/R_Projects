@@ -24,6 +24,7 @@ ui <- fluidPage(
 			tabsetPanel(
 				tabPanel("Project Scope",
 						 img(src = "flow.jpg", width = "50%"),
+						 br(),
 						 "This project..."),
 				tabPanel("Table", DT::dataTableOutput("table_head"),
 						 br(),
@@ -34,17 +35,25 @@ ui <- fluidPage(
 				tabPanel("Histogram", plotOutput("simple_plot")),
 				tabPanel("Linear Regression", plotOutput("Var_vs_Wind")),
 				tabPanel("PCA Analysis", 
-						 h5("First two PCs modes explain more than 90% of the data variance."),
+						 h4("First two PCs modes explain more than 90% of the data variance."),
+						 br(),
 						 img(src = "Variance.png", width = "50%"),
-						 h5("Two PCs and corresponding Eigenvectors."),
-						 img(src = "EigPC.png", width = "50%")
+						 br(),
+						 h4("Two PCs and corresponding Eigenvectors."),
+						 br(),
+						 img(src = "EigPC.png", width = "50%"),
+						 br(),
+						 h5("Note: content was created using Matlab."),
+						 br()
 						 ),
 				tabPanel("Future Tasks",
 						 "Neural Network...")
 			),
 			
+			br(),
+			br(),
 			# Foot note
-			h6("@created by IG")
+			h6("created by IG, 2017")
 		)
 	)
 )
