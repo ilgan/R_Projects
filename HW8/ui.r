@@ -26,6 +26,12 @@ ui <- fluidPage(
 						 # Button
 						 radioButtons("filetype", "File type:", choices = c("csv", "tsv")),
 						 downloadButton("downloadData", "Download")
+						 ),
+				tabPanel("PCA Analysis", 
+						 h5("First two PCs modes explain more than 90% of the data variance."),
+						 img(src = "Variance.png", width = "100%"),
+						 h5("Two PCs and corresponding Eigenvectors."),
+						 img(src = "EigPC.png", width = "100%")
 						 )
 			),
 			
