@@ -13,8 +13,6 @@ server <- function(input, output) {
 		#dev.off()
 		})
 
-	#output$simple_plot <- renderPlot({hist(cwd$HRR_WTCorrectedWindSpeed)})
-	#output$simple_plot <- renderPlot({hist(as. (input$varInput))})
 	output$simple_plot <- renderPlot({
 		dist <- switch(input$varInput,
 					   norm = rnorm,
@@ -27,11 +25,14 @@ server <- function(input, output) {
 	})
 	
 	output$Var_vs_Wind <- renderPlot({
+		my_y <- switch(input$varInput)
+		my_y <- (input$varInput)
+		
 		cwd %>%
 			ggplot() +
-			#aes(x = primaryLovatoReadings.L1PhaseVoltage, y = input$varInput) +
-			aes(x = HRR_WTCorrectedWindSpeed, y = input$varInput) +
+			aes(x = HRR_WTCorrectedWindSpeed, y = cwd[,my_y]) +
 			geom_point() +
+			theme_bw() +
 			geom_smooth(se=FALSE)
 	})
 

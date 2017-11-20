@@ -16,7 +16,8 @@ ui <- fluidPage(
 		
 		mainPanel(
 			#imageOutput("my_meme"),
-			img(src = "angry.jpg", width = "100%"),
+			#img(src="angry.jpg", height = 22, width = 100),"mytitle"),
+			img(src = "angry.png", width = "20%"),
 			br(),
 			plotOutput("simple_plot"),
 			br(),
