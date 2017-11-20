@@ -7,10 +7,7 @@ library(meme)
 server <- function(input, output) {
 	cwd <- read.csv("clean_wind_data.csv", stringsAsFactors = FALSE)
 	output$my_meme <- renderImage({
-		outfile <- tempfile("angry.png")
-		#outfile <- mmplot(pic) + mm_caption("Homework 8", "Yes! Give me more!", color="purple"),
-		#jpg(outfile, width = 400, height = 300)
-		#dev.off()
+		plot(m <- "www/angry.png")
 		})
 
 	output$simple_plot <- renderPlot({
@@ -32,7 +29,8 @@ server <- function(input, output) {
 			ggplot() +
 			aes(x = HRR_WTCorrectedWindSpeed, y = cwd[,my_y]) +
 			geom_point() +
-			theme_bw() +
+			labs(title = "Wind Speed vs Chosen Variable")+
+			theme_classic() +
 			geom_smooth(se=FALSE)
 	})
 

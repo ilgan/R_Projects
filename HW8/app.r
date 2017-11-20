@@ -3,10 +3,13 @@ library(ggplot2)
 library(dplyr)
 library(stringr)
 library(downloader)
+library(meme)
 
 # load the data (retrieve and clean raw data if this is the first time)
 filename_csv <- file.path("clean_wind_data.csv")
-filename_jpg <- file.path("angry.jpg")
+filename_jpg <- file.path("my_meme.jpg")
+jpg_name <- "angry.jpg"
+meme_name <- "my_meme.jpg"
 
 if (file.exists(filename_csv)) {
 	bcl <- read.csv(filename_csv, stringsAsFactors = FALSE)
@@ -22,12 +25,11 @@ if (file.exists(filename_csv)) {
 }
 
 if (file.exists(filename_jpg)){
-	pic <- "angry.jpg"
+	#Do nothing for now
 } else{
 	download.file(url = "http://www.happyfamilyneeds.com/wp-content/uploads/2017/08/angry8.jpg", destfile = "angry.jpg", mode="wb")
-	pic <- "angry.jpg"
+	pic <- mmplot(jpg_name) + mm_caption("Homework 8", "Yes! Give me more!", color="purple")
+	ggsave("my_meme.jpg", plot = pic)
 }
-
-my_meme <- mmplot(pic) + mm_caption("Homework 7", "Yes! Give me more!", color="purple")
 
 shinyApp(ui = ui, server = server)

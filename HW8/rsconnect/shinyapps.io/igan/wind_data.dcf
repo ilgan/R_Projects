@@ -5,8 +5,8 @@ account: igan
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 237588
-bundleId: 1084865
+bundleId: 1084924
 url: https://igan.shinyapps.io/wind_data/
-when: 1511140871.24434
+when: 1511144291.00198
 asMultiple: FALSE
 asStatic: FALSE

@@ -1,8 +1,9 @@
+library(meme)
+
 ui <- fluidPage(
 
 	titlePanel("Wind Turbine's Variables",
 			   h1("Created by IG")
-			   
 			   ),
 	
 	sidebarLayout(
@@ -11,14 +12,11 @@ ui <- fluidPage(
 			radioButtons("varInput", "Select Variable",
 						 choices = c("HRR_GearboxOilTemp", "HRR_GeneratorWindingTemp", "HRR_NacelleAirTemp", "HRR_kW"),
 						 selected = "HRR_kW"),
-			uiOutput("varOutput")
+			uiOutput("varOutput"),
+			img(src = "my_meme.jpg", width = "100%")
 		),
 		
 		mainPanel(
-			#imageOutput("my_meme"),
-			#img(src="angry.jpg", height = 22, width = 100),"mytitle"),
-			img(src = "angry.png", width = "20%"),
-			br(),
 			plotOutput("simple_plot"),
 			br(),
 			plotOutput("Var_vs_Wind"),
