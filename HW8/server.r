@@ -6,7 +6,9 @@ library(DT)
 library(shinyjs)
 
 server <- function(input, output) {
+	
 	cwd <- read.csv("clean_wind_data.csv", stringsAsFactors = FALSE)
+	
 	output$my_meme <- renderImage({
 		plot(m <- "www/angry.png")
 		})
@@ -18,7 +20,6 @@ server <- function(input, output) {
 					   lnorm = rlnorm,
 					   exp = rexp,
 					   rnorm)
-		
 		hist(dist(500))
 	})
 	
@@ -40,10 +41,10 @@ server <- function(input, output) {
 	}) 
 	
 	output$downloadData <- downloadHandler(
-		filename = function() {
-			paste(input$dataset, "clean_wind_data.csv", sep = "")
+		filename = function() { 
+			paste("dataset-", Sys.Date(), ".csv", sep="")
 		},
 		content = function(file) {
-			write.csv(datasetInput(), file, row.names = FALSE)
+			write.csv(mtcars, file)
 		})
 }

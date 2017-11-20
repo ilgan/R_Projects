@@ -24,6 +24,8 @@ ui <- fluidPage(
 				tabPanel("Table", DT::dataTableOutput("table_head")
 			),
 			# Button
+			radioButtons("filetype", "File type:",
+						 choices = c("csv", "tsv")),
 			downloadButton("downloadData", "Download")),
 			h3("@created by IG")
 		)
