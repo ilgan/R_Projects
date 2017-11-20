@@ -12,6 +12,7 @@
 - The Histogram changes based on the user's input
 - Graph changes based on user's input
 - A small meme created from scratch on the side bar
+- [Lights out game](https://github.com/daattali/lightsout)
 
 
 ### Notes

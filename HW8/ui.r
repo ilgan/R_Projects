@@ -44,15 +44,15 @@ ui <- fluidPage(
 				tabPanel("Histogram", plotOutput("simple_plot")),
 				tabPanel("Linear Regression", plotOutput("Var_vs_Wind")),
 				tabPanel("PCA Analysis", 
-						 h4("First two PCs modes explain more than 90% of the data variance."),
+						 p("First two PCs modes explain more than 90% of the data variance."),
 						 br(),
 						 img(src = "Variance.png", width = "50%"),
 						 br(),
-						 h4("Two PCs and corresponding Eigenvectors."),
+						 p("Two PCs and corresponding Eigenvectors."),
 						 br(),
 						 img(src = "EigPC.png", width = "50%"),
 						 br(),
-						 h5("Note: content was created using Matlab."),
+						 p("Note: content was created using Matlab."),
 						 br()
 				),
 				tabPanel("Future Tasks",
@@ -62,33 +62,9 @@ ui <- fluidPage(
 					title = "Lights Out",
 					shinyjs::useShinyjs(),
 					tags$head(
-						tags$link(href = "style.css", rel = "stylesheet"),
-						
-						# Favicon
-						tags$link(rel = "shortcut icon", type="image/x-icon", href="favicon.ico"),
-						
-						# Facebook OpenGraph tags
-						tags$meta(property = "og:title", content = share$title),
-						tags$meta(property = "og:type", content = "website"),
-						tags$meta(property = "og:url", content = share$url),
-						tags$meta(property = "og:image", content = share$image),
-						tags$meta(property = "og:description", content = share$description),
-						
-						# Twitter summary cards
-						tags$meta(name = "twitter:card", content = "summary"),
-						tags$meta(name = "twitter:site", content = paste0("@", share$twitter_user)),
-						tags$meta(name = "twitter:creator", content = paste0("@", share$twitter_user)),
-						tags$meta(name = "twitter:title", content = share$title),
-						tags$meta(name = "twitter:description", content = share$description),
-						tags$meta(name = "twitter:image", content = share$image)
+						tags$link(href = "style.css", rel = "stylesheet")
 					),
-					tags$a(
-						href="https://github.com/daattali/lightsout",
-						tags$img(style="position: absolute; top: 0; right: 0; border: 0;",
-								 src="github-orange-right.png",
-								 alt="Fork me on GitHub")
-					),
-					
+
 					div(id = "header",
 						div(id = "title",
 							"Lights Out"
