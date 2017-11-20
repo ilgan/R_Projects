@@ -37,7 +37,6 @@ server <- function(input, output) {
 	})
 
 	output$table_head <- DT::renderDataTable({ #renderTable({
-		cwd %>%
-			head()
+		cwd
 	}) 
 }
