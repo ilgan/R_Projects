@@ -41,10 +41,20 @@ server <- function(input, output) {
 	}) 
 	
 	output$downloadData <- downloadHandler(
-		filename = function() { 
-			paste("dataset-", Sys.Date(), ".csv", sep="")
+		# This function returns a string which tells the client
+		# browser what name to use when saving the file.
+		filename = function() {
+			paste(input$dataset, input$filetype, sep = ".")
 		},
+		
+		# This function should write data to a file given to it by
+		# the argument 'file'.
 		content = function(file) {
-			write.csv(mtcars, file)
-		})
+			sep <- switch(input$filetype, "csv" = ",", "tsv" = "\t")
+			
+			# Write to a file specified by the 'file' argument
+			write.table(datasetInput(), file, sep = sep,
+						row.names = FALSE)
+		}
+	)
 }
