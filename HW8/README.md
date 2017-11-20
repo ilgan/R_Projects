@@ -13,3 +13,7 @@
 - Graph changes based on user's input
 - A small meme created from scratch on the side bar
 
+
+### Notes
+- Lots of trubleshooting was involved with the making the code work properly: pictures, tables.
+- Took a while to understand the variable transition between ui and the server side.

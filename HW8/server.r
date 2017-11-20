@@ -10,7 +10,7 @@ server <- function(input, output) {
 	cwd <- read.csv("clean_wind_data.csv", stringsAsFactors = FALSE)
 	
 	output$my_meme <- renderImage({
-		plot(m <- "www/angry.png")
+		plot(m <- "www/turbine.png")
 		})
 
 	output$simple_plot <- renderPlot({ #shinyjs::colourOutput() ({
