@@ -19,20 +19,25 @@ ui <- fluidPage(
 		
 		mainPanel(
 			tabsetPanel(
-				tabPanel("Histogram", plotOutput("simple_plot")),
-				tabPanel("Linear Regression", plotOutput("Var_vs_Wind")),
+				tabPanel("Project Scope",
+						 img(src = "flow.jpg", width = "50%"),
+						 "This project..."),
 				tabPanel("Table", DT::dataTableOutput("table_head"),
 						 br(),
 						 # Button
 						 radioButtons("filetype", "File type:", choices = c("csv", "tsv")),
 						 downloadButton("downloadData", "Download")
-						 ),
+				),
+				tabPanel("Histogram", plotOutput("simple_plot")),
+				tabPanel("Linear Regression", plotOutput("Var_vs_Wind")),
 				tabPanel("PCA Analysis", 
 						 h5("First two PCs modes explain more than 90% of the data variance."),
-						 img(src = "Variance.png", width = "100%"),
+						 img(src = "Variance.png", width = "50%"),
 						 h5("Two PCs and corresponding Eigenvectors."),
-						 img(src = "EigPC.png", width = "100%")
-						 )
+						 img(src = "EigPC.png", width = "50%")
+						 ),
+				tabPanel("Future Tasks",
+						 "Neural Network...")
 			),
 			
 			h6("@created by IG")
