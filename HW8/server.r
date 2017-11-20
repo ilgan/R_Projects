@@ -3,8 +3,7 @@ library(ggplot2)
 library(dplyr)
 library(meme)
 library(DT)
-
-
+library(shinyjs)
 
 server <- function(input, output) {
 	cwd <- read.csv("clean_wind_data.csv", stringsAsFactors = FALSE)
@@ -12,7 +11,7 @@ server <- function(input, output) {
 		plot(m <- "www/angry.png")
 		})
 
-	output$simple_plot <- renderPlot({
+	output$simple_plot <- renderPlot({ #shinyjs::colourOutput() ({
 		dist <- switch(input$varInput,
 					   norm = rnorm,
 					   unif = runif,
@@ -36,7 +35,15 @@ server <- function(input, output) {
 			geom_smooth(se=FALSE)
 	})
 
-	output$table_head <- DT::renderDataTable({ #renderTable({
+	output$table_head <- renderDataTable({ #renderTable({
 		cwd
 	}) 
+	
+	output$downloadData <- downloadHandler(
+		filename = function() {
+			paste(input$dataset, ".csv", sep = "")
+		},
+		content = function(file) {
+			write.csv(datasetInput(), file, row.names = FALSE)
+		})
 }

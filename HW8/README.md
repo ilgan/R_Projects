@@ -2,4 +2,14 @@
 # HW8: Shiny App
 
 ### Data set
-- I used private data set from teh wind turbine from one day of operation. It has all the sensor data thta could possibly be collected of it including: wind speed, power, voltage measurements and etc.
+- I used private data set from the wind turbine from one day of operation. It has all the sensor data thta could possibly be collected of it including: wind speed, power, voltage measurements and etc.
+
+
+### Features
+- The download button to download .csv file
+- The page has a theme
+- Table on last tab is searchable and has multiple sub-tabs
+- The Histogram changes based on the user's input
+- Graph changes based on user's input
+- A small meme created from scratch on the side bar
+
