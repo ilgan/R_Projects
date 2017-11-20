@@ -41,7 +41,7 @@ server <- function(input, output) {
 	
 	output$downloadData <- downloadHandler(
 		filename = function() {
-			paste(input$dataset, ".csv", sep = "")
+			paste(input$dataset, "clean_wind_data.csv", sep = "")
 		},
 		content = function(file) {
 			write.csv(datasetInput(), file, row.names = FALSE)
