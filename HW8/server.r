@@ -6,13 +6,15 @@ library(DT)
 library(shinyjs)
 
 server <- function(input, output) {
-	
+	# Read the cleaned data
 	cwd <- read.csv("clean_wind_data.csv", stringsAsFactors = FALSE)
 	
+	# Create meme out of downloaded image
 	output$my_meme <- renderImage({
 		plot(m <- "www/turbine.png")
 		})
-
+	
+	# Histogram plot
 	output$simple_plot <- renderPlot({ #shinyjs::colourOutput() ({
 		dist <- switch(input$varInput,
 					   norm = rnorm,
@@ -23,6 +25,7 @@ server <- function(input, output) {
 		hist(dist(500))
 	})
 	
+	# Interactive graph with Linear Regression
 	output$Var_vs_Wind <- renderPlot({
 		my_y <- switch(input$varInput)
 		my_y <- (input$varInput)
@@ -35,11 +38,13 @@ server <- function(input, output) {
 			theme_classic() +
 			geom_smooth(se=FALSE)
 	})
-
+	
+	# Rendering interactive table
 	output$table_head <- renderDataTable({ #renderTable({
 		cwd
 	}) 
 	
+	# Download csv file button
 	output$downloadData <- downloadHandler(
 		# This function returns a string which tells the client
 		# browser what name to use when saving the file.

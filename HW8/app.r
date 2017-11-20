@@ -11,6 +11,9 @@ filename_jpg <- file.path("my_meme.jpg")
 jpg_name <- "angry.jpg"
 meme_name <- "my_meme.jpg"
 
+
+# We start with the pre processing, such as downloading the images from the internet and
+# cleaning the raw wind turbine data + saving all of those into separate files.
 if (file.exists(filename_csv)) {
 	bcl <- read.csv(filename_csv, stringsAsFactors = FALSE)
 } else {
@@ -32,4 +35,5 @@ if (file.exists(filename_jpg)){
 	ggsave("my_meme.jpg", plot = pic)
 }
 
+# Runnign the app
 shinyApp(ui = ui, server = server)

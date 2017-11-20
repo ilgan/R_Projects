@@ -3,10 +3,12 @@ library(shinythemes)
 library(DT)
 
 ui <- fluidPage(
+	# We can set up the theme for the whole page
 	theme = shinytheme("journal"),
 
 	titlePanel("Wind Turbine's Variables"),
 	
+	# Sedebar with the toggle menue and the wind turbine picture, or meme as an alternative
 	sidebarLayout(
 		sidebarPanel(
 			img(src = "turbine.png", width = "50%"),
@@ -17,6 +19,7 @@ ui <- fluidPage(
 			uiOutput("varOutput")
 		),
 		
+		# Main panel consist of the tabset Panels.
 		mainPanel(
 			tabsetPanel(
 				tabPanel("Project Scope",
@@ -40,6 +43,7 @@ ui <- fluidPage(
 						 "Neural Network...")
 			),
 			
+			# Foot note
 			h6("@created by IG")
 		)
 	)
