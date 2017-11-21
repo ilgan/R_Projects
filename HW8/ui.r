@@ -34,7 +34,11 @@ ui <- fluidPage(
 				tabPanel("Project Scope",
 						 img(src = "flow.jpg", width = "50%"),
 						 br(),
-						 "This project..."),
+						 h4("Project statement"),
+						 p("Wind turbines have been in use long before electricity was discovered to harness the power of the wind to do useful work and generate energy by converting the kinetic energy in wind into electrical energy. The current generated in the coils of a wind turbine creates an enormous amount of heat. This heat is directly proportional to the amount of power generated. The coils in the generator could get overheated if the wind speed goes above certain limits. Every ten degrees above temperature threshold of continuous operation, described in the spec sheet of the generator, reduces expected life of the generator in half."),
+						 h4("Objective "),
+						 p("The objective of this project would be to apply a predictive model on the wind turbine’s aggregated data and try to predict the generator’s winding temperature during its effective lifetime in a specific location and component configuration. We will build a model that will maximize energy production of the wind turbine (more specifically generator’s itself) through its effective lifetime.")
+						   ),
 				tabPanel("Table", DT::dataTableOutput("table_head"),
 						 br(),
 						 # Button
