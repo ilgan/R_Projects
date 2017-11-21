@@ -43,7 +43,10 @@ ui <- fluidPage(
 						 h4("Objective "),
 						 p("The objective of this project would be to apply a predictive model on the wind turbine’s aggregated data and try to predict the generator’s winding temperature during its effective lifetime in a specific location and component configuration. We will build a model that will maximize energy production of the wind turbine (more specifically generator’s itself) through its effective lifetime.")
 						   ),
-				tabPanel("Table", DT::dataTableOutput("table_head"),
+				tabPanel("Table", 
+						 p("The raw data was cleaned from 'NA' and '0' values, time and a few unrelevant columns/features were deleted, all varaibles were normalized."),
+						 br(),
+						 DT::dataTableOutput("table_head"),
 						 br(),
 						 # Button
 						 radioButtons("filetype", "File type:", choices = c("csv", "tsv")),
