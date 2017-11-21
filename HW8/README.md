@@ -13,6 +13,7 @@
 - Graph changes based on user's input
 - A small meme created from scratch on the side bar
 - [Lights out game](https://github.com/daattali/lightsout)
+- A map object with manual input is located on the side bar
 
 
 ### Notes
