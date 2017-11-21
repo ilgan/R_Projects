@@ -15,7 +15,7 @@ ui <- fluidPage(
 	# We can set up the theme for the whole page
 	theme = shinytheme("journal"),
 	
-	titlePanel("Wind Turbine's Variables"),
+	titlePanel("Multi-Layer Perceptron vs Multiple Linear Regression analysis with PCA for optimizing wind turbine energy production."),
 	
 	# Sedebar with the toggle menue and the wind turbine picture, or meme as an alternative
 	sidebarLayout(
@@ -25,15 +25,19 @@ ui <- fluidPage(
 			radioButtons("varInput", "Select Variable",
 						 choices = c("HRR_GearboxOilTemp", "HRR_GeneratorWindingTemp", "HRR_NacelleAirTemp", "HRR_kW"),
 						 selected = "HRR_kW"),
-			uiOutput("varOutput")
+			uiOutput("varOutput"),
+			
+			("Turbine Location"),
+			numericInput("lat", "Latitude:", 50.81, min = 0, max = 180),
+			numericInput("lon", "Longtitude:", -4.22, min = -180, max = 180),
+			verbatimTextOutput("value"),
+			plotOutput("map")
 		),
 		
 		# Main panel consist of the tabset Panels.
 		mainPanel(
 			tabsetPanel(
 				tabPanel("Project Scope",
-						 img(src = "flow.jpg", width = "50%"),
-						 br(),
 						 h4("Project statement"),
 						 p("Wind turbines have been in use long before electricity was discovered to harness the power of the wind to do useful work and generate energy by converting the kinetic energy in wind into electrical energy. The current generated in the coils of a wind turbine creates an enormous amount of heat. This heat is directly proportional to the amount of power generated. The coils in the generator could get overheated if the wind speed goes above certain limits. Every ten degrees above temperature threshold of continuous operation, described in the spec sheet of the generator, reduces expected life of the generator in half."),
 						 h4("Objective "),
@@ -60,6 +64,8 @@ ui <- fluidPage(
 						 br()
 				),
 				tabPanel("Future Tasks",
+						 img(src = "flow.jpg", width = "50%"),
+						 br(),
 						 p("For our next steps, we will be applying machine learning techniques to two sets of data:"),
 						 p("•	PCA reduced data set, with 2 modes.."),
 						 p("•	Unprocessed data set with all 16 features."),

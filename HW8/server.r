@@ -5,10 +5,17 @@ library(meme)
 library(DT)
 library(shinyjs)
 library(lightsout)
+library(ggmap)
 
 server <- function(input, output) {
 	# Read the cleaned data
 	cwd <- read.csv("clean_wind_data.csv", stringsAsFactors = FALSE)
+	#map_in <- get_map(location = c(lon = input$lon, lat = input$lat), zoom = "auto", scale = "auto", maptype = "terrain")
+	
+	output$map <- renderPlot({
+		map_in <- get_map(location = c(lon = input$lon, lat = input$lat), zoom = 6, scale = "auto", maptype = "terrain")
+		ggmap(map_in)
+	})
 	
 	# Create meme out of downloaded image
 	output$my_meme <- renderImage({
