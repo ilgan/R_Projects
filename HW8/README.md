@@ -1,6 +1,8 @@
 # STAT545-hw-ganelin-ilya
 # HW8: Shiny App
 
+The [link to the app](https://igan.shinyapps.io/wind_data/)
+
 ### Data set
 - I used private data set from the wind turbine from one day of operation. It has all the sensor data thta could possibly be collected of it including: wind speed, power, voltage measurements and etc.
 

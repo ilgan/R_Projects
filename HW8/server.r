@@ -14,7 +14,9 @@ server <- function(input, output) {
 	
 	output$map <- renderPlot({
 		map_in <- get_map(location = c(lon = input$lon, lat = input$lat), zoom = 6, scale = "auto", maptype = "terrain")
-		ggmap(map_in)
+		latt <- input$lat
+		lonn <- input$lon
+		ggmap(map_in)+geom_point(aes(x=latt, y=lonn))
 	})
 	
 	# Create meme out of downloaded image
