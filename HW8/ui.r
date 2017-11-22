@@ -40,8 +40,9 @@ ui <- fluidPage(
 				tabPanel("Project Scope",
 						 h4("Project statement"),
 						 p("Wind turbines have been in use long before electricity was discovered to harness the power of the wind to do useful work and generate energy by converting the kinetic energy in wind into electrical energy. The current generated in the coils of a wind turbine creates an enormous amount of heat. This heat is directly proportional to the amount of power generated. The coils in the generator could get overheated if the wind speed goes above certain limits. Every ten degrees above temperature threshold of continuous operation, described in the spec sheet of the generator, reduces expected life of the generator in half."),
-						 h4("Objective "),
-						 p("The objective of this project would be to apply a predictive model on the wind turbine’s aggregated data and try to predict the generator’s winding temperature during its effective lifetime in a specific location and component configuration. We will build a model that will maximize energy production of the wind turbine (more specifically generator’s itself) through its effective lifetime.")
+						 h4("Objective"),
+						 p("The objective of this project would be to apply a predictive model on the wind turbine’s aggregated data and try to predict the generator’s winding temperature during its effective lifetime in a specific location and component configuration. We will build a model that will maximize energy production of the wind turbine (more specifically generator’s itself) through its effective lifetime."),
+						 img(src = "temp_tresholds.bmp", width = "50%")
 						   ),
 				tabPanel("Table", 
 						 p("The raw data was cleaned from 'NA' and '0' values, time and a few unrelevant columns/features were deleted, all varaibles were normalized."),
@@ -57,7 +58,7 @@ ui <- fluidPage(
 				tabPanel("PCA Analysis", 
 						 p("First two PCs modes explain more than 90% of the data variance."),
 						 br(),
-						 img(src = "Variance.png", width = "50%"),
+						 img(src = "Variance.png", width = "80%"),
 						 br(),
 						 p("Two PCs and corresponding Eigenvectors."),
 						 br(),
