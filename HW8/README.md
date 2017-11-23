@@ -8,7 +8,7 @@ The [link to the app](https://igan.shinyapps.io/wind_data/)
 
 
 ### Features
-- The download button to download .csv file
+- The download button to download .csv file (since the data cannot be shared publically, I disabled the download function. It is working in test mode)
 - The page has a theme
 - Table on last tab is searchable and has multiple sub-tabs
 - The Histogram changes based on the user's input
