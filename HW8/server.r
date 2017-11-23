@@ -11,8 +11,8 @@ library(caret)
 server <- function(input, output) {
 	# Read the cleaned data
 	cwd <- read.csv("clean_wind_data.csv", stringsAsFactors = FALSE)
-	#map_in <- get_map(location = c(lon = input$lon, lat = input$lat), zoom = "auto", scale = "auto", maptype = "terrain")
-	
+	cwd_std <- read.csv("clean_wind_data_standarized.csv", stringsAsFactors = FALSE)
+
 	output$map <- renderPlot({
 		map_in <- get_map(location = c(lon = input$lon, lat = input$lat), zoom = "auto", scale = "auto", maptype = "terrain")
 		ggmap(map_in)+geom_point(aes_string(x=input$lat, y=input$lon), colour = "red")
@@ -55,8 +55,7 @@ server <- function(input, output) {
 	
 	# Rendering interactive table
 	output$table_head_norm <- renderDataTable({ #renderTable({
-		end = ncol(cwd)
-		preProcess(cwd[,4:end-1], method=c("center", "scale"))
+		cwd_std
 	})
 	
 	# Download csv file button

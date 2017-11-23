@@ -49,7 +49,7 @@ ui <- fluidPage(
 						 br(),
 						 DT::dataTableOutput("table_head"),
 						 br(),
-						 p("Normalized."),
+						 p("Standarized data."),
 						 br(),
 						 DT::dataTableOutput("table_head_norm"),
 						 br(),
