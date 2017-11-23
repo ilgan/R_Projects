@@ -14,7 +14,7 @@ server <- function(input, output) {
 	cwd_std <- read.csv("clean_wind_data_standarized.csv", stringsAsFactors = FALSE)
 
 	output$map <- renderPlot({
-		map_in <- get_map(location = c(lon = input$lon, lat = input$lat), zoom = "auto", scale = "auto", maptype = "terrain")
+		map_in <- get_map(location = c(lon = input$lon, lat = input$lat), zoom = 18, scale = "auto", maptype = "satellite")
 		ggmap(map_in)+geom_point(aes_string(x=input$lat, y=input$lon), colour = "red")
 	})
 	

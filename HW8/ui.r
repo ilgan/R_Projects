@@ -28,8 +28,8 @@ ui <- fluidPage(
 			uiOutput("varOutput"),
 			
 			("Turbine Location"),
-			numericInput("lat", "Latitude:", 50.81, min = 0, max = 180),
-			numericInput("lon", "Longtitude:", -4.22, min = -180, max = 180),
+			numericInput("lat", "Latitude:", 50.846355, min = 0, max = 180),
+			numericInput("lon", "Longtitude:", -4.250161, min = -180, max = 180),
 			verbatimTextOutput("value"),
 			plotOutput("map")
 		),
