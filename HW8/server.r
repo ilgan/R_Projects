@@ -6,6 +6,7 @@ library(DT)
 library(shinyjs)
 library(lightsout)
 library(ggmap)
+library(caret)
 
 server <- function(input, output) {
 	# Read the cleaned data
@@ -51,6 +52,12 @@ server <- function(input, output) {
 	output$table_head <- renderDataTable({ #renderTable({
 		cwd
 	}) 
+	
+	# Rendering interactive table
+	output$table_head_norm <- renderDataTable({ #renderTable({
+		end = ncol(cwd)
+		preProcess(cwd[,4:end-1], method=c("center", "scale"))
+	})
 	
 	# Download csv file button
 	output$downloadData <- downloadHandler(
