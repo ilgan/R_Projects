@@ -15,7 +15,7 @@ ui <- fluidPage(
 	# We can set up the theme for the whole page
 	theme = shinytheme("journal"),
 	
-	titlePanel("Multi-Layer Perceptron vs Multiple Linear Regression analysis with PCA for optimizing wind turbine energy production."),
+	titlePanel("Wind Turbine Power Output Optimization."),
 	
 	# Sedebar with the toggle menue and the wind turbine picture, or meme as an alternative
 	sidebarLayout(
