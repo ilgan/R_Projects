@@ -84,14 +84,12 @@ ui <- fluidPage(
 						 p("For our next steps, we will be applying machine learning techniques to two sets of data:"),
 						 p("•	PCA reduced data set, with 2 modes.."),
 						 p("•	Unprocessed data set with all 16 features."),
-						 p("2 different predictive models will be built and these are:"),
+						 p("Two different predictive models will be built and these are:"),
 						 p("•	Multiple Linear Regression"),
 						 p("•	Multi-Layer Perceptron"),
 						 p("The models will go through training, testing and cross validation and a performance analysis will be generated based on:"),
 						 p("•	Root mean square error"),
 						 p("•	Accuracy of prediction"),
-						 p("•	Sensitivity"),
-						 p("•	Specificity "),
 						 p("In the end, we will have 4 set of results, PCA data vs unprocessed data, each with MLP and MLR models.")
 						 ),
 				
