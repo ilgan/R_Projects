@@ -27,7 +27,7 @@ library(stringr)
 
 and introduce a new one:
 
-``` r
+```{r}
 library(rvest)
 library(xml2)
 ```
