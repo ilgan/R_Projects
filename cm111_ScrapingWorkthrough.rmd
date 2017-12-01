@@ -295,3 +295,11 @@ note: this is loosely inspired by Max Humber’s
 [post](https://www.r-bloggers.com/fantasy-hockey-with-rvest-and-purrr/)
 and David Laing’s post
 [here](https://laingdk.github.io/kendrick-lamar-data-science/).
+
+
+
+```{r}
+
+library(tidytext)
+```
+

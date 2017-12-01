@@ -1,0 +1,47 @@
+---
+title: "hw10"
+author: "iganelin"
+date: "December 1, 2017"
+output: html_document
+---
+## HW10
+
+
+#### We start with loading all the necessary general purpose libraries
+
+```{r message=FALSE}
+library(tidyverse)
+library(magrittr)
+library(purrr)
+library(glue)
+library(stringr)
+library(purrr)
+```
+
+#### Libraries for web scraping
+
+```{r message=FALSE}
+library(rvest)
+library(xml2)
+library(httr)
+```
+#### Working with the [OMDB API](https://www.omdbapi.com)
+
+```{r message=FALSE}
+get_movie <- function(title, year, key){
+	query_string <- glue("http://www.omdbapi.com/?t={title}&y={year}&apikey={key}")
+	movie_result <- httr::GET(query_string)
+	movie_content <- content(movie_result)
+	return(movie_content)
+}
+```
+
+##### Start with requesting the information of one of the movies you would like to see. For testing purposes only use your key. you can request it [here](https://www.omdbapi.com/apikey.aspx).
+
+```{r message=FALSE}
+movie_info <- get_movie("babe", "1995","33ffee5e")
+View(movie_info)
+```
+
+##### Let's expand our function to output multiple
+

@@ -1,0 +1,41 @@
+---
+title: "cm112_APIs"
+author: "IG"
+date: "November 30, 2017"
+output: html_document
+---
+
+```{r}
+library(httr)
+library(tidyverse)
+library(glue)
+```
+
+```{r}
+thor_results <- httr::GET("http://www.omdbapi.com/?t=thor&y=2017&apikey=33ffee5e")
+thor_results
+
+thor_content  <- content(thor_results)
+thor_content %>% View()
+```
+
+```{r}
+get_movie <- function(title, year, key){
+	query_string <- glue("http://www.omdbapi.com/?t={title}&y={year}&apikey={key}")
+	movie_result <- httr::GET(query_string)
+	movie_content <- content(movie_result)
+	return(movie_content)
+}
+```
+
+```{r}
+title <- "babe"
+year <- 1995
+
+query_string <- glue("http://www.omdbapi.com/?t={title}&y={year}&apikey=33ffee5e")
+
+babe <- get_movie("babe", "1995","33ffee5e")
+View(babe)
+```
+
+
