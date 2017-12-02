@@ -28,6 +28,7 @@ get_movie <- function(title, year, key){
 }
 ```
 
+
 ```{r}
 title <- "babe"
 year <- 1995

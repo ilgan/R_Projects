@@ -31,7 +31,7 @@ library(httr)
 get_movie <- function(title, year, key){
 	query_string <- glue("http://www.omdbapi.com/?t={title}&y={year}&apikey={key}")
 	movie_result <- httr::GET(query_string)
-	movie_content <- content(movie_result)
+	movie_content <- as.data.frame(content(movie_result))
 	return(movie_content)
 }
 ```
@@ -40,8 +40,36 @@ get_movie <- function(title, year, key){
 
 ```{r message=FALSE}
 movie_info <- get_movie("babe", "1995","33ffee5e")
+typeof(movie_info)
 View(movie_info)
 ```
 
 ##### Let's expand our function to output multiple
+
+```{r message=FALSE}
+get_movies <- function(title, key){
+	for (i in 1:length(movies_list)){
+		if (i == 1){
+			query_string <- glue("http://www.omdbapi.com/?t={movies_list[i]}&apikey={key}")
+			movie_result <- httr::GET(query_string)
+			movie_content <- as.data.frame(content(movie_result))
+		}
+		else{
+			query_string <- glue("http://www.omdbapi.com/?t={movies_list[i]}&apikey={key}")
+			movie_result <- httr::GET(query_string)
+			movie_content <- full_join(movie_content, as.data.frame(content(movie_result)), by = colnames(as.data.frame(content(movie_result))))
+		}
+	}
+	return(movie_content)
+}
+```
+
+#### Let's see the result.
+We start with creating a list of the movies we would like to download info for.
+
+```{r message=FALSE}
+movies_list <- c("babe", "thor", "spiderman")
+movies <- get_movies(movies_list, "33ffee5e")
+View(movies)
+```
 
