@@ -72,4 +72,51 @@ movies_list <- c("babe", "thor", "spiderman")
 movies <- get_movies(movies_list, "33ffee5e")
 View(movies)
 ```
+So now we can download the movie info and save it into the dataframe that we can use later in the project.
 
+#### Lets download the movie information from another [source](https://www.theimdbapi.org/) 
+```{r message=FALSE}
+get_movie2 <- function(title, year){
+	query_string <- glue("http://www.theimdbapi.org/api/find/movie?title={title}&year={year}")
+	movie_result <- httr::GET(query_string)
+	movie_content <- as.data.frame(content(movie_result)[[1]])
+	return(movie_content)
+}
+```
+
+#### Lets download the movie information from yet another [source](https://www.themoviedb.org) 
+```{r message=FALSE}
+get_movie3 <- function(title, year){
+	query_string <- glue("https://api.themoviedb.org/3/movie/550?api_key=ae1992621fc683b8b15c4a9bef59b8bb")
+	movie_result <- httr::GET(query_string)
+	movie_content <- as.data.frame(content(movie_result))
+	return(movie_content)
+}
+```
+
+##### Start with requesting the information of one of the movies you would like to see from [here](https://www.theimdbapi.org/).
+
+```{r message=FALSE}
+col_names <- colnames(movies)
+movie_info2 <- get_movie2("transformers", "2007")
+View(movie_info2)
+
+query_string <- glue("https://api.themoviedb.org/3/search/movie?api_key=ae1992621fc683b8b15c4a9bef59b8bb&query=Jack+Reacher")
+movie_result <- httr::GET(query_string)
+movie_content <- as.data.frame(content(movie_result))
+View(content(movie_result))
+	
+ae1992621fc683b8b15c4a9bef59b8bb
+
+query_string <- glue("http://www.theimdbapi.org/api/find/movie?title=transformers&year=2007")
+
+query_string <- glue("http://www.theimdbapi.org/api/find/movie?title=transformers&year=2007")
+movie_result <- httr::GET(query_string)
+movie_content <- as.data.frame(content(movie_result)[[1]])
+	
+typeof(movie_info2)
+View(content(movie_result)[[1]])
+
+full_join(movie_content, as.data.frame(content(movie_result)), by = colnames(as.data.frame(content(movie_result))))
+content(movie_result)[[1]]
+```
