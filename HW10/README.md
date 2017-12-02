@@ -3,20 +3,17 @@
 
 
 ### Data set
-- I used private data set from the wind turbine from one day of operation. It has all the sensor data thta could possibly be collected of it including: wind speed, power, voltage measurements and etc.
-
+We collect data from a several sources for this project:
+- [Open Weather API](https://openweathermap.org/api)
+- [OMDb API](https://www.omdbapi.com/)
 
 ### Features
-- The download button to download .csv file (since the data cannot be shared publically, I disabled the download function. It is working in test mode)
-- The page has a theme
-- Table on last tab is searchable and has multiple sub-tabs
-- The Histogram changes based on the user's input
-- Graph changes based on user's input
-- A small meme created from scratch on the side bar
-- [Lights out game](https://github.com/daattali/lightsout)
-- A map object with manual input is located on the side bar
+I decided to use in conjunction a few data scparing modules. A few functoins were created starting from the simple one that downloads the information for just one movie and outputs the dataframe with it. The next step was to extend this function so the user could download the information for multiple movies of his choice.
+In order to integrate it with anothe data set, I decided to download the current weather from Open Weather API for the movie location.
 
+#### Plots:
+- The map of teh movie locations
+- Rating for movies of interest
 
 ### Notes
-- Lots of trubleshooting was involved with the making the code work properly: pictures, tables.
-- Took a while to understand the variable transition between ui and the server side.
+The initial idea was to collect the movie info from a multiple soutces and join them together into one large data base, but I neded the API and stil wating for the owners of the web services to approve my request. I wrote the function at teh bottom of the .md file. These functions are active and worked at testing stage. Personally this is one of the most important lessons, as the scraping data is a powerful tool to have. In conjunction with the NOSQL databases (jsons) it really helped me before.
