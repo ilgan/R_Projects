@@ -16,6 +16,7 @@ library(purrr)
 library(glue)
 library(stringr)
 library(purrr)
+library(ggmap)
 ```
 
 #### Libraries for web scraping
@@ -24,6 +25,7 @@ library(purrr)
 library(rvest)
 library(xml2)
 library(httr)
+library(leaflet)
 ```
 #### Working with the [OMDB API](https://www.omdbapi.com)
 
@@ -42,6 +44,23 @@ get_movie <- function(title, year, key){
 movie_info <- get_movie("babe", "1995","33ffee5e")
 typeof(movie_info)
 View(movie_info)
+```
+
+##### Let's plot the Movie's of interest Location using ggmap and leaflet.
+
+```{r}
+get_movie_location <- function(movie_info){
+	countries <- str_split(movie_info$Country, ",")
+	loc <- geocode(as.character(countries))
+	m <- leaflet() %>%
+  		addTiles() %>%  # Add default OpenStreetMap map tiles
+  		addMarkers(lng=loc$lon, lat=loc$lat, popup="Movie Location")
+	return(m)
+}
+
+map <- get_movie_location(movie_info)
+map
+
 ```
 
 ##### Let's expand our function to output multiple
