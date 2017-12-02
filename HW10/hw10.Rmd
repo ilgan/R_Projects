@@ -48,8 +48,20 @@ typeof(movie_info)
 knitr::kable(movie_info)
 #View(movie_info)
 ```
+#### Plot the Movies locatoin using simple ggmap.
 
-#### Plot the Movie's of interest Location using ggmap and leaflet.
+```{r}
+ggmap_movie_location <- function(movie_info){
+	countries <- str_split(movie_info$Country, ",")
+	loc <- geocode(as.character(countries))
+	map_in <- get_map(location = c(lon = loc$lon, lat = loc$lat), zoom = 18, scale = "auto", maptype = "satellite")
+	map_out <- ggmap(map_in)+geom_point(aes_string(x=loc$lat, y=loc$lon), colour = "red")
+}
+map <- ggmap_movie_location(movie_info)
+map
+```
+
+#### Plot the Movie's of interest Location using ggmap and leaflet. Leaflet is better for html or shiny apps display of the data.
 
 ```{r}
 get_movie_location <- function(movie_info){
@@ -96,6 +108,26 @@ movies <- get_movies(movies_list, "33ffee5e")
 knitr::kable(movies)
 ```
 So now we can download the movie info and save it into the dataframe that we can use later in the project.
+
+#### We can plot the rating of the movies that we extracted.
+
+```{r}
+plot_rating <- function(movies){
+	r1 <- str_split(movies$Ratings.Value.1, " ")
+	r2 <- str_replace(r1, "%", "")
+	Rating <- as.integer(r2)
+	Rating[is.na(Rating)] <- 0
+	
+	movies %>%
+		mutate(rating = Rating) %>% 
+		ggplot(aes(x = Title, y = Rating), colour=Title) +
+		ggtitle("Movies Rating") +
+		theme_classic() +
+		geom_point()
+}
+
+plot_rating(movies)
+```
 
 
 
