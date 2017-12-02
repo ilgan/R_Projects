@@ -87,9 +87,9 @@ get_movies <- function(title, key){
 
 #### Let's see the result.
 We start with creating a list of the movies we would like to download info for.
-, include=FALSE
 
-```{r message=FALSE}
+
+```{r message=FALSE, include=FALSE}
 movies_list <- c("babe", "thor", "spiderman")
 movies <- get_movies(movies_list, "33ffee5e")
 #View(movies)
