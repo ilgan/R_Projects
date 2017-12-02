@@ -17,6 +17,7 @@ library(glue)
 library(stringr)
 library(purrr)
 library(ggmap)
+library(knitr)
 ```
 
 #### Libraries for web scraping
@@ -38,15 +39,16 @@ get_movie <- function(title, year, key){
 }
 ```
 
-##### Start with requesting the information of one of the movies you would like to see. For testing purposes only use your key. you can request it [here](https://www.omdbapi.com/apikey.aspx).
+#### Start with requesting the information of one of the movies you would like to see. For testing purposes only use your key. you can request it [here](https://www.omdbapi.com/apikey.aspx).
 
 ```{r message=FALSE}
 movie_info <- get_movie("babe", "1995","33ffee5e")
 typeof(movie_info)
-View(movie_info)
+knitr::kable(movie_info)
+#View(movie_info)
 ```
 
-##### Let's plot the Movie's of interest Location using ggmap and leaflet.
+#### Plot the Movie's of interest Location using ggmap and leaflet.
 
 ```{r}
 get_movie_location <- function(movie_info){
@@ -60,10 +62,9 @@ get_movie_location <- function(movie_info){
 
 map <- get_movie_location(movie_info)
 map
-
 ```
 
-##### Let's expand our function to output multiple
+#### Expand our function to output multiple
 
 ```{r message=FALSE}
 get_movies <- function(title, key){
@@ -86,14 +87,48 @@ get_movies <- function(title, key){
 #### Let's see the result.
 We start with creating a list of the movies we would like to download info for.
 
-```{r message=FALSE}
+```{r message=FALSE, include=FALSE}
 movies_list <- c("babe", "thor", "spiderman")
 movies <- get_movies(movies_list, "33ffee5e")
-View(movies)
+#View(movies)
+knitr::kable(movies)
 ```
 So now we can download the movie info and save it into the dataframe that we can use later in the project.
 
-#### Lets download the movie information from another [source](https://www.theimdbapi.org/) 
+
+
+#### This is a current weather request at the location of the movie. Use your key from [here](https://openweathermap.org/api).
+The functions reads the data frame that we aquired earlier from the movie data set, then it calls the weather API and gets the current weather report for that location.
+Easy, but powerful!
+
+```{r message=FALSE}
+current_weather <- function(movie_info, key){
+	countries <- str_split(movie_info$Country, ",")
+	loc <- geocode(as.character(countries))
+	lat <- loc$lat
+	lon <- loc$lon
+	query_string <- glue("api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={key}")
+	weather_result <- httr::GET(query_string)
+	weather_content <- content(weather_result)
+	movie_content <- as.data.frame(weather_content$weather)
+	return(movie_content)
+}
+weather_api_key <- "0e9fe1be47a184a37d666778718248b1"
+weather <- current_weather(movie_info, weather_api_key)
+#View(weather)
+knitr::kable(weather)
+```
+
+##### Start with requesting the information of one of the movies you would like to see from [here](https://www.theimdbapi.org/).
+
+```{r message=FALSE}
+
+```
+
+
+### Following functions currently do not work, as I am waiting for the API key approval:
+
+#### Download the movie information from another [source](https://www.theimdbapi.org/) 
 ```{r message=FALSE}
 get_movie2 <- function(title, year){
 	query_string <- glue("http://www.theimdbapi.org/api/find/movie?title={title}&year={year}")
@@ -103,39 +138,12 @@ get_movie2 <- function(title, year){
 }
 ```
 
-#### Lets download the movie information from yet another [source](https://www.themoviedb.org) 
+#### Download the movie information from yet another [source](https://www.themoviedb.org) 
 ```{r message=FALSE}
-get_movie3 <- function(title, year){
-	query_string <- glue("https://api.themoviedb.org/3/movie/550?api_key=ae1992621fc683b8b15c4a9bef59b8bb")
+get_movie3 <- function(title, year, key){
+	query_string <- glue("https://api.themoviedb.org/3/movie/550?api_key={key}")
 	movie_result <- httr::GET(query_string)
 	movie_content <- as.data.frame(content(movie_result))
 	return(movie_content)
 }
-```
-
-##### Start with requesting the information of one of the movies you would like to see from [here](https://www.theimdbapi.org/).
-
-```{r message=FALSE}
-col_names <- colnames(movies)
-movie_info2 <- get_movie2("transformers", "2007")
-View(movie_info2)
-
-query_string <- glue("https://api.themoviedb.org/3/search/movie?api_key=ae1992621fc683b8b15c4a9bef59b8bb&query=Jack+Reacher")
-movie_result <- httr::GET(query_string)
-movie_content <- as.data.frame(content(movie_result))
-View(content(movie_result))
-	
-ae1992621fc683b8b15c4a9bef59b8bb
-
-query_string <- glue("http://www.theimdbapi.org/api/find/movie?title=transformers&year=2007")
-
-query_string <- glue("http://www.theimdbapi.org/api/find/movie?title=transformers&year=2007")
-movie_result <- httr::GET(query_string)
-movie_content <- as.data.frame(content(movie_result)[[1]])
-	
-typeof(movie_info2)
-View(content(movie_result)[[1]])
-
-full_join(movie_content, as.data.frame(content(movie_result)), by = colnames(as.data.frame(content(movie_result))))
-content(movie_result)[[1]]
 ```
