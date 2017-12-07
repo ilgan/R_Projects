@@ -19,6 +19,9 @@ library(stringr)
 library(purrr)
 library(ggmap)
 library(knitr)
+
+library(htmltools)
+library(htmlwidgets)
 ```
 
 #### Libraries for web scraping
@@ -43,7 +46,8 @@ get_movie <- function(title, year, key){
 #### Start with requesting the information of one of the movies you would like to see. For testing purposes only use your key. you can request it [here](https://www.omdbapi.com/apikey.aspx).
 
 ```{r message=FALSE}
-movie_info <- get_movie("babe", "1995","33ffee5e")
+key <- "33ffee5e"
+movie_info <- get_movie("babe", "1995", key)
 typeof(movie_info)
 knitr::kable(movie_info)
 #View(movie_info)
@@ -74,6 +78,7 @@ get_movie_location <- function(movie_info){
 }
 
 map <- get_movie_location(movie_info)
+leaflet(map)
 map
 ```
 
@@ -99,11 +104,12 @@ get_movies <- function(title, key){
 
 #### Let's see the result.
 We start with creating a list of the movies we would like to download info for.
+#include=FALSE}
 
-
-```{r message=FALSE, include=FALSE}
+```{r message=FALSE}
+key <- "33ffee5e"
 movies_list <- c("babe", "thor", "spiderman")
-movies <- get_movies(movies_list, "33ffee5e")
+movies <- get_movies(movies_list, key)
 #View(movies)
 knitr::kable(movies)
 ```
