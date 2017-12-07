@@ -18,6 +18,8 @@ In order to integrate it with anothe data set, I decided to download the current
 ### Notes
 The initial idea was to collect the movie info from a multiple soutces and join them together into one large data base, but I neded the API and stil wating for the owners of the web services to approve my request. I wrote the function at teh bottom of the .md file. These functions are active and worked at testing stage. Personally this is one of the most important lessons, as the scraping data is a powerful tool to have. In conjunction with the NOSQL databases (jsons) it really helped me before.
 
+The Leaflet widget is shown only in html file. You can download it and open in the browser.
+
 ### API Keys
 Please use them wisely. Do not copy. I decided to provide them upon request (just send me an email) for the test purposes to save your time.
 
